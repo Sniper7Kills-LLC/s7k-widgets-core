@@ -1,4 +1,4 @@
-# vue-widgets-plugin2
+# vue3-widget-pages
 
 ## Project setup
 ```
