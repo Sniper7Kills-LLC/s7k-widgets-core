@@ -16,7 +16,7 @@
           :class="{
             'border-indigo-500 text-indigo-600': selected,
             'text-gray-500 border-gray-200': !selected,
-            'w-1/4 border-b-2 py-4 px-1 text-center text-sm font-medium': true,
+            'w-full border-b-2 py-4 px-1 text-center text-sm font-medium': true,
           }"
         >
           {{ tab.name }}
