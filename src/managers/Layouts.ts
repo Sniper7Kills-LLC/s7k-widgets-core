@@ -49,6 +49,7 @@ const layoutManager: LayoutManager = reactive({
   currentPage: "index",
   defaultLayouts: null as LayoutPage[] | null,
   savedLayouts: [] as LayoutPage[],
+  currentTab: 0,
   currentLayout: {
     id: "0000-000-000-0000",
     page: "default",
@@ -64,6 +65,7 @@ const layoutManager: LayoutManager = reactive({
 
     this.currentPage = page;
     this.defaultLayouts = defaultLayouts;
+    this.currentTab = 0;
 
     // TODO Set to a user-defined default
     this.setLayout(this.getLayoutNames()[0].id);
@@ -73,6 +75,7 @@ const layoutManager: LayoutManager = reactive({
     // Saved Layouts
     let layout = this.savedLayouts.find((value: LayoutPage) => value.id === id);
     if (layout) {
+      this.currentTab = 0;
       this.currentLayout = layout;
       // Return because we found it
       return;
@@ -81,6 +84,7 @@ const layoutManager: LayoutManager = reactive({
     // Default Layouts
     layout = this.defaultLayouts?.find((value: LayoutPage) => value.id === id);
     if (layout) {
+      this.currentTab = 0;
       this.currentLayout = layout;
     } else {
       // Handle the case when the layout is not found
@@ -133,6 +137,7 @@ const layoutManager: LayoutManager = reactive({
       ],
     });
     this.save();
+    this.currentTab = this.currentLayout.tabs.length - 1;
   },
 
   updateLayout(layout) {
@@ -159,7 +164,7 @@ const layoutManager: LayoutManager = reactive({
     this.save();
   },
 
-  updateTab(id, layout) {
+  updateTab(layout) {
     if (layout.grid.length == 0) {
       layout.grid = [
         {
@@ -173,15 +178,9 @@ const layoutManager: LayoutManager = reactive({
         },
       ];
     }
-    const tabIndex = this.currentLayout.tabs.findIndex(
-      (value: LayoutTab) => value.id === id
-    );
 
-    if (tabIndex !== -1) {
-      // Update the tab at the found index
-      this.currentLayout.tabs[tabIndex] = layout;
-      this.save();
-    }
+    this.currentLayout.tabs[this.currentTab] = layout;
+    this.save();
   },
 
   save() {

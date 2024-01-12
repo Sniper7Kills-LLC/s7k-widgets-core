@@ -17,7 +17,6 @@
       </ListboxOption>
     </ListboxOptions>
   </Listbox>
-  <AddLayout />
 </template>
 <script lang="ts">
 import { defineComponent, inject, ref, watch } from "vue";
@@ -29,12 +28,10 @@ import {
 } from "@headlessui/vue";
 
 import { LayoutManager } from "../../types";
-import AddLayout from "./Add.vue";
 
 export default defineComponent({
   name: "SelectWidgetLayout",
   components: {
-    AddLayout,
     Listbox,
     ListboxButton,
     ListboxOptions,

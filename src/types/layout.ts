@@ -32,6 +32,7 @@ export type LayoutManager = {
   defaultLayouts: LayoutPage[] | null;
   savedLayouts: LayoutPage[];
   currentLayout: LayoutPage;
+  currentTab: number;
 
   setPage(page: string, defaultLayouts: LayoutPage[] | null): void;
   setLayout(id: number | string): void;
@@ -43,7 +44,7 @@ export type LayoutManager = {
 
   updateLayout(layout: LayoutPage): void;
   updateGrid(grid: LayoutWidget[]): void;
-  updateTab(id: number | string, layout: LayoutTab): void;
+  updateTab(layout: LayoutTab): void;
 
   save(): void;
   load(): void;

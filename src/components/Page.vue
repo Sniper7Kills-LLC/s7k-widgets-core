@@ -1,5 +1,6 @@
 <template>
   <SelectWidgetLayout />
+  <AddLayout v-if="inEditMode" />
   <EditWidgetsPage v-model="inEditMode"></EditWidgetsPage>
   <template v-if="layoutManager.currentLayout">
     <WidgetsGrid
@@ -20,6 +21,7 @@
 import { defineComponent, ref, onMounted, inject, computed } from "vue";
 import EditWidgetsPage from "./Page/Edit.vue";
 import SelectWidgetLayout from "./Layout/Select.vue";
+import AddLayout from "./Layout/Add.vue";
 import { LayoutPage, LayoutManager, LayoutWidget } from "../types";
 
 export default defineComponent({
@@ -35,6 +37,7 @@ export default defineComponent({
     },
   },
   components: {
+    AddLayout,
     EditWidgetsPage,
     SelectWidgetLayout,
   },

@@ -34,6 +34,7 @@ export default defineComponent({
       if (newTabName.value != "") {
         layoutManager.createTab(newTabName.value);
         newTabName.value = "";
+        layoutManager.currentTab = layoutManager.currentLayout.tabs.length - 1;
       }
     }
 
