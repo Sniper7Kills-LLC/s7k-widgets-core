@@ -1,9 +1,19 @@
 <template>
+  <!-- <div class="text-xs">
+    {{ layoutManager.defaultLayouts[0] }}
+  </div>
+  <hr />
+  <div class="text-xs">
+    {{ layoutManager.currentLayout }}
+  </div> -->
   <WidgetsPage page="test-page" :default-layouts="layouts"></WidgetsPage>
 </template>
 
 <script setup lang="ts">
-import { LayoutPage } from "../types";
+import { inject } from "vue";
+import { LayoutPage, LayoutManager } from "../types";
+
+const layoutManager = inject("$widgetLayoutManager") as LayoutManager;
 
 const layouts: LayoutPage[] = [
   {
@@ -19,6 +29,7 @@ const layouts: LayoutPage[] = [
         w: 1,
         h: 1,
         i: 0,
+        moved: false,
       },
       {
         name: "Empty Widget",
@@ -28,6 +39,7 @@ const layouts: LayoutPage[] = [
         w: 1,
         h: 1,
         i: 1,
+        moved: false,
       },
       {
         name: "Empty Widget",
@@ -37,6 +49,7 @@ const layouts: LayoutPage[] = [
         w: 3,
         h: 1,
         i: 2,
+        moved: false,
       },
       {
         name: "Empty Widget",
@@ -46,6 +59,7 @@ const layouts: LayoutPage[] = [
         w: 1,
         h: 1,
         i: 3,
+        moved: false,
       },
     ],
     hasTabs: true,
@@ -63,6 +77,7 @@ const layouts: LayoutPage[] = [
             h: 1,
             i: 0,
             props: { label: "Tab 1 - Divider 0" },
+            moved: false,
           },
           {
             name: "Empty Widget",
@@ -72,6 +87,7 @@ const layouts: LayoutPage[] = [
             w: 1,
             h: 1,
             i: 2,
+            moved: false,
           },
           {
             name: "Divider",
@@ -82,6 +98,7 @@ const layouts: LayoutPage[] = [
             h: 1,
             i: 1,
             props: { label: "Tab 1 - Divider 1" },
+            moved: false,
           },
         ],
       },
@@ -97,6 +114,7 @@ const layouts: LayoutPage[] = [
             w: 1,
             h: 1,
             i: 0,
+            moved: false,
           },
           {
             name: "Empty Widget",
@@ -106,6 +124,7 @@ const layouts: LayoutPage[] = [
             w: 1,
             h: 1,
             i: 1,
+            moved: false,
           },
         ],
       },

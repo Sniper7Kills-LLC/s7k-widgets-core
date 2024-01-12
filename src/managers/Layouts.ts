@@ -1,5 +1,6 @@
-import { reactive } from "vue";
-import { LayoutManager, LayoutPage, LayoutTab } from "../types";
+import { markRaw, reactive } from "vue";
+import { LayoutManager, LayoutPage } from "../types";
+import sha512 from "crypto-js/sha512";
 
 const defaultLayout: LayoutPage = {
   id: generateUUID(),
@@ -47,7 +48,7 @@ function generateUUID(): string {
 
 const layoutManager: LayoutManager = reactive({
   currentPage: "index",
-  defaultLayouts: null as LayoutPage[] | null,
+  defaultLayouts: [] as LayoutPage[] | null,
   savedLayouts: [] as LayoutPage[],
   currentTab: 0,
   currentLayout: {
@@ -64,7 +65,8 @@ const layoutManager: LayoutManager = reactive({
     this.load();
 
     this.currentPage = page;
-    this.defaultLayouts = defaultLayouts;
+    //this.defaultLayouts = defaultLayouts;
+    this.defaultLayouts = defaultLayouts ? [...defaultLayouts] : null;
     this.currentTab = 0;
 
     // TODO Set to a user-defined default
@@ -72,24 +74,36 @@ const layoutManager: LayoutManager = reactive({
   },
 
   setLayout(id: number | string) {
+    let layout = null;
+
     // Saved Layouts
-    let layout = this.savedLayouts.find((value: LayoutPage) => value.id === id);
-    if (layout) {
-      this.currentTab = 0;
-      this.currentLayout = layout;
-      // Return because we found it
+    const savedLayoutIndex = this.savedLayouts.findIndex(
+      (value: LayoutPage) => value.id === id
+    );
+
+    if (savedLayoutIndex !== -1) {
+      layout = { ...this.savedLayouts[savedLayoutIndex] };
+    }
+
+    if (this.defaultLayouts === null) {
+      console.log("No Default Layouts");
       return;
     }
 
-    // Default Layouts
-    layout = this.defaultLayouts?.find((value: LayoutPage) => value.id === id);
-    if (layout) {
-      this.currentTab = 0;
-      this.currentLayout = layout;
-    } else {
-      // Handle the case when the layout is not found
-      console.warn(`Layout with ID ${id} not found.`);
+    const defaultLayoutIndex = this.defaultLayouts.findIndex(
+      (value: LayoutPage) => value.id === id
+    );
+
+    if (defaultLayoutIndex !== -1 && layout === null) {
+      layout = { ...this.defaultLayouts[defaultLayoutIndex] };
     }
+
+    if (layout === null) {
+      console.log("No Layout");
+      return;
+    }
+    this.currentTab = 0;
+    this.currentLayout = JSON.parse(JSON.stringify(layout));
   },
 
   getLayoutNames() {
@@ -141,7 +155,7 @@ const layoutManager: LayoutManager = reactive({
   },
 
   updateLayout(layout) {
-    this.currentLayout = layout;
+    this.currentLayout = JSON.parse(JSON.stringify(layout));
     this.save();
   },
 
@@ -184,22 +198,58 @@ const layoutManager: LayoutManager = reactive({
   },
 
   save() {
-    const savedLayoutID = this.savedLayouts.findIndex(
+    const savedLayoutIndex = this.savedLayouts.findIndex(
       (layout) => layout.id === this.currentLayout.id
     );
 
-    if (savedLayoutID !== -1) {
-      // Layout found, update it
-      this.savedLayouts[savedLayoutID] = this.currentLayout;
-    } else {
-      // Layout not found, add it
+    // Layout found, update it
+    if (savedLayoutIndex !== -1) {
+      this.savedLayouts[savedLayoutIndex] = this.currentLayout;
+      localStorage.setItem("$widgetLayouts", JSON.stringify(this.savedLayouts));
+      return;
+    }
+
+    if (this.defaultLayouts === null) {
+      console.log("No Default Layouts");
+      return;
+    }
+
+    // Layout Not Found
+    const defaultLayoutIndex = this.defaultLayouts.findIndex(
+      (layout) => layout.id === this.currentLayout.id
+    );
+
+    // This is a Default Layout Duplicate and Save
+    if (defaultLayoutIndex !== -1) {
+      const defaultLayout = this.defaultLayouts[defaultLayoutIndex];
+
+      /**
+       * TODO:
+       * Fix this code
+       * Currently the changes to widgets is duplicated to the defaultLayouts and isn't static.
+       * As such we are only able to identify when a widget is added/removed.
+       */
+
+      const dHash = sha512(JSON.stringify(defaultLayout)).toString();
+      const cHash = sha512(JSON.stringify(this.currentLayout)).toString();
+      // console.log(dHash);
+      // console.log(cHash);
+
+      if (dHash === cHash) {
+        // console.log("Layouts are the same");
+        return;
+      }
+
       this.currentLayout.id = generateUUID();
       this.currentLayout.page = this.currentPage;
       this.currentLayout.name = "Custom - " + this.currentLayout.name;
       this.savedLayouts.push(this.currentLayout);
+      localStorage.setItem("$widgetLayouts", JSON.stringify(this.savedLayouts));
+      return;
     }
 
-    localStorage.setItem("$widgetLayouts", JSON.stringify(this.savedLayouts));
+    // Will We Ever Get Here?
+    console.log("Hello; I'm not sure how you got here...");
   },
 
   load() {

@@ -5,3 +5,4 @@ declare module '*.vue' {
   export default component
 }
 declare module 'vue-ts-responsive-grid-layout';
+declare module 'crypto-js/sha512';

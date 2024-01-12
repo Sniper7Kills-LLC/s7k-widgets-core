@@ -1,7 +1,7 @@
 <template>
   <GridLayout
     id="GridLayout"
-    :layout="layout"
+    :layout="$props.layout"
     :col-num="3"
     @layout-updated="layoutUpdatedEvent"
     :is-draggable="$props.inEditMode"
@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import { inject, defineComponent } from "vue";
+import { inject, defineComponent, ref, onMounted } from "vue";
 import { GridItem, GridLayout } from "vue-ts-responsive-grid-layout";
 import { LayoutWidget, WidgetManager } from "../types";
 
