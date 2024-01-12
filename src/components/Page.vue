@@ -19,7 +19,7 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted, inject, computed } from "vue";
 import EditWidgetsPage from "./Page/Edit.vue";
-import SelectWidgetLayout from "./Page/Layout.vue";
+import SelectWidgetLayout from "./Layout/Select.vue";
 import { LayoutPage, LayoutManager, LayoutWidget } from "../types";
 
 export default defineComponent({
