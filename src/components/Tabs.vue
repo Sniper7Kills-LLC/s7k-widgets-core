@@ -9,13 +9,13 @@
         {{ tab.name }}
       </Tab>
     </TabList>
-    <AddTab v-if="inEditMode"></AddTab>
+    <AddTab v-if="inEditMode" />
     <TabPanels>
       <TabPanel v-for="tab in $props.tabs" :key="tab.name">
         <WidgetsGrid
           :layout="tab.grid"
           :inEditMode="inEditMode"
-          @layout-updated="(n) => gridUpdated(tab.name, n)"
+          @layout-updated="(n) => gridUpdated(tab.id, n)"
         />
       </TabPanel>
     </TabPanels>
@@ -23,16 +23,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, inject } from "vue";
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
 import AddTab from "./Tabs/Add.vue";
-import { LayoutTabs } from "../types";
+import { LayoutManager, LayoutTab, LayoutWidget } from "../types";
 
 export default defineComponent({
   name: "WidgetsTabs",
   props: {
     tabs: {
-      type: Array as () => LayoutTabs[],
+      type: Array as () => LayoutTab[],
       required: true,
     },
     inEditMode: {
@@ -49,17 +49,15 @@ export default defineComponent({
     TabPanels,
     TabPanel,
   },
-  setup(props, { emit }) {
-    function gridUpdated(tabname: string, input: any) {
-      let tabs = props.tabs;
-      let tab = tabs.find((tab) => tab.name === tabname);
+  setup(props) {
+    const layoutManager = inject("$widgetLayoutManager") as LayoutManager;
+
+    function gridUpdated(id: number | string, input: LayoutWidget[]) {
+      const tab = props.tabs.find((tab: LayoutTab) => tab.id === id);
       if (tab) {
         tab.grid = input;
+        layoutManager.updateTab(id, tab);
       }
-      emit(
-        "layoutUpdated",
-        tabs.filter((tab) => tab?.grid.length > 0)
-      );
     }
 
     return {

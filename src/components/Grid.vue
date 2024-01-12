@@ -25,7 +25,7 @@
       ]"
     >
       <component
-        :is="widgetManager.getWidget(item.name).as"
+        :is="widgetManager.getWidget(item.widgetID).as"
         v-bind="item.props"
       ></component>
     </GridItem>

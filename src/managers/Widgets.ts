@@ -6,6 +6,7 @@ import BlankWidget from "@/components/Widgets/Blank.vue";
 const widgetManager: WidgetManager = reactive({
   widgets: [
     markRaw({
+      id: "d287d3bc-94e9-4b6d-91ce-ef4bfced75ff",
       name: "Empty Widget",
       as: BlankWidget,
     }),
@@ -16,8 +17,8 @@ const widgetManager: WidgetManager = reactive({
   getWidgets() {
     return widgetManager.widgets;
   },
-  getWidget: function (name: string): ManagedWidget {
-    return this.widgets.filter((widget) => widget.name === name)[0];
+  getWidget: function (id: number | string): ManagedWidget {
+    return this.widgets.filter((widget) => widget.id === id)[0];
   },
 });
 

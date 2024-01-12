@@ -1,19 +1,16 @@
 <template>
-  <SelectWidgetLayout
-    v-model="selectedLayout"
-    :availableLayouts="availableLayouts"
-  ></SelectWidgetLayout>
+  <SelectWidgetLayout />
   <EditWidgetsPage v-model="inEditMode"></EditWidgetsPage>
-  <template v-if="selectedLayout">
+  <template v-if="layoutManager.currentLayout">
     <WidgetsGrid
-      :layout="selectedLayout.grid"
+      :layout="layoutManager.currentLayout.grid"
       :inEditMode="inEditMode"
       @layout-updated="gridUpdated"
     ></WidgetsGrid>
     <WidgetsTabs
       @layoutUpdated="tabsUpdated"
-      v-if="selectedLayout.hasTabs"
-      :tabs="selectedLayout.tabs"
+      v-if="layoutManager.currentLayout.hasTabs"
+      :tabs="layoutManager.currentLayout.tabs"
       :inEditMode="inEditMode"
     />
   </template>
@@ -23,7 +20,7 @@
 import { defineComponent, ref, onMounted, inject, computed } from "vue";
 import EditWidgetsPage from "./Page/Edit.vue";
 import SelectWidgetLayout from "./Page/Layout.vue";
-import { WidgetPageLayout, WidgetLayoutManager } from "../types";
+import { LayoutPage, LayoutManager, LayoutWidget } from "../types";
 
 export default defineComponent({
   name: "WidgetsPage",
@@ -32,8 +29,8 @@ export default defineComponent({
       type: String,
       default: "index",
     },
-    layout: {
-      type: Object as () => WidgetPageLayout,
+    defaultLayouts: {
+      type: Array as () => LayoutPage[],
       required: true,
     },
   },
@@ -44,44 +41,29 @@ export default defineComponent({
   setup(props) {
     const inEditMode = ref(false);
 
-    // Use ref to hold the widgets data
-    const selectedLayout = ref<WidgetPageLayout>(props.layout);
-    const savedLayouts = ref<WidgetPageLayout[]>([]);
+    const layoutManager = inject("$widgetLayoutManager") as LayoutManager;
 
     // Fetch widgets on component mount
     onMounted(() => {
-      // Access $widgetManager using inject
-      const layoutManager = inject(
-        "$widgetLayoutManager"
-      ) as WidgetLayoutManager;
-
       if (layoutManager) {
-        // Update the widgets data with the current widgets from the manager
-        savedLayouts.value = layoutManager.getLayouts(props.page);
+        layoutManager.setPage(props.page, props.defaultLayouts);
       }
     });
 
-    // eslint-disable-next-line vue/no-setup-props-destructure
-    let providedLayout = props.layout;
-    providedLayout.name = "Default - " + providedLayout.name;
-    const availableLayouts = [...savedLayouts.value, providedLayout];
-
-    selectedLayout.value = availableLayouts[0];
-
-    function gridUpdated(input: any) {
-      selectedLayout.value.grid = input;
+    function gridUpdated(input: LayoutWidget[]) {
+      layoutManager.updateGrid(input);
     }
 
     function tabsUpdated(input: any) {
-      selectedLayout.value.tabs = input;
+      //selectedLayout.value.tabs = input;
+      console.log("Tab Updated");
     }
 
     return {
       inEditMode,
-      availableLayouts,
-      selectedLayout,
       gridUpdated,
       tabsUpdated,
+      layoutManager,
     };
   },
 });

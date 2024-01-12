@@ -1,17 +1,17 @@
 <template>
-  <Listbox v-model="$props.modelValue">
+  <Listbox v-model="selectedLayoutID">
     <ListboxButton
       class="mt-2 w-56 block rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
     >
-      {{ $props.modelValue.name }}
+      {{ layoutManager.currentLayout.name }}
     </ListboxButton>
     <ListboxOptions
       class="mt-2 w-56 block rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
     >
       <ListboxOption
-        v-for="layout in $props.availableLayouts"
+        v-for="layout in layoutManager.getLayoutNames()"
         :key="layout.name"
-        :value="layout"
+        :value="layout.id"
       >
         {{ layout.name }}
       </ListboxOption>
@@ -19,7 +19,7 @@
   </Listbox>
 </template>
 <script lang="ts">
-import { defineComponent, ref, watch } from "vue";
+import { defineComponent, inject, ref, watch } from "vue";
 import {
   Listbox,
   ListboxButton,
@@ -27,7 +27,7 @@ import {
   ListboxOption,
 } from "@headlessui/vue";
 
-import { WidgetPageLayout } from "../../types";
+import { LayoutManager, LayoutPage } from "../../types";
 
 export default defineComponent({
   name: "SelectWidgetLayout",
@@ -37,28 +37,17 @@ export default defineComponent({
     ListboxOptions,
     ListboxOption,
   },
-  props: {
-    modelValue: {
-      type: Object as () => WidgetPageLayout,
-      required: true,
-    },
-    availableLayouts: {
-      type: Array as () => WidgetPageLayout[],
-      required: true,
-    },
-  },
-  emits: ["update:modelValue"],
-  setup(props, { emit }) {
-    const selectedLayout = ref(props.modelValue);
+  setup() {
+    const layoutManager = inject("$widgetLayoutManager") as LayoutManager;
+    const selectedLayoutID = ref();
 
-    watch(
-      () => props.modelValue,
-      (newValue) => {
-        selectedLayout.value = newValue;
-      }
-    );
+    watch(selectedLayoutID, (newID: number | string) => {
+      layoutManager.setLayout(newID);
+    });
+
     return {
-      selectedLayout,
+      selectedLayoutID,
+      layoutManager,
     };
   },
 });
