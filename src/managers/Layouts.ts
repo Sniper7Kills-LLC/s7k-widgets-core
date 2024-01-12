@@ -109,8 +109,11 @@ const layoutManager: LayoutManager = reactive({
   createLayout(name) {
     const layout = defaultLayout;
     layout.name = name;
+    layout.id = generateUUID();
+    layout.page = this.currentPage;
     this.savedLayouts.push(layout);
     this.save();
+    this.setLayout(layout.id);
   },
 
   createTab(name) {
