@@ -37,14 +37,52 @@ export default defineComponent({
       }
     });
 
+    let mouseXY = { x: 0, y: 0 };
+
     const drag = (e: DragEvent): void => {
       e.stopPropagation();
       e.preventDefault();
-      console.log(e);
+      // Track the mouse X, Y position during drag
+      if (e.clientX != 0 && e.clientY != 0) {
+        mouseXY.x = e.clientX;
+        mouseXY.y = e.clientY;
+      }
+      //console.log(`Mouse Position - X: ${mouseX}, Y: ${mouseY}`);
+      //console.log(mouseXY);
     };
 
     const dragend = (): void => {
-      console.log("Drag End");
+      // Get all elements with the id of "GridLayout"
+      const gridLayoutElements = document.querySelectorAll("#GridLayout");
+
+      let mouseInGrid = false;
+      let gridIndex = -1;
+
+      gridLayoutElements.forEach((element, index) => {
+        const rect = element.getBoundingClientRect();
+        if (
+          mouseXY.x > rect.left &&
+          mouseXY.x < rect.right &&
+          mouseXY.y > rect.top &&
+          mouseXY.y < rect.bottom
+        ) {
+          mouseInGrid = true;
+          gridIndex = index;
+        }
+      });
+
+      if (!mouseInGrid) {
+        return;
+      }
+
+      if (gridIndex == 0) {
+        // Add Widget To Grid
+        console.log("Add Widget To Grid");
+      }
+
+      if (gridIndex == 1) {
+        console.log("Add Widget To Tab");
+      }
     };
 
     return {

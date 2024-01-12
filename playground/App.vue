@@ -32,7 +32,7 @@ const layouts: LayoutPage[] = [
       {
         name: "Empty Widget",
         widgetID: "d287d3bc-94e9-4b6d-91ce-ef4bfced75ff",
-        x: 1,
+        x: 0,
         y: 1,
         w: 3,
         h: 1,

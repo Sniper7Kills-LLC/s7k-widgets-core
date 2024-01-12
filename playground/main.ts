@@ -1,8 +1,9 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 
-import { WidgetsPlugin, WidgetsPluginOptions } from "../WidgetsPlugin";
+import { WidgetsPlugin, WidgetsPluginOptions } from "../src/WidgetsPlugin";
 import WidgetDivider from "./components/Divider.vue";
+import "./index.css";
 
 const app = createApp(App);
 

@@ -1,5 +1,6 @@
 <template>
   <GridLayout
+    id="GridLayout"
     :layout="layout"
     :col-num="3"
     @layout-updated="layoutUpdatedEvent"
@@ -33,11 +34,11 @@
 </template>
 
 <script lang="ts">
-import { inject } from "vue";
+import { inject, defineComponent } from "vue";
 import { GridItem, GridLayout } from "vue-ts-responsive-grid-layout";
 import { LayoutWidget, WidgetManager } from "../types";
 
-export default {
+export default defineComponent({
   name: "WidgetsGrid",
   props: {
     inEditMode: {
@@ -58,15 +59,15 @@ export default {
     // Use ref to hold the widgets data
     const widgetManager = inject("$widgetManager") as WidgetManager;
 
-    function layoutUpdatedEvent(newLayout): void {
+    function layoutUpdatedEvent(newLayout: LayoutWidget[]): void {
       emit("layoutUpdated", newLayout);
     }
 
-    function removeGridItem(remove) {
+    function removeGridItem(remove: number | string) {
       // eslint-disable-next-line vue/no-mutating-props
       emit(
         "layoutUpdated",
-        props.layout.filter((item) => item.i != remove)
+        props.layout.filter((item: LayoutWidget) => item.i != remove)
       );
     }
 
@@ -76,7 +77,7 @@ export default {
       widgetManager,
     };
   },
-};
+});
 </script>
 
 <style>
