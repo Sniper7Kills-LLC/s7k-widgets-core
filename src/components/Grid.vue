@@ -25,18 +25,25 @@
         'overflow-hidden',
       ]"
     >
+      <ModifyWidgetProperties
+        v-if="inEditMode"
+        :widgetId="item.i"
+        :settings="item.props"
+      ></ModifyWidgetProperties>
       <component
         :is="widgetManager.getWidget(item.widgetID).as"
         v-bind="item.props"
+        :key="item.props"
       ></component>
     </GridItem>
   </GridLayout>
 </template>
 
 <script lang="ts">
-import { inject, defineComponent, ref, onMounted } from "vue";
+import { inject, defineComponent } from "vue";
 import { GridItem, GridLayout } from "vue-ts-responsive-grid-layout";
 import { LayoutWidget, WidgetManager } from "../types";
+import ModifyWidgetProperties from "./Widgets/Modify.vue";
 
 export default defineComponent({
   name: "WidgetsGrid",
@@ -51,6 +58,7 @@ export default defineComponent({
     },
   },
   components: {
+    ModifyWidgetProperties,
     GridItem,
     GridLayout,
   },

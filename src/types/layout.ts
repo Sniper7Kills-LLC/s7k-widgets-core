@@ -46,6 +46,8 @@ export type LayoutManager = {
   updateGrid(grid: LayoutWidget[]): void;
   updateTab(layout: LayoutTab): void;
 
+  updateWidgetSettings(id: number | string, settings: object): void;
+
   save(): void;
   load(): void;
 };

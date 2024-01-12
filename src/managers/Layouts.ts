@@ -1,6 +1,7 @@
-import { markRaw, reactive } from "vue";
-import { LayoutManager, LayoutPage } from "../types";
+import { reactive } from "vue";
+import { LayoutManager, LayoutPage, LayoutWidget } from "../types";
 import sha512 from "crypto-js/sha512";
+import { v4 as uuidv4 } from "uuid";
 
 const defaultLayout: LayoutPage = {
   id: generateUUID(),
@@ -39,11 +40,7 @@ const defaultLayout: LayoutPage = {
 };
 
 function generateUUID(): string {
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
-    const r = (Math.random() * 16) | 0,
-      v = c === "x" ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
+  return uuidv4();
 }
 
 const layoutManager: LayoutManager = reactive({
@@ -194,6 +191,31 @@ const layoutManager: LayoutManager = reactive({
     }
 
     this.currentLayout.tabs[this.currentTab] = layout;
+    this.save();
+  },
+
+  updateWidgetSettings(id, settings) {
+    // Check if in Grid
+    const gridWidgetIndex = this.currentLayout.grid.findIndex(
+      (value) => value.i === id
+    );
+    // check if In Tab
+    const tabWidgetIndex = this.currentLayout.tabs[
+      this.currentTab
+    ].grid.findIndex((value) => value.i === id);
+
+    // Update Accordingly
+    if (gridWidgetIndex !== -1) {
+      // Update settings for a widget in the main grid
+      const foundWidget = this.currentLayout.grid[gridWidgetIndex];
+      foundWidget.props = settings;
+    } else if (tabWidgetIndex !== -1) {
+      // Update settings for a widget in the current tab's grid
+      const foundWidget =
+        this.currentLayout.tabs[this.currentTab].grid[tabWidgetIndex];
+      foundWidget.props = settings;
+    }
+
     this.save();
   },
 

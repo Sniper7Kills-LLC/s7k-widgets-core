@@ -6,3 +6,4 @@ declare module '*.vue' {
 }
 declare module 'vue-ts-responsive-grid-layout';
 declare module 'crypto-js/sha512';
+declare module 'uuid';

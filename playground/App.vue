@@ -12,6 +12,7 @@
 <script setup lang="ts">
 import { inject } from "vue";
 import { LayoutPage, LayoutManager } from "../types";
+import { v4 as uuidv4 } from "uuid";
 
 const layoutManager = inject("$widgetLayoutManager") as LayoutManager;
 
@@ -28,7 +29,7 @@ const layouts: LayoutPage[] = [
         y: 0,
         w: 1,
         h: 1,
-        i: 0,
+        i: uuidv4(),
         moved: false,
       },
       {
@@ -38,7 +39,7 @@ const layouts: LayoutPage[] = [
         y: 0,
         w: 1,
         h: 1,
-        i: 1,
+        i: uuidv4(),
         moved: false,
       },
       {
@@ -48,7 +49,7 @@ const layouts: LayoutPage[] = [
         y: 1,
         w: 3,
         h: 1,
-        i: 2,
+        i: uuidv4(),
         moved: false,
       },
       {
@@ -58,7 +59,7 @@ const layouts: LayoutPage[] = [
         y: 0,
         w: 1,
         h: 1,
-        i: 3,
+        i: uuidv4(),
         moved: false,
       },
     ],
@@ -75,7 +76,7 @@ const layouts: LayoutPage[] = [
             y: 0,
             w: 1,
             h: 1,
-            i: 0,
+            i: uuidv4(),
             props: { label: "Tab 1 - Divider 0" },
             moved: false,
           },
@@ -86,7 +87,7 @@ const layouts: LayoutPage[] = [
             y: 0,
             w: 1,
             h: 1,
-            i: 2,
+            i: uuidv4(),
             moved: false,
           },
           {
@@ -96,7 +97,7 @@ const layouts: LayoutPage[] = [
             y: 0,
             w: 1,
             h: 1,
-            i: 1,
+            i: uuidv4(),
             props: { label: "Tab 1 - Divider 1" },
             moved: false,
           },
@@ -113,7 +114,7 @@ const layouts: LayoutPage[] = [
             y: 0,
             w: 1,
             h: 1,
-            i: 0,
+            i: uuidv4(),
             moved: false,
           },
           {
@@ -123,7 +124,7 @@ const layouts: LayoutPage[] = [
             y: 0,
             w: 1,
             h: 1,
-            i: 1,
+            i: uuidv4(),
             moved: false,
           },
         ],

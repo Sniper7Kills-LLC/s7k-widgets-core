@@ -6,9 +6,10 @@
       {{ layoutManager.currentLayout.name }}
     </ListboxButton>
     <ListboxOptions
-      class="mt-2 w-56 block rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+      class="w-56 block divide-y rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
     >
       <ListboxOption
+        class="hover:text-indigo-500 hover:bg-gray-200 text-center"
         v-for="layout in layoutManager.getLayoutNames()"
         :key="layout.name"
         :value="layout.id"
