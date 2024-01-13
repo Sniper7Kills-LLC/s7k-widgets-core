@@ -1,6 +1,6 @@
 <template>
-  <div class="sticky top-0 z-50">
-    <div class="bg-white block">
+  <div class="sticky top-0 z-10">
+    <div class="bg-white block p-4">
       <SelectWidgetLayout />
       <AddLayout v-if="inEditMode" />
       <EditWidgetsPage v-model="inEditMode"></EditWidgetsPage>
@@ -45,7 +45,7 @@ export default defineComponent({
     SelectWidgetLayout,
   },
   setup(props) {
-    const inEditMode = ref(true);
+    const inEditMode = ref(false);
 
     const layoutManager = inject("$widgetLayoutManager") as LayoutManager;
 

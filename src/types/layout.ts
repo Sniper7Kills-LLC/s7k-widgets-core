@@ -33,10 +33,13 @@ export type LayoutManager = {
   savedLayouts: LayoutPage[];
   currentLayout: LayoutPage;
   currentTab: number;
+  colCount: number;
 
   setPage(page: string, defaultLayouts: LayoutPage[] | null): void;
   setLayout(id: number | string): void;
+  setDefaultLayout(id: number | string): void;
 
+  getDefaultLayout(): number | string;
   getLayoutNames(): { id: string | number; name: string }[];
 
   createLayout(name: string): void;
@@ -52,6 +55,7 @@ export type LayoutManager = {
   addWidgetToTab(widget: LayoutWidget): void;
 
   deleteTab(id: number | string): void;
+  deleteLayout(id: number | string): void;
 
   findNextSlot(widget: LayoutWidget, grid: LayoutWidget[]): LayoutWidget | null;
 

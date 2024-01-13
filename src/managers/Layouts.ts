@@ -68,7 +68,7 @@ const layoutManager: LayoutManager = reactive({
     this.currentTab = 0;
 
     // TODO Set to a user-defined default
-    this.setLayout(this.getLayoutNames()[0].id);
+    this.setLayout(this.getDefaultLayout());
   },
 
   setLayout(id: number | string) {
@@ -102,6 +102,30 @@ const layoutManager: LayoutManager = reactive({
     }
     this.currentTab = 0;
     this.currentLayout = JSON.parse(JSON.stringify(layout));
+  },
+
+  setDefaultLayout(id: number | string): void {
+    this.savedLayouts = this.savedLayouts.map((layout) => {
+      if (layout.page === this.currentPage) {
+        layout.default = false;
+        if (layout.id === id) {
+          layout.default = true;
+        }
+      }
+      return layout;
+    });
+    this.save();
+  },
+
+  getDefaultLayout(): number | string {
+    const defaultSavedLayout = this.savedLayouts.find((layout) => {
+      return layout.page === this.currentPage && layout.default === true;
+    });
+    if (defaultSavedLayout != null) return defaultSavedLayout.id;
+
+    if (this.defaultLayouts === null) return 0;
+
+    return this.defaultLayouts[0].id;
   },
 
   getLayoutNames() {
@@ -215,6 +239,28 @@ const layoutManager: LayoutManager = reactive({
       // Tab found, remove it
       this.currentLayout.tabs.splice(index, 1);
     }
+  },
+
+  deleteLayout(id: number | string): void {
+    const index = this.savedLayouts.findIndex((layout) => layout.id === id);
+
+    const isDefault = this.savedLayouts[index].default;
+    if (index !== -1) {
+      // Tab found, remove it
+      this.savedLayouts.splice(index, 1);
+    }
+    if (isDefault && this.defaultLayouts != null) {
+      this.setLayout(this.defaultLayouts[0].id);
+    }
+
+    /**
+     * This is stupid.
+     * For some reason if savedLayouts is an empty list
+     * save() does not properly update the local storage
+     * so; we need to manually do this.
+     */
+    if (this.savedLayouts.length > 0) this.save();
+    else localStorage.setItem("$widgetLayouts", JSON.stringify([]));
   },
 
   findNextSlot(
@@ -363,7 +409,7 @@ const layoutManager: LayoutManager = reactive({
       // console.log(dHash);
       // console.log(cHash);
       if (dHash === cHash) {
-        // console.log("Layouts are the same");
+        //console.log("Layouts are the same");
         return;
       }
 
