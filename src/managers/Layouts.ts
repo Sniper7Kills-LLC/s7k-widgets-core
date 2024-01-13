@@ -208,6 +208,15 @@ const layoutManager: LayoutManager = reactive({
       this.currentLayout.tabs[this.currentTab].grid.push(updatedWidget);
   },
 
+  deleteTab(id: number | string): void {
+    const index = this.currentLayout.tabs.findIndex((tab) => tab.id === id);
+
+    if (index !== -1) {
+      // Tab found, remove it
+      this.currentLayout.tabs.splice(index, 1);
+    }
+  },
+
   findNextSlot(
     widget: LayoutWidget,
     grid: LayoutWidget[]

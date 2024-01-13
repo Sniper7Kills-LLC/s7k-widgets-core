@@ -19,7 +19,33 @@
             'w-full border-b-2 py-4 px-1 text-center text-sm font-medium': true,
           }"
         >
-          {{ tab.name }}
+          <div class="flex flex-grow justify-center items-center">
+            <div class="flex-grow">
+              {{ tab.name }}
+            </div>
+            <div
+              v-if="inEditMode"
+              class="ml-auto text-red-500 cursor-pointer"
+              @click="deleteTab(tab.id)"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 18 18 6M6 6l12 12"
+                />
+              </svg>
+
+              <span class="visually-hidden">Edit Properties</span>
+            </div>
+          </div>
         </button>
       </Tab>
     </TabList>
@@ -82,11 +108,16 @@ export default defineComponent({
       layoutManager.updateTab(tab);
     }
 
+    function deleteTab(id: number | string) {
+      layoutManager.deleteTab(id);
+    }
+
     return {
       layoutManager,
       currentTab,
       changeTab,
       gridUpdated,
+      deleteTab,
     };
   },
 });

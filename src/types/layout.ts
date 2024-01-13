@@ -51,6 +51,8 @@ export type LayoutManager = {
   addWidgetToGrid(widget: LayoutWidget): void;
   addWidgetToTab(widget: LayoutWidget): void;
 
+  deleteTab(id: number | string): void;
+
   findNextSlot(widget: LayoutWidget, grid: LayoutWidget[]): LayoutWidget | null;
 
   save(): void;
