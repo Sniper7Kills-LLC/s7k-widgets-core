@@ -8,48 +8,68 @@ While this project does not include any widgets they can easily be created in yo
 
 ## Roadmap / TODO List
 
-- [ ] GUI / Style Improvements
-    - [ ] Improve drag/drop experience
-        - [ ] EASY - Mouse Icon
-        - [ ] HARD - Drag/Drop Location Preview on Grid (Preview can just be a color not the actual widget so the user knows where the new widget will land)
-    - [ ] MEDIUM - Ability to have virtical or horizontal based tabs based on layout
-    - [ ] HARD - Fix Grid Style interactions with other components
-        - [ ] Ensure PopOvers,Dropdowns,Selects apear OVER the grid
-        - [ ] Ensure that widgets are still draggable, deletable, modifyable 
-            ( The following CSS "fixes" the previous issue; but introduces this issue.
-            `#GridLayout { z-index: -1 !important; }` )
-    - [ ] MEDIUM - General Style Improvements
-        - [ ] Open-Ended - The UI is currently put together using different snippets and examples using TailwindCSS; Use personal and professional judgement to enhance the UI while allowing maxium flexability
-        - [ ] Ensure default styles are Dark/Like mode compatable
-    - [ ] MEDIUM - Style Customization
-        - [ ] Provide ability for style to be over wrote by application developers similar to NuxtUI
+---
+
+**Legend:**
+- ⭐ - Low Priority
+- ⭐⭐ - Medium Priority
+- ⭐⭐⭐ - High Priority
+- **BOLD** - Expected difficulty Level
+
+---
+
+- [ ] **GUI / Style Improvements**
+    - [ ] ⭐⭐**Improve Drag/Drop Experience**
+        - [ ] **EASY** - Mouse Icon
+        - [ ] **HARD** - Drag/Drop Location Preview on Grid (Preview can be a color for user reference)
+    - [ ] ⭐**MEDIUM** - Ability to have vertical or horizontal based tabs based on layout
+    - [ ] ⭐⭐⭐**HARD** - Fix Grid Style Interactions with Other Components
+        - [ ] Ensure PopOvers, Dropdowns, Selects appear OVER the grid
+        - [ ] Ensure widgets remain draggable, deletable, and modifiable
+    - [ ] ⭐⭐**MEDIUM** - General Style Improvements
+        - [ ] Open-Ended - Enhance UI using TailwindCSS with flexibility
+        - [ ] Ensure default styles are dark/light mode compatible
+    - [ ] ⭐**MEDIUM** - Style Customization
+        - [ ] Provide ability for style to be overridden by application developers (similar to NuxtUI)
         - [ ] Ability to pass styles from plugin options
         - [ ] Ability to pass styles via props
 
-- [ ] Functionality Improvements
-    - [ ] HARD - Ability to import Widgets from GUI by End-User
-    - [ ] EASY - Ability to import / export layouts from the GUI
-        - [ ] Export
-            - [ ] Allow user to select which saved layouts to export
-            - [ ] Allow user to rename layouts during export
-            - [ ] JSON like file
-            - [ ] Layouts from any page can be exported; even if not on that page.
-        - [ ] Import
-            - [ ] Ability to select which layouts to import
-            - [ ] Does not over-write existing layouts w/ modifications
-    - [ ] EASY - Ability to rename Tabs
-    - [ ] MEDIUM - Ability to reorder Tabs (Drag & Drop prefered; but OK with buttons)
+- [ ] **Functionality Improvements**
+    - [ ] GENERAL
+        - [ ] ⭐⭐⭐**HARD** - Ability to Import Widgets from GUI by End-User
+        - [ ] ⭐⭐⭐**EASY** - Ability to Import/Export Layouts from the GUI
+            - [ ] **Export**
+                - [ ] Allow user to select which saved layouts to export
+                - [ ] Allow user to rename layouts during export
+                - [ ] JSON-like file
+                - [ ] Layouts from any page can be exported, even if not on that page
+            - [ ] **Import**
+                - [ ] Ability to select which layouts to import
+                - [ ] Does not overwrite existing layouts with modifications
+    - [ ] Widgets
+        - [ ] ⭐⭐**MEDIUM** - Ability for widgets to provide customized edit screen for settings
+            - [ ] Use JSON editor by default / not provided
+            - [ ] Custom Form & logic to update widget settings/props possible within widget
+    - [ ] Layouts
+        - [ ] ⭐**EASY** - Ability to specify number of columns for a layout
+        - [ ] ⭐**EASY** - Ability to enable/disable Tabs for a layout
+    - [ ] Tabs
+        - [ ] ⭐**EASY** - Ability to Rename Tabs
+        - [ ] ⭐**MEDIUM** - Ability to Reorder Tabs (preferably drag & drop, but OK with buttons)
 
-- [ ] Developer Experience
-    - [ ] MEDIUM - Create a Widget Development Repository
+- [ ] **Developer Experience**
+    - [ ] ⭐⭐⭐**MEDIUM** - Create a Widget Development Repository
         - [ ] Playground for previewing widgets during development
-            - [ ] Dark/Light mode compatable
-            - [ ] Uses This package in playground for widget interactions
+            - [ ] Dark/light mode compatible
+            - [ ] Uses this package in the playground for widget interactions
         - [ ] Ability to build widgets
             - [ ] For 3rd party NPM packages imported via PluginOptions
-            - [ ] For End-User based Import
-        - [ ] Ability to maintain several widgets in single repository
-    - [ ] EASY - Export Type definitions in this package
+            - [ ] For End-User-based Import
+                (❓ Compile VUE and save output into JSON file to be inserted into a `<script>` tag so it can be used as a dynamic component?)
+                - [ ] File used for importing widgets should contain the definition of the widget(s) (name, height, width, etc.) along with anything required for the widget to be displayed (compiled script, script url, etc...)
+        - [ ] Ability to maintain several widgets in a single repository
+    - [ ] ⭐**EASY** - Export Type Definitions in This Package
+
 
 -----------------
 
