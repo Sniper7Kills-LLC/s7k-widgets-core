@@ -132,7 +132,8 @@ export default defineComponent({
   },
   setup(props) {
     const isOpen = ref(false);
-    const widgetSettings = ref({});
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const widgetSettings = ref<Record<string, any>>({});
 
     const layoutManager = inject("$widgetLayoutManager") as LayoutManager;
 
@@ -145,6 +146,9 @@ export default defineComponent({
     }
 
     function saveSettings() {
+      if (typeof widgetSettings.value === "string") {
+        widgetSettings.value = JSON.parse(widgetSettings.value);
+      }
       layoutManager.updateWidgetSettings(props.widgetId, widgetSettings.value);
       setIsOpen(false);
     }

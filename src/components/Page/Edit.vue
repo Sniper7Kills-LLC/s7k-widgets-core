@@ -1,14 +1,16 @@
 <template>
-  <div class="space-x-2">
+  <div class="space-x-2 relative">
     <button
       class="rounded bg-indigo-600 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
       @click="toggleEditMode"
     >
       {{ editMode ? "Save" : "Edit" }}
     </button>
-    <div class="flex" v-if="editMode">
-      <AddWidget class="flex-grow"></AddWidget>
+
+    <div v-if="editMode">
+      <AddWidget></AddWidget>
     </div>
+
     <RegisterWidget></RegisterWidget>
   </div>
 </template>

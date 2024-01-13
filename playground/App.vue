@@ -63,7 +63,7 @@ const layouts: LayoutPage[] = [
     hasTabs: true,
     tabs: [
       {
-        id: "0",
+        id: uuidv4(),
         name: "Example Tab 1",
         grid: [
           {
@@ -101,7 +101,7 @@ const layouts: LayoutPage[] = [
         ],
       },
       {
-        id: "1",
+        id: uuidv4(),
         name: "Example Tab 2",
         grid: [
           {

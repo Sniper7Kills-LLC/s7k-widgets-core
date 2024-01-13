@@ -1,7 +1,11 @@
 <template>
-  <SelectWidgetLayout />
-  <AddLayout v-if="inEditMode" />
-  <EditWidgetsPage v-model="inEditMode"></EditWidgetsPage>
+  <div class="sticky top-0 z-50">
+    <div class="bg-white block">
+      <SelectWidgetLayout />
+      <AddLayout v-if="inEditMode" />
+      <EditWidgetsPage v-model="inEditMode"></EditWidgetsPage>
+    </div>
+  </div>
   <template v-if="layoutManager.currentLayout">
     <WidgetsGrid
       :layout="layoutManager.currentLayout.grid"
@@ -41,7 +45,7 @@ export default defineComponent({
     SelectWidgetLayout,
   },
   setup(props) {
-    const inEditMode = ref(false);
+    const inEditMode = ref(true);
 
     const layoutManager = inject("$widgetLayoutManager") as LayoutManager;
 

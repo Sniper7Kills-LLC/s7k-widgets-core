@@ -4,8 +4,6 @@
     id="GridLayout"
     :layout="$props.layout"
     :col-num="3"
-    :horizontal-shift="true"
-    :prevent-collision="true"
     @layout-updated="layoutUpdatedEvent"
     :is-draggable="$props.inEditMode"
     :is-resizable="$props.inEditMode"
