@@ -1,23 +1,36 @@
 <template>
-  <div class="sticky top-0 z-10">
-    <div class="bg-white block p-4">
-      <SelectWidgetLayout />
-      <AddLayout v-if="inEditMode" />
-      <EditWidgetsPage v-model="inEditMode"></EditWidgetsPage>
+  <div :class="[inEditMode ? 'sticky top-0' : '', 'z-10 m-2 bg-white']">
+    <div class="drop-shadow-md rounded-b-lg">
+      <div class="p-4 flex">
+        <div class="flex-grow">
+          <div class="flex">
+            <AddLayout v-if="inEditMode" />
+          </div>
+        </div>
+        <div class="flex justify-end">
+          <SelectWidgetLayout />
+          <EditWidgetsPage v-model="inEditMode"></EditWidgetsPage>
+        </div>
+      </div>
+      <div class="bg-white px-4 pb-2">
+        <AddWidget v-if="inEditMode"></AddWidget>
+      </div>
     </div>
   </div>
-  <template v-if="layoutManager.currentLayout">
-    <WidgetsGrid
-      :layout="layoutManager.currentLayout.grid"
-      :inEditMode="inEditMode"
-      @layout-updated="gridUpdated"
-    ></WidgetsGrid>
-    <WidgetsTabs
-      v-if="layoutManager.currentLayout.hasTabs"
-      :tabs="layoutManager.currentLayout.tabs"
-      :inEditMode="inEditMode"
-    />
-  </template>
+  <div class="">
+    <template v-if="layoutManager.currentLayout">
+      <WidgetsGrid
+        :layout="layoutManager.currentLayout.grid"
+        :inEditMode="inEditMode"
+        @layout-updated="gridUpdated"
+      ></WidgetsGrid>
+      <WidgetsTabs
+        v-if="layoutManager.currentLayout.hasTabs"
+        :tabs="layoutManager.currentLayout.tabs"
+        :inEditMode="inEditMode"
+      />
+    </template>
+  </div>
 </template>
 
 <script lang="ts">
@@ -25,6 +38,7 @@ import { defineComponent, ref, onMounted, inject } from "vue";
 import EditWidgetsPage from "./Page/Edit.vue";
 import SelectWidgetLayout from "./Layout/Select.vue";
 import AddLayout from "./Layout/Add.vue";
+import AddWidget from "./Widgets/Add.vue";
 import { LayoutPage, LayoutManager, LayoutWidget } from "../types";
 
 export default defineComponent({
@@ -41,6 +55,7 @@ export default defineComponent({
   },
   components: {
     AddLayout,
+    AddWidget,
     EditWidgetsPage,
     SelectWidgetLayout,
   },

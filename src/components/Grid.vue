@@ -109,6 +109,7 @@ export default defineComponent({
 
 .vue-grid-item {
   touch-action: none;
+  display: block !important;
 }
 
 .vue-close-button:hover {
@@ -117,12 +118,14 @@ export default defineComponent({
   opacity: 0.8;
 }
 
-.grid::before {
-  content: "";
-  height: calc(100% - 5px);
-  width: calc(100% - 5px);
-  position: absolute;
-  background-repeat: repeat;
-  margin: 5px;
+.vue-grid-layout {
+  /* position: relative;
+  transition: height 200ms ease;
+  z-index: unset !important; */
+  background-color: white;
+  z-index: 0;
+}
+#GridLayout {
+  /* z-index: -1 !important; */
 }
 </style>

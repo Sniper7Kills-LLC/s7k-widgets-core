@@ -1,6 +1,6 @@
 <template>
   <TransitionRoot as="template" :show="isOpen">
-    <Dialog as="div" class="relative z-10" @close="setIsOpen">
+    <Dialog as="div" class="relative z-10" @close="isOpen = false">
       <TransitionChild
         as="template"
         enter="ease-out duration-300"
@@ -36,12 +36,43 @@
                   <DialogTitle
                     as="h3"
                     class="text-base font-semibold leading-6 text-gray-900"
-                    >Register Widget</DialogTitle
+                    >Import/Export Layouts</DialogTitle
                   >
                   <DialogDescription class="mt-2 text-sm text-gray-500">
-                    Add a new Widget to be available
+                    Import or Export Layouts to share with other users.
                   </DialogDescription>
                 </div>
+              </div>
+              <div>
+                <fieldset>
+                  <legend class="sr-only">Available Layouts</legend>
+                  <div class="space-y-5">
+                    <div
+                      class="relative flex items-start"
+                      v-for="layout in layoutManager.savedLayouts"
+                      :key="layout.id"
+                    >
+                      <div class="min-w-0 flex-1 text-sm leading-6">
+                        <label
+                          :for="`layout-${layout.id}`"
+                          class="select-none font-medium text-gray-900"
+                        >
+                          [ {{ layout.page }} ]
+                          {{ layout.name }}
+                        </label>
+                      </div>
+                      <div class="ml-3 flex h-6 items-center">
+                        <input
+                          :id="`layout-${layout.id}`"
+                          :name="`layout-${layout.id}`"
+                          type="checkbox"
+                          class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                          @click.stop
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </fieldset>
               </div>
               <div class="mt-5 sm:mt-6">
                 <button
@@ -59,16 +90,15 @@
     </Dialog>
   </TransitionRoot>
   <button
-    :key="isActive"
     class="hover:bg-violet-500 hover:text-white text-gray-900 group flex w-full items-center rounded-md px-2 py-2 text-sm"
     @click="setIsOpen(true)"
   >
-    Register New Widget
+    Import/Export Layout
   </button>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from "vue";
+import { defineComponent, inject, ref, watch } from "vue";
 import {
   Dialog,
   DialogPanel,
@@ -77,6 +107,7 @@ import {
   TransitionChild,
   TransitionRoot,
 } from "@headlessui/vue";
+import { LayoutManager } from "../../types";
 //import { WidgetManager } from "../../types";
 
 export default defineComponent({
@@ -97,16 +128,6 @@ export default defineComponent({
       type: Boolean,
     },
   },
-  emits: [
-    "click",
-    "focus",
-    "pointerenter",
-    "mouseenter",
-    "pointermove",
-    "mousemove",
-    "pointerleave",
-    "mouseleave",
-  ],
   setup(props) {
     const isOpen = ref(false);
     const isActive = ref(false);
@@ -119,16 +140,7 @@ export default defineComponent({
     );
 
     // Use inject in the setup function
-    //const widgetManager = inject("$widgetManager") as WidgetManager;
-
-    // Use reactive for data
-    const widgetName = ref("");
-
-    // Define your methods
-    const registerWidget = () => {
-      // TODO
-      setIsOpen(false);
-    };
+    const layoutManager = inject("$widgetLayoutManager") as LayoutManager;
 
     function setIsOpen(value: boolean) {
       isOpen.value = value;
@@ -145,8 +157,7 @@ export default defineComponent({
       ui,
       isOpen,
       setIsOpen,
-      widgetName,
-      registerWidget,
+      layoutManager,
       isActive,
     };
   },

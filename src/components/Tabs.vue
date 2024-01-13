@@ -1,11 +1,12 @@
 <template>
-  <AddTab v-if="inEditMode" />
+  <!-- <AddTab v-if="inEditMode" /> -->
   <TabGroup
     :selected-index="currentTab"
     @change="changeTab"
     :key="layoutManager.currentLayout.tabs.length"
   >
     <TabList class="isolate flex rounded-lg shadow">
+      <AddTab v-if="inEditMode" />
       <Tab
         as="template"
         v-slot="{ selected }"

@@ -43,7 +43,7 @@ export default defineComponent({
 
       if (widgetManager) {
         // Update the widgets data with the current widgets from the manager
-        widgets.value = widgetManager.getWidgets();
+        widgets.value = widgetManager.getWidgets(layoutManager.currentPage);
       }
     });
 

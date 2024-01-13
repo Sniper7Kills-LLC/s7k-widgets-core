@@ -9,16 +9,25 @@ const widgetManager: WidgetManager = reactive({
       id: "d287d3bc-94e9-4b6d-91ce-ef4bfced75ff",
       name: "Empty Widget",
       as: BlankWidget,
+      pages: ["default"],
     }),
   ] as ManagedWidget[], // Adjust the type based on your widget structure
   registerWidget(widget: ManagedWidget) {
-    widgetManager.widgets.push(markRaw(widget));
+    this.widgets.push(markRaw(widget));
   },
-  getWidgets() {
-    return widgetManager.widgets;
+  getWidgets(page = "default") {
+    return this.widgets.filter((widget: ManagedWidget) => {
+      return (
+        widget.pages == null ||
+        widget.pages.some((pageName) => {
+          const pageRegex = new RegExp(pageName);
+          return pageRegex.test(page);
+        })
+      );
+    });
   },
   getWidget: function (id: number | string): ManagedWidget {
-    return this.widgets.filter((widget) => widget.id === id)[0];
+    return this.widgets.filter((widget: ManagedWidget) => widget.id === id)[0];
   },
 });
 

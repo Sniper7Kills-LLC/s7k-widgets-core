@@ -248,6 +248,7 @@ const layoutManager: LayoutManager = reactive({
     if (index !== -1) {
       // Tab found, remove it
       this.savedLayouts.splice(index, 1);
+      this.setLayout(this.getDefaultLayout());
     }
     if (isDefault && this.defaultLayouts != null) {
       this.setLayout(this.defaultLayouts[0].id);
@@ -421,8 +422,7 @@ const layoutManager: LayoutManager = reactive({
       return;
     }
 
-    // Will We Ever Get Here?
-    console.log("Hello; I'm not sure how you got here...");
+    localStorage.setItem("$widgetLayouts", JSON.stringify(this.savedLayouts));
   },
 
   load() {

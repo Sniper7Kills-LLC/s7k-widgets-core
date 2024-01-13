@@ -8,11 +8,12 @@ export type ManagedWidget = Widget & {
   defaultProps?: object;
   height?: number;
   width?: number;
+  pages?: string[];
 };
 
 export type WidgetManager = {
   widgets: ManagedWidget[];
-  getWidgets(): ManagedWidget[];
+  getWidgets(page: string): ManagedWidget[];
   registerWidget(widget: ManagedWidget): void;
   getWidget(id: number | string): ManagedWidget;
 };

@@ -15,6 +15,7 @@ const WidgetsPluginOptions: WidgetsPluginOptions = {
       as: WidgetDivider,
       defaultProps: { label: "Divider Label" },
       width: 3,
+      pages: [".*"],
     },
   ],
 };
