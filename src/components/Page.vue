@@ -9,7 +9,6 @@
       @layout-updated="gridUpdated"
     ></WidgetsGrid>
     <WidgetsTabs
-      @layoutUpdated="tabsUpdated"
       v-if="layoutManager.currentLayout.hasTabs"
       :tabs="layoutManager.currentLayout.tabs"
       :inEditMode="inEditMode"
@@ -18,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, inject, computed } from "vue";
+import { defineComponent, ref, onMounted, inject } from "vue";
 import EditWidgetsPage from "./Page/Edit.vue";
 import SelectWidgetLayout from "./Layout/Select.vue";
 import AddLayout from "./Layout/Add.vue";
@@ -57,15 +56,9 @@ export default defineComponent({
       layoutManager.updateGrid(input);
     }
 
-    function tabsUpdated(input: any) {
-      //selectedLayout.value.tabs = input;
-      console.log("Tab Updated");
-    }
-
     return {
       inEditMode,
       gridUpdated,
-      tabsUpdated,
       layoutManager,
     };
   },

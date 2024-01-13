@@ -67,7 +67,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, ref } from "vue";
+import { defineComponent, ref } from "vue";
 import {
   Dialog,
   DialogPanel,
@@ -76,7 +76,7 @@ import {
   TransitionChild,
   TransitionRoot,
 } from "@headlessui/vue";
-import { WidgetManager } from "../../types";
+//import { WidgetManager } from "../../types";
 
 export default defineComponent({
   name: "RegisterWidget",
@@ -92,7 +92,7 @@ export default defineComponent({
     const isOpen = ref(false);
 
     // Use inject in the setup function
-    const widgetManager = inject("$widgetManager") as WidgetManager;
+    //const widgetManager = inject("$widgetManager") as WidgetManager;
 
     // Use reactive for data
     const widgetName = ref("");

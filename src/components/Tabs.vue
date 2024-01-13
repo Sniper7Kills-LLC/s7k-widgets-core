@@ -52,7 +52,6 @@ export default defineComponent({
       required: true,
     },
   },
-  emits: ["layoutUpdated"],
   components: {
     AddTab,
     TabGroup,

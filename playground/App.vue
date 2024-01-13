@@ -10,11 +10,8 @@
 </template>
 
 <script setup lang="ts">
-import { inject } from "vue";
-import { LayoutPage, LayoutManager } from "../types";
+import { LayoutPage } from "../types";
 import { v4 as uuidv4 } from "uuid";
-
-const layoutManager = inject("$widgetLayoutManager") as LayoutManager;
 
 const layouts: LayoutPage[] = [
   {
