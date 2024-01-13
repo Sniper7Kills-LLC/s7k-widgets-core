@@ -13,6 +13,7 @@ const WidgetsPluginOptions: WidgetsPluginOptions = {
       name: "Divider",
       id: "a6d8771b-2eef-4ae7-a61a-cd28a6ab4e3b",
       as: WidgetDivider,
+      defaultProps: { label: "Divider Label" },
     },
   ],
 };

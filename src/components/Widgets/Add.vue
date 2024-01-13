@@ -5,6 +5,7 @@
         <div
           class="droppable-element"
           draggable="true"
+          @dragstart="selectedWidget = widget"
           @drag="drag"
           @dragend="dragend"
         >
@@ -22,6 +23,7 @@ import { v4 as uuidv4 } from "uuid";
 import {
   Widget,
   WidgetManager,
+  ManagedWidget,
   LayoutManager,
   LayoutWidget,
 } from "../../types";
@@ -32,6 +34,7 @@ export default defineComponent({
     // Use ref to hold the widgets data
     const widgets = ref<Widget[]>([]);
     const layoutManager = inject("$widgetLayoutManager") as LayoutManager;
+    const selectedWidget = ref<ManagedWidget | null>(null);
 
     // Fetch widgets on component mount
     onMounted(() => {
@@ -59,6 +62,7 @@ export default defineComponent({
     };
 
     const dragend = (): void => {
+      if (selectedWidget.value === null) return;
       // Get all elements with the id of "GridLayout"
       const gridLayoutElements = document.querySelectorAll("#GridLayout");
 
@@ -85,8 +89,9 @@ export default defineComponent({
       if (gridIndex == 0) {
         // Add Widget To Grid
         layoutManager.addWidgetToGrid({
-          name: "Empty Widget",
-          widgetID: "d287d3bc-94e9-4b6d-91ce-ef4bfced75ff",
+          name: selectedWidget.value?.name,
+          widgetID: selectedWidget.value?.id,
+          props: selectedWidget.value ? selectedWidget.value.defaultProps : {},
           x: 1,
           y: 0,
           w: 1,
@@ -94,13 +99,13 @@ export default defineComponent({
           i: uuidv4(),
           moved: false,
         } as LayoutWidget);
-        console.log("Add Widget To Grid");
       }
 
       if (gridIndex == 1) {
         layoutManager.addWidgetToTab({
-          name: "Empty Widget",
-          widgetID: "d287d3bc-94e9-4b6d-91ce-ef4bfced75ff",
+          name: selectedWidget.value?.name,
+          widgetID: selectedWidget.value?.id,
+          props: selectedWidget.value ? selectedWidget.value.defaultProps : {},
           x: 1,
           y: 0,
           w: 1,
@@ -108,14 +113,19 @@ export default defineComponent({
           i: uuidv4(),
           moved: false,
         } as LayoutWidget);
-        console.log("Add Widget To Tab");
       }
     };
+
+    function widgetSelected(widget: ManagedWidget) {
+      selectedWidget.value = widget;
+    }
 
     return {
       drag,
       dragend,
       widgets,
+      widgetSelected,
+      selectedWidget,
     };
   },
 });
