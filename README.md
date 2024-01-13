@@ -36,6 +36,7 @@ While this project does not include any widgets they can easily be created in yo
 
 - [ ] **Functionality Improvements**
     - [ ] GENERAL
+        - [ ] ⭐⭐**HARD** - General Improvements to preformance and logic (I'm not a developer by trade; I think this repository helps prove that)
         - [ ] ⭐⭐⭐**HARD** - Ability to Import Widgets from GUI by End-User
         - [ ] ⭐⭐⭐**EASY** - Ability to Import/Export Layouts from the GUI
             - [ ] **Export**
@@ -56,6 +57,11 @@ While this project does not include any widgets they can easily be created in yo
     - [ ] Tabs
         - [ ] ⭐**EASY** - Ability to Rename Tabs
         - [ ] ⭐**MEDIUM** - Ability to Reorder Tabs (preferably drag & drop, but OK with buttons)
+    -[ ] Components
+        - [ ] ⭐**HARD** - Refactor to allow the use of the Grid or Tabs component without using the Page component.
+            ( Currently the project is designed to only support the use of the Page component in Applications )
+            - [ ] Provide support for the Tabs or Grid component to be used on their own and still retain expected functionaility
+            - [ ] May require making additional components avilable from the plugin
 
 - [ ] **Developer Experience**
     - [ ] ⭐⭐⭐**MEDIUM** - Create a Widget Development Repository
