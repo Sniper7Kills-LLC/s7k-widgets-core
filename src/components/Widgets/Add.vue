@@ -18,13 +18,20 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted, inject } from "vue";
-import { Widget, WidgetManager } from "../../types";
+import { v4 as uuidv4 } from "uuid";
+import {
+  Widget,
+  WidgetManager,
+  LayoutManager,
+  LayoutWidget,
+} from "../../types";
 
 export default defineComponent({
   name: "AddWidget",
   setup() {
     // Use ref to hold the widgets data
     const widgets = ref<Widget[]>([]);
+    const layoutManager = inject("$widgetLayoutManager") as LayoutManager;
 
     // Fetch widgets on component mount
     onMounted(() => {
@@ -77,10 +84,30 @@ export default defineComponent({
 
       if (gridIndex == 0) {
         // Add Widget To Grid
+        layoutManager.addWidgetToGrid({
+          name: "Empty Widget",
+          widgetID: "d287d3bc-94e9-4b6d-91ce-ef4bfced75ff",
+          x: 1,
+          y: 0,
+          w: 1,
+          h: 1,
+          i: uuidv4(),
+          moved: false,
+        } as LayoutWidget);
         console.log("Add Widget To Grid");
       }
 
       if (gridIndex == 1) {
+        layoutManager.addWidgetToTab({
+          name: "Empty Widget",
+          widgetID: "d287d3bc-94e9-4b6d-91ce-ef4bfced75ff",
+          x: 1,
+          y: 0,
+          w: 1,
+          h: 1,
+          i: uuidv4(),
+          moved: false,
+        } as LayoutWidget);
         console.log("Add Widget To Tab");
       }
     };

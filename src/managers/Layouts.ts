@@ -194,6 +194,15 @@ const layoutManager: LayoutManager = reactive({
     this.save();
   },
 
+  addWidgetToGrid: function (widget: LayoutWidget): void {
+    this.currentLayout.grid.push(widget);
+    //throw new Error("Function not implemented.");
+  },
+  addWidgetToTab: function (widget: LayoutWidget): void {
+    this.currentLayout.tabs[this.currentTab].grid.push(widget);
+    //throw new Error("Function not implemented.");
+  },
+
   updateWidgetSettings(id, settings) {
     // Check if in Grid
     const gridWidgetIndex = this.currentLayout.grid.findIndex(
@@ -251,12 +260,10 @@ const layoutManager: LayoutManager = reactive({
        * Currently the changes to widgets is duplicated to the defaultLayouts and isn't static.
        * As such we are only able to identify when a widget is added/removed.
        */
-
       const dHash = sha512(JSON.stringify(defaultLayout)).toString();
       const cHash = sha512(JSON.stringify(this.currentLayout)).toString();
       // console.log(dHash);
       // console.log(cHash);
-
       if (dHash === cHash) {
         // console.log("Layouts are the same");
         return;

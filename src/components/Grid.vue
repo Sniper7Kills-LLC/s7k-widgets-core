@@ -2,6 +2,7 @@
   <GridLayout
     id="GridLayout"
     :layout="$props.layout"
+    :key="$props.layout.length"
     :col-num="3"
     @layout-updated="layoutUpdatedEvent"
     :is-draggable="$props.inEditMode"
@@ -9,7 +10,7 @@
   >
     <GridItem
       :showCloseButton="$props.inEditMode"
-      v-for="item in layout"
+      v-for="item in $props.layout"
       :key="item.i"
       :x="item.x"
       :y="item.y"
