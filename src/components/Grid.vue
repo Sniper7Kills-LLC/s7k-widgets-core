@@ -1,8 +1,8 @@
 <template>
   <GridLayout
+    v-if="$props.layout"
     id="GridLayout"
     :layout="$props.layout"
-    :key="$props.layout.length"
     :col-num="3"
     @layout-updated="layoutUpdatedEvent"
     :is-draggable="$props.inEditMode"

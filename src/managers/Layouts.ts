@@ -195,12 +195,39 @@ const layoutManager: LayoutManager = reactive({
   },
 
   addWidgetToGrid: function (widget: LayoutWidget): void {
+    while (this.isOverLapping(widget, this.currentLayout.grid)) {
+      widget.x = (widget.x + widget.w) % 3;
+      if (widget.x == 0) {
+        widget.y += 1;
+      }
+    }
     this.currentLayout.grid.push(widget);
     //throw new Error("Function not implemented.");
   },
   addWidgetToTab: function (widget: LayoutWidget): void {
+    while (
+      this.isOverLapping(widget, this.currentLayout.tabs[this.currentTab].grid)
+    ) {
+      widget.x = (widget.x + widget.w) % 3;
+      if (widget.x == 0) {
+        widget.y += 1;
+      }
+    }
+
     this.currentLayout.tabs[this.currentTab].grid.push(widget);
     //throw new Error("Function not implemented.");
+  },
+
+  isOverLapping(widget: LayoutWidget, grid: LayoutWidget[]) {
+    return grid.some((item) => {
+      const occupiedXEnd = item.x + item.w;
+      const candidateXEnd = widget.x + widget.w;
+      const isXOverlap = widget.x < occupiedXEnd && candidateXEnd > item.x;
+      const isYOverlap =
+        widget.y < item.y + item.h && widget.y + widget.h > item.y;
+
+      return isXOverlap && isYOverlap;
+    });
   },
 
   updateWidgetSettings(id, settings) {
