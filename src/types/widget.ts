@@ -6,6 +6,8 @@ export type ManagedWidget = Widget & {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types
   as: Component | DefineComponent;
   defaultProps?: object;
+  height?: number;
+  width?: number;
 };
 
 export type WidgetManager = {

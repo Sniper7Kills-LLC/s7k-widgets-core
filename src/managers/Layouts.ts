@@ -57,6 +57,7 @@ const layoutManager: LayoutManager = reactive({
     hasTabs: false,
     tabs: [],
   } as LayoutPage,
+  colCount: 3,
 
   setPage(page, defaultLayouts = null) {
     this.load();
@@ -195,39 +196,100 @@ const layoutManager: LayoutManager = reactive({
   },
 
   addWidgetToGrid: function (widget: LayoutWidget): void {
-    while (this.isOverLapping(widget, this.currentLayout.grid)) {
-      widget.x = (widget.x + widget.w) % 3;
-      if (widget.x == 0) {
-        widget.y += 1;
-      }
-    }
-    this.currentLayout.grid.push(widget);
-    //throw new Error("Function not implemented.");
+    const updatedWidget = this.findNextSlot(widget, this.currentLayout.grid);
+    if (updatedWidget != null) this.currentLayout.grid.push(updatedWidget);
   },
   addWidgetToTab: function (widget: LayoutWidget): void {
-    while (
-      this.isOverLapping(widget, this.currentLayout.tabs[this.currentTab].grid)
+    const updatedWidget = this.findNextSlot(
+      widget,
+      this.currentLayout.tabs[this.currentTab].grid
+    );
+    if (updatedWidget != null)
+      this.currentLayout.tabs[this.currentTab].grid.push(updatedWidget);
+  },
+
+  findNextSlot(
+    widget: LayoutWidget,
+    grid: LayoutWidget[]
+  ): LayoutWidget | null {
+    const numColumns = 3;
+
+    grid.sort((a, b) => a.y - b.y || a.x - b.x);
+
+    // Helper function to check if a location is available for the new object
+    function isLocationAvailable(
+      x: number,
+      y: number,
+      w: number,
+      h: number
+    ): boolean {
+      for (const item of grid) {
+        if (
+          !(x + w <= item.x || x >= item.x + item.w) &&
+          !(y + h <= item.y || y >= item.y + item.h)
+        ) {
+          return false; // Overlapping with an existing item
+        }
+      }
+      return true; // Location is available
+    }
+
+    // Iterate through possible locations to find a suitable one
+    for (
+      let y = 0;
+      y <= Math.max(...grid.map((item) => item.y + item.h), 0);
+      y++
     ) {
-      widget.x = (widget.x + widget.w) % 3;
-      if (widget.x == 0) {
-        widget.y += 1;
+      for (let x = 0; x <= numColumns - widget.w; x++) {
+        if (isLocationAvailable(x, y, widget.w, widget.h)) {
+          widget.x = x;
+          widget.y = y;
+          return widget; // Found a suitable location
+        }
       }
     }
 
-    this.currentLayout.tabs[this.currentTab].grid.push(widget);
-    //throw new Error("Function not implemented.");
-  },
+    return null; // Unable to find a suitable location
 
-  isOverLapping(widget: LayoutWidget, grid: LayoutWidget[]) {
-    return grid.some((item) => {
-      const occupiedXEnd = item.x + item.w;
-      const candidateXEnd = widget.x + widget.w;
-      const isXOverlap = widget.x < occupiedXEnd && candidateXEnd > item.x;
-      const isYOverlap =
-        widget.y < item.y + item.h && widget.y + widget.h > item.y;
+    // // Check for overlap
+    // while (
+    //   attempts <= numOfAttempts &&
+    //   grid.some((item) => {
+    //     const itemXEnd = item.x + item.w;
+    //     const itemYEnd = item.y + item.h;
+    //     console.log(`IXS: ${item.x}, IYS: ${item.y}`);
+    //     console.log(`IXE: ${itemXEnd}, IYE: ${itemYEnd}`);
 
-      return isXOverlap && isYOverlap;
-    });
+    //     const widgetXEnd = widget.x + widget.w;
+    //     const widgetYEnd = widget.y + widget.h;
+    //     console.log(`WXS: ${widget.x}, WYS: ${widget.y}`);
+    //     console.log(`WXE: ${widgetXEnd}, WYE: ${widgetYEnd}`);
+
+    //     const isXOverlap = widget.x < itemXEnd && widgetXEnd > item.x;
+    //     const isYOverlap = widget.y < itemYEnd && widgetYEnd > item.y;
+
+    //     console.log(`WX: ${widget.x}, WY: ${widget.y}`);
+    //     console.log(`X: ${isXOverlap}, Y: ${isYOverlap}`);
+    //     // if (isXOverlap || isYOverlap) {
+    //     //   console.log(item);
+    //     // }
+
+    //     return (isXOverlap && !isYOverlap) || (isYOverlap && !isXOverlap);
+    //   })
+    // ) {
+    //   // Move to the next slot
+    //   widget.x += 1;
+    //   if (widget.x >= this.colCount) {
+    //     widget.x = 0;
+    //     widget.y += 1;
+    //   }
+    //   attempts += 1;
+    // }
+    // if (attempts < numOfAttempts) {
+    //   console.log(`Final position: x: ${widget.x}, y: ${widget.y}`);
+    //   return widget;
+    // }
+    // return null;
   },
 
   updateWidgetSettings(id, settings) {

@@ -140,13 +140,13 @@ export default defineComponent({
       widgetSettings.value = props.settings;
     });
 
-    function setIsOpen(value) {
+    function setIsOpen(value: boolean) {
       isOpen.value = value;
     }
 
     function saveSettings() {
       layoutManager.updateWidgetSettings(props.widgetId, widgetSettings.value);
-      this.setIsOpen(false);
+      setIsOpen(false);
     }
 
     return {

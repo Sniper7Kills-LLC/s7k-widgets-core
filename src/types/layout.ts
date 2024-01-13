@@ -51,7 +51,7 @@ export type LayoutManager = {
   addWidgetToGrid(widget: LayoutWidget): void;
   addWidgetToTab(widget: LayoutWidget): void;
 
-  isOverLapping(widget: LayoutWidget, grid: LayoutWidget[]): boolean;
+  findNextSlot(widget: LayoutWidget, grid: LayoutWidget[]): LayoutWidget | null;
 
   save(): void;
   load(): void;
