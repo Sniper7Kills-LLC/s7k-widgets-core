@@ -22,10 +22,21 @@ While this project does not include any widgets they can easily be created in yo
     - [ ] ⭐⭐**Improve Drag/Drop Experience**
         - [ ] **EASY** - Mouse Icon
         - [ ] **HARD** - Drag/Drop Location Preview on Grid (Preview can be a color for user reference)
-    - [ ] ⭐**MEDIUM** - Ability to have vertical or horizontal based tabs based on layout
+    - [ ] ⭐**MEDIUM** - Ability to have vertical or horizontal tabs based on layout
+    - [ ] ⭐⭐**MEDIUM** - Refactor to allow the `components/widgets/Add.vue` component to exist outside of default components.
+        - [ ] Displayed as a horizontal sticky bar by default (current functionality)
+            - [ ] Add scrollbar for X overflow
+        - [ ] Allow it to be modified to fit the application
+            - Use a prop to disable default behavior
+            - Can be positioned outside of any WidgetGrid location
+            - I.E. Displayed in a slide-over (https://tailwindui.com/components/application-ui/overlays/slide-overs)
+            - Styled by application; not this package
+            - May just be part of StyleCustomization task
     - [ ] ⭐⭐⭐**HARD** - Fix Grid Style Interactions with Other Components
         - [ ] Ensure PopOvers, Dropdowns, Selects appear OVER the grid
         - [ ] Ensure widgets remain draggable, deletable, and modifiable
+            ( The following CSS "fixes" the previous issue; but introduces this issue.
+            `#GridLayout { z-index: -1 !important; }` )
     - [ ] ⭐⭐**MEDIUM** - General Style Improvements
         - [ ] Open-Ended - Enhance UI using TailwindCSS with flexibility
         - [ ] Ensure default styles are dark/light mode compatible
@@ -51,9 +62,23 @@ While this project does not include any widgets they can easily be created in yo
         - [ ] ⭐⭐**MEDIUM** - Ability for widgets to provide customized edit screen for settings
             - [ ] Use JSON editor by default / not provided
             - [ ] Custom Form & logic to update widget settings/props possible within widget
+        - [ ] ⭐⭐**MEDIUM** - Refactor method of adding widgets to grids
+            - [ ] Assign an ID to every grid
+            - [ ] Modify `components/Widgets/Add.vue` to identify which grid is being used based on the following item
+            - [ ] Modify `components/Grid.vue` to assign a property or tag to be used in previous item to specify the ID of the grid being displayed.
+        - [ ] ⭐**EASY** - Add thumbnail to `ManagedWidget`
+            - [ ] Update Type
+            - [ ] Use thumnail in `components/Widgets/Add.vue`
+            - [ ] Use/Generate default if not provided
+                - [ ] I.E. use `https://placehold.co/600x400?text=Hello+World` and display the name of the widget
     - [ ] Layouts
         - [ ] ⭐**EASY** - Ability to specify number of columns for a layout
         - [ ] ⭐**EASY** - Ability to enable/disable Tabs for a layout
+        - [ ] ⭐**HARD** - Expand layout flexability
+            - [ ] Ability to use a single `WidgetGrid` in an application view
+            - [ ] Ability to use a single `WidgetTabs` in an application view
+            - [ ] Ability to use multiple `WidgetGrid`s in an application view
+            - [ ] Ability to use multiple `WidgetGrid`s and a single `WidgetTab` in an application view
     - [ ] Tabs
         - [ ] ⭐**EASY** - Ability to Rename Tabs
         - [ ] ⭐**MEDIUM** - Ability to Reorder Tabs (preferably drag & drop, but OK with buttons)
@@ -76,11 +101,61 @@ While this project does not include any widgets they can easily be created in yo
         - [ ] Ability to maintain several widgets in a single repository
     - [ ] ⭐**EASY** - Export Type Definitions in This Package
 
+- [ ] **Production Ready**
+    - [ ] ⭐⭐**HARD** - Unit Tests
+        - [ ] WidgetManager
+        - [ ] LayoutManager
+    - [ ] ⭐**HARD** - E2E Tests
+        - [ ] User can register widget
+        - [ ] ...?
 
 -----------------
 
 ## Installation
-1) Install the Project
+
+### Nuxt
+
+1) Install the Package
+    ```cli
+    npm install [PACKAGE_NAME]
+    ```
+1) Create a Nuxt Plugin
+    ```typescript
+    // Import Plugin and Plugin Options Type
+    import { WidgetsPlugin, WidgetsPluginOptions } from "[PACKAGE_NAME]";
+
+    // Import your Application widgets
+    import WidgetDivider from "./components/Divider.vue";
+
+    // Define the Plugin Options
+    const WidgetsPluginOptions: WidgetsPluginOptions = {
+        // Define Widgets installed in your application
+        widgets: [
+            // Application Divider Widget
+            {
+                name: "Divider", // Widget Name
+                id: "a6d8771b-2eef-4ae7-a61a-cd28a6ab4e3b", // Widget ID
+                as: WidgetDivider, // Imported Widget
+                defaultProps: { label: "Divider Label" }, // Properties / Settings for the Widget
+                height: 1, // Default Widget Height
+                width: 3, // Default Widget Widget
+                pages: [".*"], // List of pages this widget is available to (Regex based matching)
+            },
+        ],
+    };
+
+    // Define the Nuxt Plugin
+    export default defineNuxtPlugin((nuxtApp) => {
+        // Register the Plugin in Nuxt
+        nuxtApp.vueApp.use(WidgetsPlugin, WidgetsPluginOptions);
+    })
+    ```
+
+1) Follow Usage Instructions
+
+### Vue3
+
+1) Install the Package
     ```cli
     npm install [PACKAGE_NAME]
     ```
@@ -122,65 +197,72 @@ While this project does not include any widgets they can easily be created in yo
 
     app.mount("#app");
     ```
-1) Use it in your application
-    ```html
-    <template>
-        <WidgetsPage page="[PAGE_NAME]" :default-layouts="layouts"></WidgetsPage>
-    </template>
-    <script setup lang="ts">
-        // Import LayoutPage type
-        import { LayoutPage } from "[PACKAGE_NAME]";
-        import { v4 as uuidv4 } from "uuid";
 
-        // NOTE: This can be defined and imported from a seperate file.
-        const layouts: LayoutPage[] = [
-            {
-                id: "0000-000-000-0000", // ID of the Layout
-                name: "Test Page", // Name of the layout
-                default: false, // If this is the default non-saved layout
-                // The widget Grid
-                grid: [
-                  // A single widget on the grid
-                  {
-                    name: "Empty Widget", // Name of the Widget
-                    widgetID: "d287d3bc-94e9-4b6d-91ce-ef4bfced75ff", // The widget ID as defined in the WidgetsPluginOptions
-                    x: 0, // widget X position
-                    y: 0, // widget Y position
-                    w: 1, // widget column width
-                    h: 1, // widget row height
-                    i: uuidv4(), // ID of this widget layout)
-                    moved: false, // default value
-                  },
-                ],
-                hasTabs: true, // If this layout has Tabs enabled
-                // The tabs for this layout
-                tabs: [
-                    // A single Tab
-                    {
-                        id: uuidv4(), // the ID of this tab
-                        name: "First Tab", // the name of this tab
-                        // The widget grid for this tab
-                        grid: [
-                            // A single widget on the grid. Same as previous example
-                            {
-                                name: "Empty Widget",
-                                widgetID: "d287d3bc-94e9-4b6d-91ce-ef4bfced75ff",
-                                x: 0,
-                                y: 0,
-                                w: 1,
-                                h: 1,
-                                i: uuidv4(),
-                                moved: false,
-                            },
-                        ]
-                    }
-                ],
-            } as LayoutPage,
-        ];
-    </script>
+## Usage
 
-    <style></style>
-    ```
+Currently only the `WidgetsPage` component is fully functional.
+In the future just the `WidgetsGrid` and `WidgetsTab` components will be able to be used seperatly.
+
+### WidgetPage
+
+```html
+<template>
+    <!-- Header Content -->
+    <WidgetsPage page="[PAGE_NAME]" :default-layouts="layouts"></WidgetsPage>
+    <!-- Footer Content -->
+</template>
+<script setup lang="ts">
+    // Import LayoutPage type
+    import { LayoutPage } from "[PACKAGE_NAME]";
+    import { v4 as uuidv4 } from "uuid";
+    // NOTE: This can be defined and imported from a seperate file.
+    const layouts: LayoutPage[] = [
+        {
+            id: "0000-000-000-0000", // ID of the Layout
+            name: "Test Page", // Name of the layout
+            default: false, // If this is the default non-saved layout
+            // The widget Grid
+            grid: [
+              // A single widget on the grid
+              {
+                name: "Empty Widget", // Name of the Widget
+                widgetID: "d287d3bc-94e9-4b6d-91ce-ef4bfced75ff", // The widget ID as defined in the WidgetsPluginOptions
+                x: 0, // widget X position
+                y: 0, // widget Y position
+                w: 1, // widget column width
+                h: 1, // widget row height
+                i: uuidv4(), // ID of this widget layout)
+                moved: false, // default value
+              },
+            ],
+            hasTabs: true, // If this layout has Tabs enabled
+            // The tabs for this layout
+            tabs: [
+                // A single Tab
+                {
+                    id: uuidv4(), // the ID of this tab
+                    name: "First Tab", // the name of this tab
+                    // The widget grid for this tab
+                    grid: [
+                        // A single widget on the grid. Same as previous example
+                        {
+                            name: "Empty Widget",
+                            widgetID: "d287d3bc-94e9-4b6d-91ce-ef4bfced75ff",
+                            x: 0,
+                            y: 0,
+                            w: 1,
+                            h: 1,
+                            i: uuidv4(),
+                            moved: false,
+                        },
+                    ]
+                }
+            ],
+        } as LayoutPage,
+    ];
+</script>
+<style></style>
+```
 
 -----------------
 

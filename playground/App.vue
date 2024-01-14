@@ -6,10 +6,14 @@
   <div class="text-xs">
     {{ layoutManager.currentLayout }}
   </div> -->
-  <WidgetsPage page="test-page" :default-layouts="layouts"></WidgetsPage>
+  <div class="bg-white dark:bg-gray-700">
+    <ModeSelector></ModeSelector>
+    <WidgetsPage page="test-page" :default-layouts="layouts"></WidgetsPage>
+  </div>
 </template>
 
 <script setup lang="ts">
+import ModeSelector from "./components/Mode.vue";
 import { LayoutPage } from "../types";
 import { v4 as uuidv4 } from "uuid";
 

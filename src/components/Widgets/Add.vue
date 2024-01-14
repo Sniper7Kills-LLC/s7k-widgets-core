@@ -61,6 +61,15 @@ export default defineComponent({
       //console.log(mouseXY);
     };
 
+    /**
+     * The following is the logic that determins where the new widget should go.
+     * It **ASSUMES** it is being used on the `WidgetsPage` component;
+     * and will not function as expected if used on a page not containing a grid followed by tabs
+     *
+     * TODO:
+     *    - Possibly identify the grids by ID;
+     *    - Identify the grid based on the ID
+     */
     const dragend = (): void => {
       if (selectedWidget.value === null) return;
       // Get all elements with the id of "GridLayout"

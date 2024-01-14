@@ -4,6 +4,7 @@ module.exports = {
     "./src/**/*.{vue,js,ts,jsx,tsx}",
     "./playground/**/*.{vue,js,ts,jsx,tsx}",
   ],
+  darkMode: "class",
   theme: {
     extend: {},
   },
