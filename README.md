@@ -57,7 +57,7 @@ While this project does not include any widgets they can easily be created in yo
     - [ ] Tabs
         - [ ] ⭐**EASY** - Ability to Rename Tabs
         - [ ] ⭐**MEDIUM** - Ability to Reorder Tabs (preferably drag & drop, but OK with buttons)
-    -[ ] Components
+    - [ ] Components
         - [ ] ⭐**HARD** - Refactor to allow the use of the Grid or Tabs component without using the Page component.
             ( Currently the project is designed to only support the use of the Page component in Applications )
             - [ ] Provide support for the Tabs or Grid component to be used on their own and still retain expected functionaility
