@@ -14,6 +14,7 @@ While this project does not include any widgets they can easily be created in yo
 - ⭐ - Low Priority
 - ⭐⭐ - Medium Priority
 - ⭐⭐⭐ - High Priority
+- ❓ - Idea/Comment / Question how to achieve
 - **BOLD** - Expected difficulty Level
 
 ---
@@ -26,7 +27,7 @@ While this project does not include any widgets they can easily be created in yo
     - [ ] ⭐⭐**MEDIUM** - Refactor to allow the `components/widgets/Add.vue` component to exist outside of default components.
         - [ ] Displayed as a horizontal sticky bar by default (current functionality)
             - [ ] Add scrollbar for X overflow
-        - [ ] Allow it to be modified to fit the application
+        - [ ] ❓ Allow it to be modified to fit the application 
             - Use a prop to disable default behavior
             - Can be positioned outside of any WidgetGrid location
             - I.E. Displayed in a slide-over (https://tailwindui.com/components/application-ui/overlays/slide-overs)
@@ -87,21 +88,43 @@ While this project does not include any widgets they can easily be created in yo
             ( Currently the project is designed to only support the use of the Page component in Applications )
             - [ ] Provide support for the Tabs or Grid component to be used on their own and still retain expected functionaility
             - [ ] May require making additional components avilable from the plugin
+            - ❓Related to `⭐**HARD** - Expand layout flexability`
 
 - [ ] **Developer Experience**
+    - [ ] ⭐⭐**EASY** - Provide Github Workflow(s)
+        - [ ] Runs any unit and E2E tests
+        - [ ] Builds Package
+        - [ ] Publishes to github
+        - [ ] Publishes to NPM package to Packagist
     - [ ] ⭐⭐⭐**MEDIUM** - Create a Widget Development Repository
         - [ ] Playground for previewing widgets during development
             - [ ] Dark/light mode compatible
             - [ ] Uses this package in the playground for widget interactions
         - [ ] Ability to build widgets
+            - [ ] Default Github Workflow(s)
             - [ ] For 3rd party NPM packages imported via PluginOptions
             - [ ] For End-User-based Import
                 (❓ Compile VUE and save output into JSON file to be inserted into a `<script>` tag so it can be used as a dynamic component?)
                 - [ ] File used for importing widgets should contain the definition of the widget(s) (name, height, width, etc.) along with anything required for the widget to be displayed (compiled script, script url, etc...)
         - [ ] Ability to maintain several widgets in a single repository
     - [ ] ⭐**EASY** - Export Type Definitions in This Package
+    - [ ] ⭐**MEDIUM** - Create documentation site
+        - [ ] Github Workflow to build + publish
+        - [ ] Host on Github Pages
+        - [ ] Describe Components
+            - [ ] Props
+            - [ ] Slots
+            - [ ] Examples
+        - [ ] Describe Mangers
+            - [ ] Widget
+            - [ ] Layout
+        - [ ] Describe Types
+            - [ ] ManagedWidget
+            - [ ] LayoutWidget
+            - [ ] LayoutTabs
+            - [ ] LayoutPage
 
-- [ ] **Production Ready**
+- [ ] **Tested Production Ready**
     - [ ] ⭐⭐**HARD** - Unit Tests
         - [ ] WidgetManager
         - [ ] LayoutManager
@@ -121,6 +144,8 @@ While this project does not include any widgets they can easily be created in yo
     ```
 1) Create a Nuxt Plugin
     ```typescript
+    // plugins/widgets.client.ts
+
     // Import Plugin and Plugin Options Type
     import { WidgetsPlugin, WidgetsPluginOptions } from "[PACKAGE_NAME]";
 
