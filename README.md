@@ -109,11 +109,10 @@ Widget Template Repository: https://github.com/Sniper7Kills-LLC/vue3-widget-temp
         - [ ] Playground for previewing widgets during development
             - [ ] Dark/light mode compatible
             - [ ] Uses this package in the playground for widget interactions
-        - [ ] Ability to build widgets
+        - [ ] 🚧 Ability to build widgets
             - [ ] Default Github Workflow(s)
             - [ ] For 3rd party NPM packages imported via PluginOptions
-            - [ ] For End-User-based Import
-                (❓ Compile VUE and save output into JSON file to be inserted into a `<script>` tag so it can be used as a dynamic component?)
+            - [ ] 🚧 For End-User-based Import
                 - [ ] File used for importing widgets should contain the definition of the widget(s) (name, height, width, etc.) along with anything required for the widget to be displayed (compiled script, script url, etc...)
         - [ ] Ability to maintain several widgets in a single repository
     - [ ] ⭐**EASY** - Export Type Definitions in This Package
