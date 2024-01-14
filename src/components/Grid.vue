@@ -32,7 +32,7 @@
         :settings="item.props"
       ></ModifyWidgetProperties>
       <component
-        :is="widgetManager.getWidget(item.widgetID).as"
+        :is="widgetManager.getComponent(item.widgetID)"
         v-bind="item.props"
         :key="item.props"
       ></component>
