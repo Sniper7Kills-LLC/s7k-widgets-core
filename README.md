@@ -66,6 +66,9 @@ Widget Template Repository: https://github.com/Sniper7Kills-LLC/vue3-widget-temp
                 - [ ] Ability to select which layouts to import
                 - [ ] Does not overwrite existing layouts with modifications
     - [ ] Widgets
+        - [x] 🚧⭐⭐⭐**MEDIUM** - Ability to use Widgets not included in plugin or application plugin is used in
+            - [x] Modify `ManagedWidget` to allow a string (url) to be used instead of a component for its definition
+            - [x] Load the script if `as` is a string
         - [ ] ⭐⭐**MEDIUM** - Ability for widgets to provide customized edit screen for settings
             - [ ] Use JSON editor by default / not provided
             - [ ] Custom Form & logic to update widget settings/props possible within widget
@@ -171,6 +174,14 @@ Widget Template Repository: https://github.com/Sniper7Kills-LLC/vue3-widget-temp
                 height: 1, // Default Widget Height
                 width: 3, // Default Widget Widget
                 pages: [".*"], // List of pages this widget is available to (Regex based matching)
+            },
+            // Standalone Widget Example (This is the same as an End-User Import)
+            {
+                name: "Custom",  // Widget Name
+                id: "f634771b-2fef-4ae7-a61a-cd28b6ab4e2c", // Widget ID
+                as: "https://gist.githack.com/sniper7kills/6b42ba3125724c5709f604e90379e18f/raw/0f0a9c529cbfb00688eee0546958a106c036273c/TestWidget.umd.min.js", // URL to JS file (umd.min.js expected)
+                defaultProps: { message: "Custom Message" }, // Properties / Settings for the Widget
+                pages: [".*"],
             },
         ],
     };
