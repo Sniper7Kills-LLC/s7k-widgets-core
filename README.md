@@ -3,6 +3,11 @@
 This project provides a widget based grid system to Vue3 based projects.
 
 While this project does not include any widgets they can easily be created in your own applications, imported from third party packages.
+Additionally users are able to import Widgets not included in your application to provide additional flexability.
+
+
+The following repository can be used as a template for widgets.
+Widget Template Repository: https://github.com/Sniper7Kills-LLC/vue3-widget-template
 
 -----------------
 
@@ -15,6 +20,7 @@ While this project does not include any widgets they can easily be created in yo
 - ⭐⭐ - Medium Priority
 - ⭐⭐⭐ - High Priority
 - ❓ - Idea/Comment / Question how to achieve
+- 🚧 - Some work has been completed.
 - **BOLD** - Expected difficulty Level
 
 ---
@@ -96,7 +102,7 @@ While this project does not include any widgets they can easily be created in yo
         - [ ] Builds Package
         - [ ] Publishes to github
         - [ ] Publishes to NPM package to Packagist
-    - [ ] ⭐⭐⭐**MEDIUM** - Create a Widget Development Repository
+    - [ ] 🚧⭐⭐⭐**MEDIUM** - Create a Widget Development Repository
         - [ ] Playground for previewing widgets during development
             - [ ] Dark/light mode compatible
             - [ ] Uses this package in the playground for widget interactions
