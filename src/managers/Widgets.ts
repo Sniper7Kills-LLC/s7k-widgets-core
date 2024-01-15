@@ -13,24 +13,48 @@ const widgetManager: WidgetManager = reactive({
       pages: ["default"],
     }),
   ] as ManagedWidget[], // Adjust the type based on your widget structure
+  savedWidgets: [] as ManagedWidget[],
+  addUserWidget(widget: ManagedWidget) {
+    if (
+      this.savedWidgets.findIndex(
+        (savedWidget) => savedWidget.id === widget.id
+      ) > -1
+    )
+      return;
+    this.savedWidgets.push(widget);
+    this.registerWidget(widget);
+    this.save();
+  },
   registerWidget(widget: ManagedWidget) {
+    // Is this Widget Already Registered?
+    if (
+      this.widgets.findIndex((savedWidget) => savedWidget.id === widget.id) > -1
+    )
+      return;
+
     this.widgets.push(markRaw(widget));
+
+    // Were done if widget.as is not a string
     if (typeof widget.as !== "string") return;
 
+    // Get the Widget name from the as javascript file name
     const matchResult = (widget.as as string)
       .split("/")
       .reverse()[0]
       .match(/^(.*?)\.umd/);
     const name = matchResult ? matchResult[1] : null;
 
+    // We can't find a name.
     if (!name) {
       console.error(`Error: Unable to extract name from URL ${widget.as}`);
       return;
     }
 
+    // Create a Promise to load the widget javascript via script URL or Base64
     new Promise((resolve, reject) => {
+      // Create Script Tag
       const script = document.createElement("script");
-      script.async = true;
+
       script.addEventListener("load", () => {
         resolve((window as Record<string, any>)[name]);
       });
@@ -39,12 +63,16 @@ const widgetManager: WidgetManager = reactive({
       });
 
       if (widget.base64) {
+        // Widget JS provided as Base64
+        script.async = false;
         script.text = atob(widget.base64) as string;
       } else {
-        script.async = false;
+        // Widget JS provided as Script URL
+        script.async = true;
         script.src = widget.as as string;
       }
 
+      // Append it to the page.
       document.head.appendChild(script);
     });
   },
@@ -79,7 +107,20 @@ const widgetManager: WidgetManager = reactive({
       console.error(`Error: Unable to extract name from URL ${widget.as}`);
       return Promise.resolve(null);
     }
+
     return (window as Record<string, any>)[name];
+  },
+  save() {
+    localStorage.setItem("$widgets", JSON.stringify(this.savedWidgets));
+  },
+  load() {
+    const data = localStorage.getItem("$widgets");
+    if (data != null) {
+      this.savedWidgets = JSON.parse(data);
+    }
+    for (const widget of this.savedWidgets) {
+      this.registerWidget(widget);
+    }
   },
 });
 

@@ -39,6 +39,8 @@ export type LayoutManager = {
   setLayout(id: number | string): void;
   setDefaultLayout(id: number | string): void;
 
+  addLayout(layout: LayoutPage): void;
+
   getDefaultLayout(): number | string;
   getLayoutNames(): { id: string | number; name: string }[];
 

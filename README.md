@@ -56,18 +56,18 @@ Widget Template Repository: https://github.com/Sniper7Kills-LLC/vue3-widget-temp
 - [ ] **Functionality Improvements**
     - [ ] GENERAL
         - [ ] ⭐⭐**HARD** - General Improvements to preformance and logic (I'm not a developer by trade; I think this repository helps prove that)
-        - [ ] ⭐⭐⭐**HARD** - Ability to Import Widgets from GUI by End-User
-        - [ ] 🚧⭐⭐⭐**EASY** - Ability to Import/Export Layouts from the GUI
+        - [x] ✅⭐⭐⭐**HARD** - Ability to Import Widgets from GUI by End-User
+        - [x] ✅⭐⭐⭐**EASY** - Ability to Import/Export Layouts from the GUI
             - [x] ✅**Export**
                 - [x] Allow user to select which saved layouts to export
                 - [x] Allow user to rename layouts during export
                 - [x] JSON-like file
                 - [x] Layouts from any page can be exported, even if not on that page
-            - [ ] **Import**
-                - [ ] Ability to select which layouts to import
-                - [ ] Does not overwrite existing layouts with modifications
+            - [x] ✅**Import**
+                - [x] Ability to select which layouts to import
+                - [x] Does not overwrite existing layouts with modifications
     - [ ] Widgets
-        - [ ] 🚧⭐⭐⭐**MEDIUM** - Ability to use Widgets not included in plugin or application plugin is used in
+        - [x] ✅⭐⭐⭐**MEDIUM** - Ability to use Widgets not included in plugin or application plugin is used in
             - [x] Modify `ManagedWidget` to allow a string (url) to be used instead of a component for its definition
             - [x] Load the script if `as` is a string
             - [x] Ability to save plugin as Base64
@@ -113,9 +113,9 @@ Widget Template Repository: https://github.com/Sniper7Kills-LLC/vue3-widget-temp
             - [ ] Uses this package in the playground for widget interactions
         - [ ] 🚧 Ability to build widgets
             - [ ] Default Github Workflow(s)
-            - [ ] For 3rd party NPM packages imported via PluginOptions
-            - [ ] 🚧 For End-User-based Import
-                - [ ] File used for importing widgets should contain the definition of the widget(s) (name, height, width, etc.) along with anything required for the widget to be displayed (compiled script, script url, etc...)
+            - [ ] 🚧 For 3rd party NPM packages imported via PluginOptions
+            - [x] ✅ For End-User-based Import
+                - [x] File used for importing widgets should contain the definition of the widget(s) (name, height, width, etc.) along with anything required for the widget to be displayed (compiled script, script url, etc...)
         - [ ] Ability to maintain several widgets in a single repository
     - [ ] ⭐**EASY** - Export Type Definitions in This Package
     - [ ] ⭐**MEDIUM** - Create documentation site

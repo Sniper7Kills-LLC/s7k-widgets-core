@@ -32,7 +32,7 @@
               class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6"
             >
               <div>
-                <div class="mt-3 text-center sm:mt-5">
+                <div class="mt-3 text-center">
                   <DialogTitle
                     as="h3"
                     class="text-base font-semibold leading-6 text-gray-900"
@@ -43,15 +43,7 @@
                   </DialogDescription>
                 </div>
               </div>
-              <div class="mt-5 sm:mt-6">
-                <button
-                  type="button"
-                  class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  @click="setIsOpen(false)"
-                >
-                  Close
-                </button>
-              </div>
+              <ImportWidget></ImportWidget>
             </DialogPanel>
           </TransitionChild>
         </div>
@@ -72,6 +64,8 @@ import {
 } from "@headlessui/vue";
 //import { WidgetManager } from "../../types";
 
+import ImportWidget from "./Import.vue";
+
 export default defineComponent({
   name: "RegisterWidget",
   components: {
@@ -81,6 +75,7 @@ export default defineComponent({
     DialogDescription,
     TransitionChild,
     TransitionRoot,
+    ImportWidget,
   },
   props: {
     open: {
@@ -99,18 +94,6 @@ export default defineComponent({
       }
     );
 
-    // Use inject in the setup function
-    //const widgetManager = inject("$widgetManager") as WidgetManager;
-
-    // Use reactive for data
-    const widgetName = ref("");
-
-    // Define your methods
-    const registerWidget = () => {
-      // TODO
-      setIsOpen(false);
-    };
-
     function setIsOpen(value: boolean) {
       isOpen.value = value;
       emit("update:open", value);
@@ -120,8 +103,6 @@ export default defineComponent({
     return {
       isOpen,
       setIsOpen,
-      widgetName,
-      registerWidget,
     };
   },
 });

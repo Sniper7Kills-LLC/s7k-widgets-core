@@ -32,6 +32,9 @@ export const WidgetsPlugin = {
       });
     }
 
+    LayoutManager.load();
+    WidgetManager.load();
+
     // Register the widget manager module globally
     app.provide("$widgetManager", WidgetManager);
     app.provide("$widgetLayoutManager", LayoutManager);

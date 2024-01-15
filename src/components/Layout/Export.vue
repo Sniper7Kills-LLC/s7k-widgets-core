@@ -1,6 +1,6 @@
 <template>
   <div class="pt-4 space-y-4">
-    <div class="pt-4 max-h-56 overflow-y-scroll">
+    <div v-if="savedLayouts.length > 0" class="pt-4 max-h-56 overflow-y-scroll">
       <table class="w-full">
         <thead>
           <tr>
@@ -36,8 +36,6 @@
           </tr>
         </tbody>
       </table>
-    </div>
-    <div>
       <button
         type="button"
         class="rounded bg-indigo-600 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
@@ -45,6 +43,11 @@
       >
         Export
       </button>
+    </div>
+    <div v-else>
+      <p class="text-center text-bold px-3.5 py-2.5">
+        No Saved Layouts To Export.
+      </p>
     </div>
   </div>
 </template>
@@ -76,6 +79,7 @@ export default defineComponent({
         })
         // Remove "Should Export" variable to false
         .map(
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           ({ shouldExport, ...layoutWithoutShouldExport }) =>
             layoutWithoutShouldExport
         );
@@ -89,13 +93,17 @@ export default defineComponent({
       const blob = new Blob([JSON.stringify(exportLayouts)], {
         type: "application/json",
       });
-      const jsonObjectUrl = URL.createObjectURL(blob);
+      const dataUri = `data:application/json;charset=utf-8,${encodeURIComponent(
+        JSON.stringify(exportLayouts)
+      )}`;
       const filename = "WidgetLayouts.json";
+
       const anchorEl = document.createElement("a");
-      anchorEl.href = jsonObjectUrl;
+      anchorEl.href = dataUri;
       anchorEl.download = filename;
+      document.body.appendChild(anchorEl);
       anchorEl.click();
-      URL.revokeObjectURL(jsonObjectUrl);
+      document.body.removeChild(anchorEl);
 
       // Reset the SavedLayouts
       savedLayouts.value.forEach((layout) => {

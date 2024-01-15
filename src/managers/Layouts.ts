@@ -118,6 +118,18 @@ const layoutManager: LayoutManager = reactive({
     this.save();
   },
 
+  addLayout(layout) {
+    if (
+      this.savedLayouts.findIndex((sLayout) => sLayout.id == layout.id) > -1
+    ) {
+      console.log("Layout Already Exists!");
+      return;
+    }
+
+    this.savedLayouts.push(layout);
+    this.save();
+  },
+
   getDefaultLayout(): number | string {
     const defaultSavedLayout = this.savedLayouts.find((layout) => {
       return layout.page === this.currentPage && layout.default === true;

@@ -16,7 +16,7 @@
             <span>Upload a file</span>
             <!-- Use @change to handle file selection -->
             <input
-              id="LayoutImport"
+              id="WidgetImport"
               name="file-upload"
               type="file"
               class="sr-only"
@@ -27,7 +27,7 @@
         </div>
       </div>
     </div>
-    <div v-if="this.layouts.length > 0" class="pt-4 max-h-56 overflow-y-auto">
+    <div v-if="this.widgets.length > 0" class="pt-4 max-h-56 overflow-y-auto">
       <table class="w-full">
         <thead>
           <tr>
@@ -39,7 +39,7 @@
             <th
               class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
             >
-              Layout Name
+              widget Name
             </th>
             <th class="relative whitespace-nowrap py-3.5 pl-3 pr-4 sm:pr-0">
               <span class="sr-only">Export</span>
@@ -47,22 +47,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="layout in layouts" :key="layout.id">
+          <tr v-for="widget in widgets" :key="widget.id">
             <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
-              {{ layout.page }}
-            </td>
-            <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
-              <input
-                type="text"
-                name="layout-name"
-                v-model="layout.name"
-                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
+              {{ widget.name }}
             </td>
             <td>
               <button
                 class="rounded bg-indigo-600 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                @click="importLayout(layout.id)"
+                @click="importWidget(widget.id)"
               >
                 Import
               </button>
@@ -76,38 +68,38 @@
 
 <script lang="ts">
 import { defineComponent, inject } from "vue";
-import { LayoutManager, LayoutPage } from "../../types";
+import { WidgetManager, ManagedWidget } from "../../types";
 
 export default defineComponent({
-  name: "ImportLayout",
+  name: "ImportWidget",
   data() {
     return {
       files: [] as { name: string }[],
-      layouts: [] as LayoutPage[],
+      widgets: [] as ManagedWidget[],
     };
   },
   setup() {
-    const layoutManager = inject("$widgetLayoutManager") as LayoutManager;
+    const widgetManager = inject("$widgetManager") as WidgetManager;
     return {
-      layoutManager,
+      widgetManager,
     };
   },
   methods: {
-    importLayout(layoutID: number | string) {
-      const layoutIndex = this.layouts.findIndex(
-        (layout) => layout.id == layoutID
+    importWidget(widgetID: number | string) {
+      const widgetIndex = this.widgets.findIndex(
+        (widget) => widget.id == widgetID
       );
 
-      if (layoutIndex == -1) return;
+      if (widgetIndex == -1) return;
 
-      const layout = this.layouts[layoutIndex];
-      this.layoutManager.addLayout(layout);
+      const widget = this.widgets[widgetIndex];
+      this.widgetManager.addUserWidget(widget);
 
-      this.layouts.splice(layoutIndex, 1);
+      this.widgets.splice(widgetIndex, 1);
     },
     openFileInput() {
       // Trigger file input click
-      const fileInput = this.$el.querySelector("#LayoutImport");
+      const fileInput = this.$el.querySelector("#WidgetImport");
       if (fileInput) {
         fileInput.click();
       }
@@ -142,23 +134,23 @@ export default defineComponent({
         try {
           const jsonData = JSON.parse(content);
           if (Array.isArray(jsonData)) {
-            for (let layout of jsonData as LayoutPage[]) {
-              if (layout == null) return;
+            for (let widget of jsonData as ManagedWidget[]) {
+              if (widget == null) return;
               if (
-                this.layouts.findIndex(
-                  (layoutForImport) => layoutForImport.id === layout.id
+                this.widgets.findIndex(
+                  (widgetForImport) => widgetForImport.id === widget.id
                 ) == -1
               )
-                this.layouts.push(layout);
+                this.widgets.push(widget);
             }
           } else if (typeof jsonData === "object" && jsonData !== null) {
             if (
-              this.layouts.findIndex(
-                (layoutForImport) =>
-                  layoutForImport.id === (jsonData as LayoutPage).id
+              this.widgets.findIndex(
+                (widgetForImport) =>
+                  widgetForImport.id === (jsonData as ManagedWidget).id
               ) == -1
             )
-              this.layouts.push(jsonData as LayoutPage);
+              this.widgets.push(jsonData as ManagedWidget);
           } else {
             console.log("Data apears to be corrupt.");
           }

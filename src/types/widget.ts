@@ -14,10 +14,15 @@ export type ManagedWidget = Widget & {
 
 export type WidgetManager = {
   widgets: ManagedWidget[];
+  savedWidgets: ManagedWidget[];
   getWidgets(page: string): ManagedWidget[];
+  addUserWidget(widget: ManagedWidget): void;
   registerWidget(widget: ManagedWidget): void;
   getWidget(id: number | string): ManagedWidget;
   getComponent(
     id: number | string
   ): Component | DefineComponent | Promise<Component | null>;
+
+  save(): void;
+  load(): void;
 };

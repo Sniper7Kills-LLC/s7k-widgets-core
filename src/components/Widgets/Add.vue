@@ -1,7 +1,7 @@
 <template>
   <div>
-    <ul class="flex flex-grow space-x-2">
-      <li v-for="widget in widgets" :key="widget.name">
+    <ul class="flex flex-grow space-x-2 overflow-x-auto">
+      <li v-for="widget in widgets" :key="widget.name" class="">
         <div
           class="droppable-element"
           draggable="true"
