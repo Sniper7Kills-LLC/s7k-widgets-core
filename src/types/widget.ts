@@ -9,10 +9,12 @@ export type ManagedWidget = Widget & {
   height?: number;
   width?: number;
   pages?: string[];
+  base64?: string;
 };
 
 export type WidgetManager = {
   widgets: ManagedWidget[];
+  standaloneWidgets: Record<string | number, any>;
   getWidgets(page: string): ManagedWidget[];
   registerWidget(widget: ManagedWidget): void;
   getWidget(id: number | string): ManagedWidget;

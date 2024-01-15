@@ -7,6 +7,7 @@
     @layout-updated="layoutUpdatedEvent"
     :is-draggable="$props.inEditMode"
     :is-resizable="$props.inEditMode"
+    :key="window['widgets']"
   >
     <GridItem
       :showCloseButton="$props.inEditMode"
@@ -84,6 +85,7 @@ export default defineComponent({
       removeGridItem,
       layoutUpdatedEvent,
       widgetManager,
+      window,
     };
   },
 });
