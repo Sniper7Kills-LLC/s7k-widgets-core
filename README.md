@@ -21,6 +21,7 @@ Widget Template Repository: https://github.com/Sniper7Kills-LLC/vue3-widget-temp
 - ⭐⭐⭐ - High Priority
 - ❓ - Idea/Comment / Question how to achieve
 - 🚧 - Some work has been completed.
+- ✅ - Completed
 - **BOLD** - Expected difficulty Level
 
 ---
@@ -39,9 +40,9 @@ Widget Template Repository: https://github.com/Sniper7Kills-LLC/vue3-widget-temp
             - I.E. Displayed in a slide-over (https://tailwindui.com/components/application-ui/overlays/slide-overs)
             - Styled by application; not this package
             - May just be part of StyleCustomization task
-    - [ ] ⭐⭐⭐**HARD** - Fix Grid Style Interactions with Other Components
-        - [ ] Ensure PopOvers, Dropdowns, Selects appear OVER the grid
-        - [ ] Ensure widgets remain draggable, deletable, and modifiable
+    - [X] ✅**HARD** - Fix Grid Style Interactions with Other Components
+        - [X] ✅Ensure PopOvers, Dropdowns, Selects appear OVER the grid
+        - [X] ✅Ensure widgets remain draggable, deletable, and modifiable
             ( The following CSS "fixes" the previous issue; but introduces this issue.
             `#GridLayout { z-index: -1 !important; }` )
     - [ ] ⭐⭐**MEDIUM** - General Style Improvements
