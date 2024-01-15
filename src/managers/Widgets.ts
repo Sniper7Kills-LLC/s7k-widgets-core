@@ -56,6 +56,7 @@ const widgetManager: WidgetManager = reactive({
       const script = document.createElement("script");
 
       script.addEventListener("load", () => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         resolve((window as Record<string, any>)[name]);
       });
       script.addEventListener("error", () => {
@@ -108,6 +109,7 @@ const widgetManager: WidgetManager = reactive({
       return Promise.resolve(null);
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return (window as Record<string, any>)[name];
   },
   save() {

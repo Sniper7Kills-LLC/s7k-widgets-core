@@ -83,7 +83,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, ref, watch } from "vue";
+import { defineComponent, ref, watch } from "vue";
 import {
   Dialog,
   DialogPanel,

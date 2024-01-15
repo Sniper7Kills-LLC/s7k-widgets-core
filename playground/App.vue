@@ -22,7 +22,9 @@ import { v4 as uuidv4 } from "uuid";
 import { WidgetManager, LayoutManager } from "../src/types";
 import { inject } from "vue";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const widgetManager = inject("$widgetManager") as WidgetManager;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const layoutManager = inject("$widgetLayoutManager") as LayoutManager;
 
 const layouts: LayoutPage[] = [

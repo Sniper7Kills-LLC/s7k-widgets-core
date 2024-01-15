@@ -90,9 +90,6 @@ export default defineComponent({
 
       if (exportLayouts.length == 0) return;
 
-      const blob = new Blob([JSON.stringify(exportLayouts)], {
-        type: "application/json",
-      });
       const dataUri = `data:application/json;charset=utf-8,${encodeURIComponent(
         JSON.stringify(exportLayouts)
       )}`;
