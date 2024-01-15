@@ -57,19 +57,20 @@ Widget Template Repository: https://github.com/Sniper7Kills-LLC/vue3-widget-temp
     - [ ] GENERAL
         - [ ] ⭐⭐**HARD** - General Improvements to preformance and logic (I'm not a developer by trade; I think this repository helps prove that)
         - [ ] ⭐⭐⭐**HARD** - Ability to Import Widgets from GUI by End-User
-        - [ ] ⭐⭐⭐**EASY** - Ability to Import/Export Layouts from the GUI
-            - [ ] **Export**
-                - [ ] Allow user to select which saved layouts to export
-                - [ ] Allow user to rename layouts during export
-                - [ ] JSON-like file
-                - [ ] Layouts from any page can be exported, even if not on that page
+        - [ ] 🚧⭐⭐⭐**EASY** - Ability to Import/Export Layouts from the GUI
+            - [x] ✅**Export**
+                - [x] Allow user to select which saved layouts to export
+                - [x] Allow user to rename layouts during export
+                - [x] JSON-like file
+                - [x] Layouts from any page can be exported, even if not on that page
             - [ ] **Import**
                 - [ ] Ability to select which layouts to import
                 - [ ] Does not overwrite existing layouts with modifications
     - [ ] Widgets
-        - [x] 🚧⭐⭐⭐**MEDIUM** - Ability to use Widgets not included in plugin or application plugin is used in
+        - [ ] 🚧⭐⭐⭐**MEDIUM** - Ability to use Widgets not included in plugin or application plugin is used in
             - [x] Modify `ManagedWidget` to allow a string (url) to be used instead of a component for its definition
             - [x] Load the script if `as` is a string
+            - [x] Ability to save plugin as Base64
         - [ ] ⭐⭐**MEDIUM** - Ability for widgets to provide customized edit screen for settings
             - [ ] Use JSON editor by default / not provided
             - [ ] Custom Form & logic to update widget settings/props possible within widget
