@@ -244,6 +244,9 @@ const layoutManager: LayoutManager = reactive({
   deleteLayout(id: number | string): void {
     const index = this.savedLayouts.findIndex((layout) => layout.id === id);
 
+    // We didn't find the layout in saved layouts. Nothing to do
+    if (index == -1) return;
+
     const isDefault = this.savedLayouts[index].default;
     if (index !== -1) {
       // Tab found, remove it
