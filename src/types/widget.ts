@@ -14,7 +14,6 @@ export type ManagedWidget = Widget & {
 
 export type WidgetManager = {
   widgets: ManagedWidget[];
-  standaloneWidgets: Record<string | number, any>;
   getWidgets(page: string): ManagedWidget[];
   registerWidget(widget: ManagedWidget): void;
   getWidget(id: number | string): ManagedWidget;

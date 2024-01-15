@@ -6,6 +6,9 @@
   <div class="text-xs">
     {{ layoutManager.currentLayout }}
   </div> -->
+  <!-- <div class="text-xs">
+    {{ widgetManager.widgets }}
+  </div> -->
   <div class="bg-white dark:bg-gray-700">
     <ModeSelector></ModeSelector>
     <WidgetsPage page="test-page" :default-layouts="layouts"></WidgetsPage>
@@ -16,6 +19,11 @@
 import ModeSelector from "./components/Mode.vue";
 import { LayoutPage } from "../types";
 import { v4 as uuidv4 } from "uuid";
+import { WidgetManager, LayoutManager } from "../src/types";
+import { inject } from "vue";
+
+const widgetManager = inject("$widgetManager") as WidgetManager;
+const layoutManager = inject("$widgetLayoutManager") as LayoutManager;
 
 const layouts: LayoutPage[] = [
   {

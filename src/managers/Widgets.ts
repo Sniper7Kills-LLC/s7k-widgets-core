@@ -5,7 +5,6 @@ import BlankWidget from "@/components/Widgets/Blank.vue";
 import { Component, DefineComponent } from "vue/dist/vue";
 
 const widgetManager: WidgetManager = reactive({
-  standaloneWidgets: {} as Record<string | number, any>,
   widgets: [
     markRaw({
       id: "d287d3bc-94e9-4b6d-91ce-ef4bfced75ff",
@@ -29,7 +28,7 @@ const widgetManager: WidgetManager = reactive({
       return;
     }
 
-    this.standaloneWidgets[widget.id] = new Promise((resolve, reject) => {
+    new Promise((resolve, reject) => {
       const script = document.createElement("script");
       script.async = true;
       script.addEventListener("load", () => {
