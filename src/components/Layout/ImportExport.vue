@@ -1,6 +1,6 @@
 <template>
   <TransitionRoot as="template" :show="isOpen">
-    <Dialog as="div" class="relative z-10" @close="isOpen = false">
+    <Dialog as="div" class="relative z-10" @close="setIsOpen(false)">
       <TransitionChild
         as="template"
         enter="ease-out duration-300"
@@ -89,12 +89,6 @@
       </div>
     </Dialog>
   </TransitionRoot>
-  <button
-    class="hover:bg-violet-500 hover:text-white text-gray-900 group flex w-full items-center rounded-md px-2 py-2 text-sm"
-    @click="setIsOpen(true)"
-  >
-    Import/Export Layout
-  </button>
 </template>
 
 <script lang="ts">
@@ -121,21 +115,19 @@ export default defineComponent({
     TransitionRoot,
   },
   props: {
-    active: {
+    open: {
       type: Boolean,
-    },
-    disabled: {
-      type: Boolean,
+      default: false,
     },
   },
-  setup(props) {
-    const isOpen = ref(false);
-    const isActive = ref(false);
+  emits: ["update:open"],
+  setup(props, { emit }) {
+    const isOpen = ref(props.open);
 
     watch(
-      () => props,
+      () => props.open,
       () => {
-        isActive.value = props.active;
+        isOpen.value = props.open;
       }
     );
 
@@ -144,6 +136,7 @@ export default defineComponent({
 
     function setIsOpen(value: boolean) {
       isOpen.value = value;
+      emit("update:open", value);
     }
 
     const ui = {
@@ -158,7 +151,6 @@ export default defineComponent({
       isOpen,
       setIsOpen,
       layoutManager,
-      isActive,
     };
   },
 });

@@ -51,14 +51,32 @@
           </button>
         </MenuItem>
         <MenuItem v-slot="{ active }">
-          <ImportExportLayout :active="active"></ImportExportLayout>
+          <button
+            :class="[
+              active ? 'bg-violet-500 text-white' : 'text-gray-900',
+              'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+            ]"
+            @click="importExportOpen = true"
+          >
+            Import/Export Layouts
+          </button>
         </MenuItem>
         <MenuItem v-slot="{ active }">
-          <RegisterWidget :active="active"></RegisterWidget>
+          <button
+            :class="[
+              active ? 'bg-violet-500 text-white' : 'text-gray-900',
+              'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+            ]"
+            @click="registerWidgetOpen = true"
+          >
+            Register Widget
+          </button>
         </MenuItem>
       </MenuItems>
     </transition>
   </Menu>
+  <ImportExportLayout v-model:open="importExportOpen"></ImportExportLayout>
+  <RegisterWidget v-model:open="registerWidgetOpen"></RegisterWidget>
 </template>
 
 <script lang="ts">
@@ -87,6 +105,8 @@ export default defineComponent({
   emits: ["update:modelValue"],
   setup(props, { emit }) {
     const editMode = ref(props.modelValue);
+    const importExportOpen = ref(false);
+    const registerWidgetOpen = ref(false);
     const layoutManager = inject("$widgetLayoutManager") as LayoutManager;
 
     watch(
@@ -111,6 +131,8 @@ export default defineComponent({
 
     return {
       editMode,
+      importExportOpen,
+      registerWidgetOpen,
       toggleEditMode,
       setDefaultLayout,
       deleteLayout,

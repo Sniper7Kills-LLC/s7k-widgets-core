@@ -73,6 +73,7 @@ const layoutManager: LayoutManager = reactive({
 
   setLayout(id: number | string) {
     let layout = null;
+    this.currentTab = 0;
 
     // Saved Layouts
     const savedLayoutIndex = this.savedLayouts.findIndex(
@@ -247,6 +248,8 @@ const layoutManager: LayoutManager = reactive({
     // We didn't find the layout in saved layouts. Nothing to do
     if (index == -1) return;
 
+    this.currentTab = 0;
+
     const isDefault = this.savedLayouts[index].default;
     if (index !== -1) {
       // Tab found, remove it
@@ -420,6 +423,7 @@ const layoutManager: LayoutManager = reactive({
       this.currentLayout.id = generateUUID();
       this.currentLayout.page = this.currentPage;
       this.currentLayout.name = "Custom - " + this.currentLayout.name;
+      this.currentLayout.default = this.getDefaultLayout() == defaultLayout.id;
       this.savedLayouts.push(this.currentLayout);
       localStorage.setItem("$widgetLayouts", JSON.stringify(this.savedLayouts));
       return;

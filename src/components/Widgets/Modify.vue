@@ -68,7 +68,7 @@
   </TransitionRoot>
 
   <button
-    class="absolute z-20"
+    class="absolute z-20 text-black"
     style="width: 24px; right: 27px; top: 3px"
     @click="setIsOpen(true)"
   >

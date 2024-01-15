@@ -58,13 +58,6 @@
       </div>
     </Dialog>
   </TransitionRoot>
-  <button
-    :key="isActive"
-    class="hover:bg-violet-500 hover:text-white text-gray-900 group flex w-full items-center rounded-md px-2 py-2 text-sm"
-    @click="setIsOpen(true)"
-  >
-    Register New Widget
-  </button>
 </template>
 
 <script lang="ts">
@@ -90,31 +83,19 @@ export default defineComponent({
     TransitionRoot,
   },
   props: {
-    active: {
+    open: {
       type: Boolean,
-    },
-    disabled: {
-      type: Boolean,
+      default: false,
     },
   },
-  emits: [
-    "click",
-    "focus",
-    "pointerenter",
-    "mouseenter",
-    "pointermove",
-    "mousemove",
-    "pointerleave",
-    "mouseleave",
-  ],
-  setup(props) {
+  emits: ["update:open"],
+  setup(props, { emit }) {
     const isOpen = ref(false);
-    const isActive = ref(false);
 
     watch(
-      () => props,
+      () => props.open,
       () => {
-        isActive.value = props.active;
+        isOpen.value = props.open;
       }
     );
 
@@ -132,22 +113,15 @@ export default defineComponent({
 
     function setIsOpen(value: boolean) {
       isOpen.value = value;
+      emit("update:open", value);
     }
-
-    const ui = {
-      dialog: {
-        outter: "",
-      },
-    };
 
     // Expose data and methods to the template
     return {
-      ui,
       isOpen,
       setIsOpen,
       widgetName,
       registerWidget,
-      isActive,
     };
   },
 });
