@@ -35,7 +35,7 @@ const layouts: LayoutPage[] = [
     grid: [
       {
         name: "Empty Widget",
-        widgetID: "f634771b-2fef-0000-0000-cd28b6ab4e2c",
+        widgetID: "d287d3bc-94e9-4b6d-91ce-ef4bfced75ff",
         x: 0,
         y: 0,
         w: 1,
@@ -45,7 +45,7 @@ const layouts: LayoutPage[] = [
       },
       {
         name: "Empty Widget",
-        widgetID: "f634771b-2fef-4ae7-a61a-cd28b6ab4e2c",
+        widgetID: "d287d3bc-94e9-4b6d-91ce-ef4bfced75ff",
         x: 1,
         y: 0,
         w: 1,
@@ -53,16 +53,6 @@ const layouts: LayoutPage[] = [
         i: uuidv4(),
         moved: false,
       },
-      // {
-      //   name: "Empty Widget",
-      //   widgetID: "f634771b-2fef-4ae7-a61a-cd28b6ab4e2c",
-      //   x: 1,
-      //   y: 0,
-      //   w: 1,
-      //   h: 1,
-      //   i: uuidv4(),
-      //   moved: false,
-      // },
     ],
     hasTabs: true,
     tabs: [
