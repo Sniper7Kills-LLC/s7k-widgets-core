@@ -34,15 +34,10 @@
             <th
               class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
             >
-              Page
-            </th>
-            <th
-              class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
-            >
-              widget Name
+              Widget Name
             </th>
             <th class="relative whitespace-nowrap py-3.5 pl-3 pr-4 sm:pr-0">
-              <span class="sr-only">Export</span>
+              <span class="sr-only">Register</span>
             </th>
           </tr>
         </thead>
@@ -56,7 +51,7 @@
                 class="rounded bg-indigo-600 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 @click="importWidget(widget.id)"
               >
-                Import
+                Register
               </button>
             </td>
           </tr>

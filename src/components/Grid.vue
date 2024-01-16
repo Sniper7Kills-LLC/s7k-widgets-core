@@ -449,10 +449,10 @@ export default defineComponent({
     linear-gradient(to bottom, black 1px, transparent 1px);
 }
 
-.vue-grid-item {
+/* .vue-grid-item {
   touch-action: none;
   display: block !important;
-}
+} */
 
 .vue-close-button:hover {
   cursor: pointer;

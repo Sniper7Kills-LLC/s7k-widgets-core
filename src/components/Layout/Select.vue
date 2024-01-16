@@ -1,5 +1,5 @@
 <template>
-  <Listbox v-model="selectedLayoutID">
+  <Listbox v-model="selectedLayoutID" :key="layoutManager.getLayoutNames()">
     <div class="relative mt-2 z-50">
       <ListboxButton
         class="relative w-48 cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm"
@@ -72,11 +72,18 @@ export default defineComponent({
   },
   setup() {
     const layoutManager = inject("$widgetLayoutManager") as LayoutManager;
-    const selectedLayoutID = ref();
+    const selectedLayoutID = ref(layoutManager.currentLayout.id);
 
     watch(selectedLayoutID, (newID: number | string) => {
       layoutManager.setLayout(newID);
     });
+
+    watch(
+      () => layoutManager.currentLayout.id,
+      () => {
+        selectedLayoutID.value = layoutManager.currentLayout.id;
+      }
+    );
 
     return {
       selectedLayoutID,

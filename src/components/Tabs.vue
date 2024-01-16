@@ -1,12 +1,14 @@
 <template>
   <!-- <AddTab v-if="inEditMode" /> -->
+  <div class="flex flex-for justify-end">
+    <EditTabs v-if="inEditMode"></EditTabs>
+  </div>
   <TabGroup
     :selected-index="currentTab"
     @change="changeTab"
-    :key="layoutManager.currentLayout.tabs.length"
+    :key="layoutManager.currentLayout.tabs"
   >
-    <TabList class="isolate flex rounded-lg shadow">
-      <AddTab v-if="inEditMode" />
+    <TabList class="flex rounded-lg shadow">
       <Tab
         as="template"
         v-slot="{ selected }"
@@ -64,7 +66,7 @@
 <script lang="ts">
 import { defineComponent, inject, ref, watch } from "vue";
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
-import AddTab from "./Tabs/Add.vue";
+import EditTabs from "./Tabs/Edit.vue";
 import { LayoutManager, LayoutTab, LayoutWidget } from "../types";
 
 export default defineComponent({
@@ -80,7 +82,7 @@ export default defineComponent({
     },
   },
   components: {
-    AddTab,
+    EditTabs,
     TabGroup,
     TabList,
     Tab,

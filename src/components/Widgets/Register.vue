@@ -39,7 +39,7 @@
                     >Register Widget</DialogTitle
                   >
                   <DialogDescription class="mt-2 text-sm text-gray-500">
-                    Add a new Widget to be available
+                    Register a widget not provided by the application.
                   </DialogDescription>
                 </div>
               </div>

@@ -235,6 +235,7 @@ const layoutManager: LayoutManager = reactive({
   addWidgetToGrid: function (widget: LayoutWidget): void {
     const updatedWidget = this.findNextSlot(widget, this.currentLayout.grid);
     if (updatedWidget != null) this.currentLayout.grid.push(updatedWidget);
+    this.save();
   },
   addWidgetToTab: function (widget: LayoutWidget): void {
     const updatedWidget = this.findNextSlot(
@@ -243,6 +244,7 @@ const layoutManager: LayoutManager = reactive({
     );
     if (updatedWidget != null)
       this.currentLayout.tabs[this.currentTab].grid.push(updatedWidget);
+    this.save();
   },
 
   deleteTab(id: number | string): void {
