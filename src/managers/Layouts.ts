@@ -2,46 +2,49 @@ import { reactive } from "vue";
 import { LayoutManager, LayoutPage, LayoutWidget } from "../types";
 import sha512 from "crypto-js/sha512";
 import { v4 as uuidv4 } from "uuid";
+import { LayoutGrid } from "@/types/layout";
 
 const defaultLayout: LayoutPage = {
-  id: generateUUID(),
+  id: uuidv4(),
   page: "default",
   name: "default",
   default: false,
-  grid: [
-    {
-      name: "Empty Widget",
-      widgetID: "d287d3bc-94e9-4b6d-91ce-ef4bfced75ff",
-      x: 0,
-      y: 0,
-      w: 1,
-      h: 1,
-      i: generateUUID(),
-    },
-  ],
+  grid: {
+    id: uuidv4(),
+    items: [
+      {
+        name: "Empty Widget",
+        widgetID: "d287d3bc-94e9-4b6d-91ce-ef4bfced75ff",
+        x: 0,
+        y: 0,
+        w: 1,
+        h: 1,
+        i: uuidv4(),
+      },
+    ],
+  },
   hasTabs: true,
   tabs: [
     {
-      id: generateUUID(),
+      id: uuidv4(),
       name: "Empty Tab",
-      grid: [
-        {
-          name: "Empty Widget",
-          widgetID: "d287d3bc-94e9-4b6d-91ce-ef4bfced75ff",
-          x: 0,
-          y: 0,
-          w: 1,
-          h: 1,
-          i: generateUUID(),
-        },
-      ],
+      grid: {
+        id: uuidv4(),
+        items: [
+          {
+            name: "Empty Widget",
+            widgetID: "d287d3bc-94e9-4b6d-91ce-ef4bfced75ff",
+            x: 0,
+            y: 0,
+            w: 1,
+            h: 1,
+            i: uuidv4(),
+          },
+        ],
+      },
     },
   ],
 };
-
-function generateUUID(): string {
-  return uuidv4();
-}
 
 const layoutManager: LayoutManager = reactive({
   currentPage: "index",
@@ -53,7 +56,10 @@ const layoutManager: LayoutManager = reactive({
     page: "default",
     name: "default",
     default: false,
-    grid: [],
+    grid: {
+      id: uuidv4(),
+      items: [],
+    },
     hasTabs: false,
     tabs: [],
   } as LayoutPage,
@@ -141,6 +147,18 @@ const layoutManager: LayoutManager = reactive({
     return this.defaultLayouts[0].id;
   },
 
+  getGrid(gridID: number | string): LayoutGrid | null {
+    if (this.currentLayout.grid.id === gridID) return this.currentLayout.grid;
+
+    const tabIndex = this.currentLayout.tabs.findIndex((tab) => {
+      return tab.grid.id === gridID;
+    });
+    console.log(tabIndex);
+    if (tabIndex > -1) return this.currentLayout.tabs[tabIndex].grid;
+
+    return null;
+  },
+
   getLayoutNames() {
     const savedLayouts = this.savedLayouts
       .filter((value: LayoutPage) => value.page === this.currentPage)
@@ -162,7 +180,7 @@ const layoutManager: LayoutManager = reactive({
   createLayout(name) {
     const layout = defaultLayout;
     layout.name = name;
-    layout.id = generateUUID();
+    layout.id = uuidv4();
     layout.page = this.currentPage;
     this.savedLayouts.push(layout);
     this.save();
@@ -171,19 +189,22 @@ const layoutManager: LayoutManager = reactive({
 
   createTab(name) {
     this.currentLayout.tabs.push({
-      id: generateUUID(),
+      id: uuidv4(),
       name: name,
-      grid: [
-        {
-          name: "Empty Widget",
-          widgetID: "d287d3bc-94e9-4b6d-91ce-ef4bfced75ff",
-          x: 0,
-          y: 0,
-          w: 1,
-          h: 1,
-          i: generateUUID(),
-        },
-      ],
+      grid: {
+        id: uuidv4(),
+        items: [
+          {
+            name: "Empty Widget",
+            widgetID: "d287d3bc-94e9-4b6d-91ce-ef4bfced75ff",
+            x: 0,
+            y: 0,
+            w: 1,
+            h: 1,
+            i: uuidv4(),
+          },
+        ],
+      },
     });
     this.save();
     this.currentTab = this.currentLayout.tabs.length - 1;
@@ -194,11 +215,15 @@ const layoutManager: LayoutManager = reactive({
     this.save();
   },
 
-  updateGrid(grid) {
-    if (grid.length > 0) {
-      this.currentLayout.grid = grid;
+  updateGrid(items, gridID) {
+    const grid = this.getGrid(gridID);
+
+    if (grid == null || !grid.items) return;
+
+    if (grid.items.length > 0) {
+      grid.items = items;
     } else {
-      this.currentLayout.grid = [
+      grid.items = [
         {
           name: "Empty Widget",
           widgetID: "d287d3bc-94e9-4b6d-91ce-ef4bfced75ff",
@@ -206,46 +231,54 @@ const layoutManager: LayoutManager = reactive({
           y: 0,
           w: 1,
           h: 1,
-          i: generateUUID(),
+          i: uuidv4(),
         },
       ];
     }
     this.save();
   },
 
-  updateTab(layout) {
-    if (layout.grid.length == 0) {
-      layout.grid = [
-        {
-          name: "Empty Widget",
-          widgetID: "d287d3bc-94e9-4b6d-91ce-ef4bfced75ff",
-          x: 0,
-          y: 0,
-          w: 1,
-          h: 1,
-          i: generateUUID(),
-        },
-      ];
-    }
+  // updateTab(layout) {
+  //   if (layout.grid.items.length == 0) {
+  //     layout.grid.items = [
+  //       {
+  //         name: "Empty Widget",
+  //         widgetID: "d287d3bc-94e9-4b6d-91ce-ef4bfced75ff",
+  //         x: 0,
+  //         y: 0,
+  //         w: 1,
+  //         h: 1,
+  //         i: uuidv4(),
+  //       },
+  //     ];
+  //   }
 
-    this.currentLayout.tabs[this.currentTab] = layout;
-    this.save();
-  },
+  //   this.currentLayout.tabs[this.currentTab] = layout;
+  //   this.save();
+  // },
 
-  addWidgetToGrid: function (widget: LayoutWidget): void {
-    const updatedWidget = this.findNextSlot(widget, this.currentLayout.grid);
-    if (updatedWidget != null) this.currentLayout.grid.push(updatedWidget);
+  addWidgetToGrid: function (
+    widget: LayoutWidget,
+    gridID: number | string
+  ): void {
+    const grid = this.getGrid(gridID);
+    console.log(grid);
+    if (grid === null) return;
+
+    console.log(grid);
+    const updatedWidget = this.findNextSlot(widget, grid.items);
+    if (updatedWidget != null) grid.items.push(updatedWidget);
     this.save();
   },
-  addWidgetToTab: function (widget: LayoutWidget): void {
-    const updatedWidget = this.findNextSlot(
-      widget,
-      this.currentLayout.tabs[this.currentTab].grid
-    );
-    if (updatedWidget != null)
-      this.currentLayout.tabs[this.currentTab].grid.push(updatedWidget);
-    this.save();
-  },
+  // addWidgetToTab: function (widget: LayoutWidget): void {
+  //   const updatedWidget = this.findNextSlot(
+  //     widget,
+  //     this.currentLayout.tabs[this.currentTab].grid.items
+  //   );
+  //   if (updatedWidget != null)
+  //     this.currentLayout.tabs[this.currentTab].grid.items.push(updatedWidget);
+  //   this.save();
+  // },
 
   deleteTab(id: number | string): void {
     const index = this.currentLayout.tabs.findIndex((tab) => tab.id === id);
@@ -370,23 +403,23 @@ const layoutManager: LayoutManager = reactive({
 
   updateWidgetSettings(id, settings) {
     // Check if in Grid
-    const gridWidgetIndex = this.currentLayout.grid.findIndex(
+    const gridWidgetIndex = this.currentLayout.grid.items.findIndex(
       (value) => value.i === id
     );
     // check if In Tab
     const tabWidgetIndex = this.currentLayout.tabs[
       this.currentTab
-    ].grid.findIndex((value) => value.i === id);
+    ].grid.items.findIndex((value) => value.i === id);
 
     // Update Accordingly
     if (gridWidgetIndex !== -1) {
       // Update settings for a widget in the main grid
-      const foundWidget = this.currentLayout.grid[gridWidgetIndex];
+      const foundWidget = this.currentLayout.grid.items[gridWidgetIndex];
       foundWidget.props = settings;
     } else if (tabWidgetIndex !== -1) {
       // Update settings for a widget in the current tab's grid
       const foundWidget =
-        this.currentLayout.tabs[this.currentTab].grid[tabWidgetIndex];
+        this.currentLayout.tabs[this.currentTab].grid.items[tabWidgetIndex];
       foundWidget.props = settings;
     }
 
@@ -434,7 +467,7 @@ const layoutManager: LayoutManager = reactive({
         return;
       }
 
-      this.currentLayout.id = generateUUID();
+      this.currentLayout.id = uuidv4();
       this.currentLayout.page = this.currentPage;
       this.currentLayout.name = "Custom - " + this.currentLayout.name;
       this.currentLayout.default = this.getDefaultLayout() == defaultLayout.id;

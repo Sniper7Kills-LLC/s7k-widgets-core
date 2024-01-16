@@ -4,6 +4,7 @@ import {
   LayoutTab,
   LayoutPage,
   LayoutManager,
+  LayoutGrid,
 } from "./types/layout";
 
 export type Widget = {
@@ -19,4 +20,5 @@ export {
   LayoutTab,
   LayoutPage,
   LayoutManager,
+  LayoutGrid,
 };

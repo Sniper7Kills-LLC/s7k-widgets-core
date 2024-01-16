@@ -11,10 +11,15 @@ export type LayoutWidget = Widget & {
   props?: Record<string, any>;
 };
 
+export type LayoutGrid = {
+  id: number | string;
+  items: LayoutWidget[];
+};
+
 export type LayoutTab = {
   id: number | string;
   name: string;
-  grid: LayoutWidget[];
+  grid: LayoutGrid;
 };
 
 export type LayoutPage = {
@@ -22,7 +27,7 @@ export type LayoutPage = {
   page: string;
   name: string;
   default: boolean;
-  grid: LayoutWidget[];
+  grid: LayoutGrid;
   hasTabs: boolean;
   tabs: LayoutTab[];
 };
@@ -43,18 +48,18 @@ export type LayoutManager = {
 
   getDefaultLayout(): number | string;
   getLayoutNames(): { id: string | number; name: string }[];
+  getGrid(gridID: number | string): LayoutGrid | null;
 
   createLayout(name: string): void;
   createTab(name: string): void;
 
   updateLayout(layout: LayoutPage): void;
-  updateGrid(grid: LayoutWidget[]): void;
-  updateTab(layout: LayoutTab): void;
+  updateGrid(items: LayoutWidget[], gridID: string | number): void;
+  // updateTab(layout: LayoutTab): void;
 
   updateWidgetSettings(id: number | string, settings: object): void;
 
-  addWidgetToGrid(widget: LayoutWidget): void;
-  addWidgetToTab(widget: LayoutWidget): void;
+  addWidgetToGrid(widget: LayoutWidget, gridID: number | string): void;
 
   deleteTab(id: number | string): void;
   deleteLayout(id: number | string): void;

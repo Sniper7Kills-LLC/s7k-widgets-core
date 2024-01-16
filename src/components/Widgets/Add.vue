@@ -76,9 +76,9 @@ export default defineComponent({
       const gridLayoutElements = document.querySelectorAll("#GridLayout");
 
       let mouseInGrid = false;
-      let gridIndex = -1;
+      let gridID: number | string | null = null;
 
-      gridLayoutElements.forEach((element, index) => {
+      gridLayoutElements.forEach((element) => {
         const rect = element.getBoundingClientRect();
         if (
           mouseXY.x > rect.left &&
@@ -87,7 +87,7 @@ export default defineComponent({
           mouseXY.y < rect.bottom
         ) {
           mouseInGrid = true;
-          gridIndex = index;
+          gridID = element.getAttribute("grid-id");
         }
       });
 
@@ -95,23 +95,15 @@ export default defineComponent({
         return;
       }
 
-      if (gridIndex == 0) {
-        // Add Widget To Grid
-        layoutManager.addWidgetToGrid({
-          name: selectedWidget.value?.name,
-          widgetID: selectedWidget.value?.id,
-          props: selectedWidget.value ? selectedWidget.value.defaultProps : {},
-          x: 0,
-          y: 0,
-          w: selectedWidget.value.width ? selectedWidget.value.width : 1,
-          h: selectedWidget.value.height ? selectedWidget.value.height : 1,
-          i: uuidv4(),
-          moved: false,
-        } as LayoutWidget);
+      if (gridID === null) {
+        console.error(
+          "Was not able to detect the Grid ID the Widget should be added to."
+        );
+        return;
       }
 
-      if (gridIndex == 1) {
-        layoutManager.addWidgetToTab({
+      layoutManager.addWidgetToGrid(
+        {
           name: selectedWidget.value?.name,
           widgetID: selectedWidget.value?.id,
           props: selectedWidget.value ? selectedWidget.value.defaultProps : {},
@@ -121,8 +113,9 @@ export default defineComponent({
           h: selectedWidget.value.height ? selectedWidget.value.height : 1,
           i: uuidv4(),
           moved: false,
-        } as LayoutWidget);
-      }
+        } as LayoutWidget,
+        gridID
+      );
     };
 
     function widgetSelected(widget: ManagedWidget) {

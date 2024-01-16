@@ -74,10 +74,10 @@ Widget Template Repository: https://github.com/Sniper7Kills-LLC/vue3-widget-temp
         - [ ] ⭐⭐**MEDIUM** - Ability for widgets to provide customized edit screen for settings
             - [ ] Use JSON editor by default / not provided
             - [ ] Custom Form & logic to update widget settings/props possible within widget
-        - [ ] ⭐⭐**MEDIUM** - Refactor method of adding widgets to grids
-            - [ ] Assign an ID to every grid
-            - [ ] Modify `components/Widgets/Add.vue` to identify which grid is being used based on the following item
-            - [ ] Modify `components/Grid.vue` to assign a property or tag to be used in previous item to specify the ID of the grid being displayed.
+        - [x] ✅⭐⭐**MEDIUM** - Refactor method of adding widgets to grids
+            - [x] ✅Assign an ID to every grid
+            - [x] ✅Modify `components/Widgets/Add.vue` to identify which grid is being used based on the following item
+            - [x] ✅Modify `components/Grid.vue` to assign a property or tag to be used in previous item to specify the ID of the grid being displayed.
         - [ ] ⭐**EASY** - Add thumbnail to `ManagedWidget`
             - [ ] Update Type
             - [ ] Use thumnail in `components/Widgets/Add.vue`
@@ -91,9 +91,9 @@ Widget Template Repository: https://github.com/Sniper7Kills-LLC/vue3-widget-temp
             - [ ] Ability to use a single `WidgetTabs` in an application view
             - [ ] Ability to use multiple `WidgetGrid`s in an application view
             - [ ] Ability to use multiple `WidgetGrid`s and a single `WidgetTab` in an application view
-    - [ ] Tabs
-        - [ ] ⭐**EASY** - Ability to Rename Tabs
-        - [ ] ⭐**MEDIUM** - Ability to Reorder Tabs (preferably drag & drop, but OK with buttons)
+    - [x] ✅ Tabs
+        - [x] ✅⭐**EASY** - Ability to Rename Tabs
+        - [x] ✅⭐**MEDIUM** - Ability to Reorder Tabs (preferably drag & drop, but OK with buttons)
     - [ ] Components
         - [ ] ⭐**HARD** - Refactor to allow the use of the Grid or Tabs component without using the Page component.
             ( Currently the project is designed to only support the use of the Page component in Applications )

@@ -1,50 +1,51 @@
 <template>
-  <GridLayout
-    v-if="$props.layout"
-    id="GridLayout"
-    :layout="$props.layout"
-    :col-num="3"
-    @layout-updated="layoutUpdatedEvent"
-    :is-draggable="$props.inEditMode"
-    :is-resizable="$props.inEditMode"
-    :key="window['widgets']"
-  >
-    <GridItem
-      :showCloseButton="$props.inEditMode"
-      v-for="item in $props.layout"
-      :key="item.i"
-      :x="item.x"
-      :y="item.y"
-      :w="item.w"
-      :h="item.h"
-      :i="item.i"
-      :enableEditMode="$props.inEditMode"
-      @remove-grid-item="removeGridItem"
-      :class="[
-        $props.inEditMode
-          ? 'rounded-lg border-2 border-dashed border-gray-300 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
-          : '',
-        'overflow-hidden',
-      ]"
+  <div id="GridLayout" :grid-id="$props.layout.id">
+    <GridLayout
+      v-if="$props.layout"
+      :layout="$props.layout.items"
+      :col-num="3"
+      @layout-updated="layoutUpdatedEvent"
+      :is-draggable="$props.inEditMode"
+      :is-resizable="$props.inEditMode"
+      :key="window['widgets']"
     >
-      <ModifyWidgetProperties
-        v-if="inEditMode"
-        :widgetId="item.i"
-        :settings="item.props"
-      ></ModifyWidgetProperties>
-      <component
-        :is="widgetManager.getComponent(item.widgetID)"
-        v-bind="item.props"
-        :key="item.props"
-      ></component>
-    </GridItem>
-  </GridLayout>
+      <GridItem
+        :showCloseButton="$props.inEditMode"
+        v-for="item in $props.layout.items"
+        :key="item.i"
+        :x="item.x"
+        :y="item.y"
+        :w="item.w"
+        :h="item.h"
+        :i="item.i"
+        :enableEditMode="$props.inEditMode"
+        @remove-grid-item="removeGridItem"
+        :class="[
+          $props.inEditMode
+            ? 'rounded-lg border-2 border-dashed border-gray-300 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+            : '',
+          'overflow-hidden',
+        ]"
+      >
+        <ModifyWidgetProperties
+          v-if="inEditMode"
+          :widgetId="item.i"
+          :settings="item.props"
+        ></ModifyWidgetProperties>
+        <component
+          :is="widgetManager.getComponent(item.widgetID)"
+          v-bind="item.props"
+          :key="item.props"
+        ></component>
+      </GridItem>
+    </GridLayout>
+  </div>
 </template>
 
 <script lang="ts">
 import { inject, defineComponent } from "vue";
 import { GridItem, GridLayout } from "vue-ts-responsive-grid-layout";
-import { LayoutWidget, WidgetManager } from "../types";
+import { LayoutWidget, WidgetManager, LayoutGrid } from "../types";
 import ModifyWidgetProperties from "./Widgets/Modify.vue";
 
 export default defineComponent({
@@ -55,7 +56,7 @@ export default defineComponent({
       required: true,
     },
     layout: {
-      type: Array as () => LayoutWidget[],
+      type: Object as () => LayoutGrid,
       required: true,
     },
   },
@@ -77,7 +78,7 @@ export default defineComponent({
       // eslint-disable-next-line vue/no-mutating-props
       emit(
         "layoutUpdated",
-        props.layout.filter((item: LayoutWidget) => item.i != remove)
+        props.layout.items.filter((item: LayoutWidget) => item.i != remove)
       );
     }
 

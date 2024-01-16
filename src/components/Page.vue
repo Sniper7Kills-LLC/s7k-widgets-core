@@ -72,7 +72,7 @@ export default defineComponent({
     });
 
     function gridUpdated(input: LayoutWidget[]) {
-      layoutManager.updateGrid(input);
+      layoutManager.updateGrid(input, layoutManager.currentLayout.grid.id);
     }
 
     return {

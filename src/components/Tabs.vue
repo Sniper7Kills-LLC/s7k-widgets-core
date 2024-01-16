@@ -107,8 +107,11 @@ export default defineComponent({
 
     function gridUpdated(input: LayoutWidget[]) {
       const tab = props.tabs[layoutManager.currentTab];
-      tab.grid = input;
-      layoutManager.updateTab(tab);
+      tab.grid.items = input;
+      layoutManager.updateGrid(
+        input,
+        props.tabs[layoutManager.currentTab].grid.id
+      );
     }
 
     function deleteTab(id: number | string) {
