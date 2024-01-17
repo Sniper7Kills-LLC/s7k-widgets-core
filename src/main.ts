@@ -32,3 +32,6 @@ export default {
 
 export { default as defaultWidgetComponent } from './defineWidget'
 export { WidgetInterface } from '@/components'
+
+import type * as AllTypes from '@/types';
+export { AllTypes };
