@@ -1,5 +1,5 @@
-import { ManagedWidget, WidgetManager } from "./types/widget";
-import {
+import type { ManagedWidget, WidgetManager } from "./types/widget";
+import type {
   LayoutWidget,
   LayoutTab,
   LayoutPage,
@@ -11,7 +11,7 @@ export type Widget = {
   name: string;
 };
 
-export {
+export type {
   // Widget
   ManagedWidget,
   WidgetManager,

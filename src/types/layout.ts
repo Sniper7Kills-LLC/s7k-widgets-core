@@ -1,4 +1,4 @@
-import { Widget } from "@/types";
+import type { Widget } from "../types";
 
 export type LayoutWidget = Widget & {
   widgetID: number | string;

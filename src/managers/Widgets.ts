@@ -1,6 +1,7 @@
 import { ManagedWidget, WidgetManager } from "@/types";
 import { reactive, markRaw } from "vue";
 
+import WidgetInterface from "../components/Widget.vue";
 import BlankWidget from "@/components/Widgets/Blank.vue";
 import { Component, DefineComponent } from "vue/dist/vue";
 
@@ -111,6 +112,9 @@ const widgetManager: WidgetManager = reactive({
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return (window as Record<string, any>)[name];
+  },
+  getInterface(): DefineComponent {
+    return WidgetInterface as unknown as DefineComponent;
   },
   save() {
     localStorage.setItem("$widgets", JSON.stringify(this.savedWidgets));

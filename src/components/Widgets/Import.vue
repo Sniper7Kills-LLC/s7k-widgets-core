@@ -63,7 +63,7 @@
 
 <script lang="ts">
 import { defineComponent, inject } from "vue";
-import { WidgetManager, ManagedWidget } from "../../types";
+import type { WidgetManager, ManagedWidget } from "../../types";
 
 export default defineComponent({
   name: "ImportWidget",

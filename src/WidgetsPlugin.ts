@@ -3,6 +3,7 @@ import { App } from "vue";
 import WidgetsGrid from "./components/Grid.vue";
 import WidgetsPage from "./components/Page.vue";
 import WidgetsTabs from "./components/Tabs.vue";
+import WidgetInterface from "./components/Widget.vue";
 // Managers
 import WidgetManager from "./managers/Widgets";
 import LayoutManager from "./managers/Layouts";
@@ -24,6 +25,7 @@ export const WidgetsPlugin = {
     app.component("WidgetsGrid", WidgetsGrid);
     app.component("WidgetsPage", WidgetsPage);
     app.component("WidgetsTabs", WidgetsTabs);
+    app.component("WidgetInterface", WidgetInterface);
 
     // Register widgets passed by app using plugin
     if (options.widgets && Array.isArray(options.widgets)) {

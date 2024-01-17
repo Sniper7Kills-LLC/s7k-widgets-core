@@ -153,7 +153,7 @@ const layoutManager: LayoutManager = reactive({
     const tabIndex = this.currentLayout.tabs.findIndex((tab) => {
       return tab.grid.id === gridID;
     });
-    console.log(tabIndex);
+    //console.log(tabIndex);
     if (tabIndex > -1) return this.currentLayout.tabs[tabIndex].grid;
 
     return null;
@@ -262,10 +262,8 @@ const layoutManager: LayoutManager = reactive({
     gridID: number | string
   ): void {
     const grid = this.getGrid(gridID);
-    console.log(grid);
     if (grid === null) return;
 
-    console.log(grid);
     const updatedWidget = this.findNextSlot(widget, grid.items);
     if (updatedWidget != null) grid.items.push(updatedWidget);
     this.save();

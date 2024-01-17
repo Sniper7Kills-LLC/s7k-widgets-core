@@ -27,14 +27,16 @@
           'overflow-hidden',
         ]"
       >
-        <ModifyWidgetProperties
+        <!-- <ModifyWidgetProperties
           v-if="inEditMode"
           :widgetId="item.i"
           :settings="item.props"
-        ></ModifyWidgetProperties>
+        ></ModifyWidgetProperties> -->
         <component
           :is="widgetManager.getComponent(item.widgetID)"
-          v-bind="item.props"
+          :widget-id="item.i"
+          :in-edit-mode="inEditMode"
+          v-bind="{ ...item.props, settings: { ...item.props } }"
           :key="item.props"
         ></component>
       </GridItem>
@@ -450,10 +452,9 @@ export default defineComponent({
     linear-gradient(to bottom, black 1px, transparent 1px);
 }
 
-/* .vue-grid-item {
+.vue-grid-item {
   touch-action: none;
-  display: block !important;
-} */
+}
 
 .vue-close-button:hover {
   cursor: pointer;

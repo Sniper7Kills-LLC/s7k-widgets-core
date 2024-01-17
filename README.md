@@ -66,23 +66,23 @@ Widget Template Repository: https://github.com/Sniper7Kills-LLC/vue3-widget-temp
             - [x] ✅**Import**
                 - [x] Ability to select which layouts to import
                 - [x] Does not overwrite existing layouts with modifications
-    - [ ] Widgets
+    - [x] ✅Widgets
         - [x] ✅⭐⭐⭐**MEDIUM** - Ability to use Widgets not included in plugin or application plugin is used in
             - [x] Modify `ManagedWidget` to allow a string (url) to be used instead of a component for its definition
             - [x] Load the script if `as` is a string
             - [x] Ability to save plugin as Base64
-        - [ ] ⭐⭐**MEDIUM** - Ability for widgets to provide customized edit screen for settings
-            - [ ] Use JSON editor by default / not provided
-            - [ ] Custom Form & logic to update widget settings/props possible within widget
+        - [x] ✅⭐⭐**MEDIUM** - Ability for widgets to provide customized edit screen for settings
+            - [x] ✅Use JSON editor by default / not provided
+            - [x] ✅Custom Form & logic to update widget settings/props possible within widget
         - [x] ✅⭐⭐**MEDIUM** - Refactor method of adding widgets to grids
             - [x] ✅Assign an ID to every grid
             - [x] ✅Modify `components/Widgets/Add.vue` to identify which grid is being used based on the following item
             - [x] ✅Modify `components/Grid.vue` to assign a property or tag to be used in previous item to specify the ID of the grid being displayed.
-        - [ ] ⭐**EASY** - Add thumbnail to `ManagedWidget`
-            - [ ] Update Type
-            - [ ] Use thumnail in `components/Widgets/Add.vue`
-            - [ ] Use/Generate default if not provided
-                - [ ] I.E. use `https://placehold.co/600x400?text=Hello+World` and display the name of the widget
+        - [x] ✅⭐**EASY** - Add thumbnail to `ManagedWidget`
+            - [x] ✅ Update Type
+            - [x] ✅ Use thumnail in `components/Widgets/Add.vue`
+            - [x] ✅ Use/Generate default if not provided
+                - [x] I.E. use `https://placehold.co/600x400?text=Hello+World` and display the name of the widget
     - [ ] Layouts
         - [ ] ⭐**EASY** - Ability to specify number of columns for a layout
         - [ ] ⭐**EASY** - Ability to enable/disable Tabs for a layout
@@ -116,7 +116,7 @@ Widget Template Repository: https://github.com/Sniper7Kills-LLC/vue3-widget-temp
             - [ ] 🚧 For 3rd party NPM packages imported via PluginOptions
             - [x] ✅ For End-User-based Import
                 - [x] File used for importing widgets should contain the definition of the widget(s) (name, height, width, etc.) along with anything required for the widget to be displayed (compiled script, script url, etc...)
-        - [ ] Ability to maintain several widgets in a single repository
+        - [x] ✅ Ability to maintain several widgets in a single repository
     - [ ] ⭐**EASY** - Export Type Definitions in This Package
     - [ ] ⭐**MEDIUM** - Create documentation site
         - [ ] Github Workflow to build + publish

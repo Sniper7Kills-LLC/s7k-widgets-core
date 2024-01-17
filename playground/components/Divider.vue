@@ -1,24 +1,54 @@
 <template>
-  <div class="h-full flex items-center">
-    <div class="relative w-full">
-      <div class="absolute inset-0 flex items-center" aria-hidden="true">
-        <div class="w-full border-t border-gray-300" />
-      </div>
-      <div class="relative flex justify-center">
-        <span
-          class="bg-white px-3 text-base font-semibold leading-6 text-gray-900"
+  <WidgetInterface
+    :in-edit-mode="inEditMode"
+    :widget-id="widgetId"
+    :settings="settings"
+  >
+    <template #settings="{ widgetSettings }">
+      <div>
+        <label
+          for="label"
+          class="block text-sm font-medium leading-6 text-gray-900"
+          >Divider Label</label
         >
-          {{ label }}
-        </span>
+        <div class="mt-2">
+          <input
+            type="text"
+            name="label"
+            id="label"
+            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            v-model="widgetSettings.label"
+            placeholder=""
+          />
+        </div>
+      </div>
+    </template>
+
+    <div class="h-full flex items-center">
+      <div class="relative w-full">
+        <div class="absolute inset-0 flex items-center" aria-hidden="true">
+          <div class="w-full border-t border-gray-300" />
+        </div>
+        <div class="relative flex justify-center">
+          <span
+            class="bg-white px-3 text-base font-semibold leading-6 text-gray-900"
+          >
+            {{ label }}
+          </span>
+        </div>
       </div>
     </div>
-  </div>
+  </WidgetInterface>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import WidgetInterface from "../../src/components/Widget.vue";
+import defineWidget from "../../src/defineWidget";
 
-export default defineComponent({
+export default defineWidget({
   name: "WidgetDivider",
+  components: {
+    WidgetInterface,
+  },
   props: {
     label: {
       type: String,

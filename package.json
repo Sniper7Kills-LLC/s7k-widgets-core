@@ -2,13 +2,16 @@
   "name": "vue3-widget-pages",
   "version": "0.1.0",
   "private": true,
+  "main": "index.ts",
   "scripts": {
     "serve": "vue-cli-service serve playground/main.ts",
     "build": "vue-cli-service build --target lib --name vue-widgets-plugin src/WidgetsPlugin.ts",
+    "build:interface": "vue-cli-service build --target lib --name WidgetInterface src/components/Widget.vue",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@headlessui/vue": "^1.7.17",
+    "@heroicons/vue": "^2.1.1",
     "@noction/vue-draggable-grid": "1.9.10",
     "core-js": "^3.8.3",
     "crypto-js": "^4.2.0",

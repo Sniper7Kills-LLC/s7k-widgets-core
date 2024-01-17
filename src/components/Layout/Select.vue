@@ -53,6 +53,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, inject, ref, watch } from "vue";
+import { CheckIcon } from "@heroicons/vue/24/solid";
 import {
   Listbox,
   ListboxButton,
@@ -69,6 +70,7 @@ export default defineComponent({
     ListboxButton,
     ListboxOptions,
     ListboxOption,
+    CheckIcon,
   },
   setup() {
     const layoutManager = inject("$widgetLayoutManager") as LayoutManager;

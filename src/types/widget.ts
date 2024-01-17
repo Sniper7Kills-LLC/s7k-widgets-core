@@ -1,5 +1,5 @@
-import { Component, DefineComponent } from "vue";
-import { Widget } from "@/types";
+import type { Component, DefineComponent } from "vue";
+import type { Widget } from "../types";
 
 export type ManagedWidget = Widget & {
   id: number | string;
@@ -10,6 +10,8 @@ export type ManagedWidget = Widget & {
   width?: number;
   pages?: string[];
   base64?: string;
+  thumbnail?: string;
+  thumbnail64?: string;
 };
 
 export type WidgetManager = {
@@ -22,6 +24,7 @@ export type WidgetManager = {
   getComponent(
     id: number | string
   ): Component | DefineComponent | Promise<Component | null>;
+  getInterface(): DefineComponent;
 
   save(): void;
   load(): void;
