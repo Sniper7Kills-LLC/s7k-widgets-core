@@ -10,15 +10,11 @@
         leave-from="opacity-100"
         leave-to="opacity-0"
       >
-        <div
-          class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-        />
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
       </TransitionChild>
 
       <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
-        <div
-          class="flex min-h-full items-end justify-center text-center sm:items-center sm:p-0"
-        >
+        <div class="flex min-h-full items-end justify-center text-center sm:items-center sm:p-0">
           <TransitionChild
             as="template"
             enter="ease-out duration-300"
@@ -33,18 +29,13 @@
             >
               <div>
                 <div class="mt-3 text-center">
-                  <DialogTitle
-                    as="h3"
-                    class="text-base font-semibold leading-6 text-gray-900"
+                  <DialogTitle as="h3" class="text-base font-semibold leading-6 text-gray-900"
                     >Add New Tab</DialogTitle
                   >
                 </div>
               </div>
               <div>
-                <label
-                  for="tabName"
-                  class="block text-sm font-medium leading-6 text-gray-900"
-                >
+                <label for="tabName" class="block text-sm font-medium leading-6 text-gray-900">
                   Name of New Tab
                 </label>
                 <div class="mt-2">
@@ -75,55 +66,49 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, ref, watch } from "vue";
-import {
-  Dialog,
-  DialogPanel,
-  DialogTitle,
-  TransitionChild,
-  TransitionRoot,
-} from "@headlessui/vue";
-import { LayoutManager } from "../../types";
+import { defineComponent, inject, ref, watch } from 'vue'
+import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
+import type { LayoutManager } from '@/types'
 
 export default defineComponent({
-  name: "AddTab",
+  name: 'AddTab',
   components: {
     Dialog,
     DialogPanel,
     DialogTitle,
     TransitionChild,
-    TransitionRoot,
+    TransitionRoot
   },
   props: {
     open: {
       type: Boolean,
-      default: true,
-    },
+      default: true
+    }
   },
-  emits: ["update:open"],
+  emits: ['update:open'],
   setup(props, { emit }) {
-    const isOpen = ref(props.open);
+    const isOpen = ref(props.open)
 
     watch(
       () => props.open,
       () => {
-        isOpen.value = props.open;
+        isOpen.value = props.open
       }
-    );
+    )
 
     function setIsOpen(value: boolean) {
-      isOpen.value = value;
-      emit("update:open", value);
+      isOpen.value = value
+      emit('update:open', value)
     }
 
-    const newTabName = ref("");
-    const layoutManager = inject("$widgetLayoutManager") as LayoutManager;
+    const newTabName = ref('')
+    const layoutManager = inject('$widgetLayoutManager') as LayoutManager
 
     function createTab() {
-      if (newTabName.value != "") {
-        layoutManager.createTab(newTabName.value);
-        newTabName.value = "";
-        layoutManager.currentTab = layoutManager.currentLayout.tabs.length - 1;
+      if (newTabName.value != '') {
+        layoutManager.createTab(newTabName.value)
+        newTabName.value = ''
+        layoutManager.currentTab = layoutManager.currentLayout.tabs.length - 1
       }
     }
 
@@ -132,10 +117,10 @@ export default defineComponent({
       isOpen,
       setIsOpen,
       newTabName,
-      createTab,
-    };
-  },
-});
+      createTab
+    }
+  }
+})
 </script>
 
 <style scoped>

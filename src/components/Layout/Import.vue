@@ -27,7 +27,7 @@
         </div>
       </div>
     </div>
-    <div v-if="this.layouts.length > 0" class="pt-4 max-h-56 overflow-y-auto">
+    <div v-if="layouts.length > 0" class="pt-4 max-h-56 overflow-y-auto">
       <table class="w-full">
         <thead>
           <tr>
@@ -36,9 +36,7 @@
             >
               Page
             </th>
-            <th
-              class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
-            >
+            <th class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">
               Layout Name
             </th>
             <th class="relative whitespace-nowrap py-3.5 pl-3 pr-4 sm:pr-0">
@@ -75,101 +73,96 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject } from "vue";
-import { LayoutManager, LayoutPage } from "../../types";
+import { defineComponent, inject } from 'vue'
+import type { LayoutManager, LayoutPage } from '@/types'
 
 export default defineComponent({
-  name: "ImportLayout",
+  name: 'ImportLayout',
   data() {
     return {
       files: [] as { name: string }[],
-      layouts: [] as LayoutPage[],
-    };
+      layouts: [] as LayoutPage[]
+    }
   },
   setup() {
-    const layoutManager = inject("$widgetLayoutManager") as LayoutManager;
+    const layoutManager = inject('$widgetLayoutManager') as LayoutManager
     return {
-      layoutManager,
-    };
+      layoutManager
+    }
   },
   methods: {
     importLayout(layoutID: number | string) {
-      const layoutIndex = this.layouts.findIndex(
-        (layout) => layout.id == layoutID
-      );
+      const layoutIndex = this.layouts.findIndex((layout) => layout.id == layoutID)
 
-      if (layoutIndex == -1) return;
+      if (layoutIndex == -1) return
 
-      const layout = this.layouts[layoutIndex];
-      this.layoutManager.addLayout(layout);
+      const layout = this.layouts[layoutIndex]
+      this.layoutManager.addLayout(layout)
 
-      this.layouts.splice(layoutIndex, 1);
+      this.layouts.splice(layoutIndex, 1)
     },
     openFileInput() {
       // Trigger file input click
-      const fileInput = this.$el.querySelector("#LayoutImport");
+      const fileInput = this.$el.querySelector('#LayoutImport')
       if (fileInput) {
-        fileInput.click();
+        fileInput.click()
       }
     },
     onFileSelection(e: Event) {
-      const input = e.target as HTMLInputElement;
+      const input = e.target as HTMLInputElement
       if (input.files) {
         for (let i = 0; i < input.files.length; i++) {
-          this.processFile(input.files[i]);
+          this.processFile(input.files[i])
         }
       }
       // Reset file input
-      input.value = "";
+      input.value = ''
     },
     onFileDrop(e: DragEvent) {
-      e.preventDefault();
-      e.stopPropagation();
-      const dt = e.dataTransfer;
-      if (dt === null) return;
+      e.preventDefault()
+      e.stopPropagation()
+      const dt = e.dataTransfer
+      if (dt === null) return
       if (dt.files) {
         for (let i = 0; i < dt.files.length; i++) {
-          this.processFile(dt.files[i]);
+          this.processFile(dt.files[i])
         }
       }
     },
     processFile(file: File) {
-      const reader = new FileReader();
+      const reader = new FileReader()
 
       reader.onload = (event) => {
-        if (event.target == null) return;
-        const content = event.target.result as string;
+        if (event.target == null) return
+        const content = event.target.result as string
         try {
-          const jsonData = JSON.parse(content);
+          const jsonData = JSON.parse(content)
           if (Array.isArray(jsonData)) {
             for (let layout of jsonData as LayoutPage[]) {
-              if (layout == null) return;
+              if (layout == null) return
               if (
-                this.layouts.findIndex(
-                  (layoutForImport) => layoutForImport.id === layout.id
-                ) == -1
+                this.layouts.findIndex((layoutForImport) => layoutForImport.id === layout.id) == -1
               )
-                this.layouts.push(layout);
+                this.layouts.push(layout)
             }
-          } else if (typeof jsonData === "object" && jsonData !== null) {
+          } else if (typeof jsonData === 'object' && jsonData !== null) {
             if (
               this.layouts.findIndex(
-                (layoutForImport) =>
-                  layoutForImport.id === (jsonData as LayoutPage).id
+                (layoutForImport) => layoutForImport.id === (jsonData as LayoutPage).id
               ) == -1
             )
-              this.layouts.push(jsonData as LayoutPage);
+              this.layouts.push(jsonData as LayoutPage)
           } else {
-            console.log("Data apears to be corrupt.");
+            console.log('Data apears to be corrupt.')
           }
           // Process the Data
         } catch (error) {
-          console.error("Error parsing JSON:", error);
+          console.error('Error parsing JSON:', error)
         }
-      };
+      }
 
-      reader.readAsText(file);
-    },
-  },
-});
+      reader.readAsText(file)
+    }
+  }
+})
 </script>

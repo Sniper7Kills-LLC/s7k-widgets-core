@@ -10,15 +10,11 @@
         leave-from="opacity-100"
         leave-to="opacity-0"
       >
-        <div
-          class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-        />
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
       </TransitionChild>
 
       <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
-        <div
-          class="flex min-h-full items-end justify-center text-center sm:items-center sm:p-0"
-        >
+        <div class="flex min-h-full items-end justify-center text-center sm:items-center sm:p-0">
           <TransitionChild
             as="template"
             enter="ease-out duration-300"
@@ -33,9 +29,7 @@
             >
               <div>
                 <div class="mt-3 text-center">
-                  <DialogTitle
-                    as="h3"
-                    class="text-base font-semibold leading-6 text-gray-900"
+                  <DialogTitle as="h3" class="text-base font-semibold leading-6 text-gray-900"
                     >Reorder Tabs</DialogTitle
                   >
                 </div>
@@ -59,8 +53,8 @@
                   class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   @click="
                     () => {
-                      layoutManager.save();
-                      setIsOpen(false);
+                      layoutManager.save()
+                      setIsOpen(false)
                     }
                   "
                 >
@@ -76,64 +70,58 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, ref, watch } from "vue";
-import {
-  Dialog,
-  DialogPanel,
-  DialogTitle,
-  TransitionChild,
-  TransitionRoot,
-} from "@headlessui/vue";
-import draggable from "vuedraggable";
-import { LayoutManager } from "../../types";
+import { defineComponent, inject, ref, watch } from 'vue'
+import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
+import draggable from 'vuedraggable'
+import type { LayoutManager } from '@/types'
 
 export default defineComponent({
-  name: "ReorderTabs",
+  name: 'ReorderTabs',
   components: {
     Dialog,
     DialogPanel,
     DialogTitle,
     TransitionChild,
     TransitionRoot,
-    draggable,
+    draggable
   },
   props: {
     open: {
       type: Boolean,
-      default: true,
-    },
+      default: true
+    }
   },
   data() {
     return {
-      drag: false,
-    };
+      drag: false
+    }
   },
-  emits: ["update:open"],
+  emits: ['update:open'],
   setup(props, { emit }) {
-    const isOpen = ref(props.open);
+    const isOpen = ref(props.open)
 
     watch(
       () => props.open,
       () => {
-        isOpen.value = props.open;
+        isOpen.value = props.open
       }
-    );
+    )
 
     function setIsOpen(value: boolean) {
-      isOpen.value = value;
-      emit("update:open", value);
+      isOpen.value = value
+      emit('update:open', value)
     }
 
-    const layoutManager = inject("$widgetLayoutManager") as LayoutManager;
+    const layoutManager = inject('$widgetLayoutManager') as LayoutManager
 
     // Expose data and methods to the template
     return {
       isOpen,
       setIsOpen,
-      layoutManager,
-    };
-  },
-});
+      layoutManager
+    }
+  }
+})
 </script>
 
 <style scoped>

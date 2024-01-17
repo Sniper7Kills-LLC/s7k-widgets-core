@@ -9,7 +9,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true,
-
+    "lib": ["ESNext", "DOM"],
     "skipLibCheck": true,
     "noEmit": true,
     "allowJs": true,
@@ -24,27 +24,8 @@
       "@/*": [
         "./src/*"
       ]
-    },
-    "sourceMap": true,
-    "types": [
-      "webpack-env"
-    ],
-    "lib": [
-      "ESNext",
-      "DOM",
-      "dom.iterable",
-      "scripthost"
-    ],
-    "composite": true,
+    }
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "tests/**/*.ts",
-    "tests/**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }
