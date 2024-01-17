@@ -1,6 +1,6 @@
 {
-  "name": "widgets-core",
-  "version": "0.0.0",
+  "name": "@s7k-widgets/core",
+  "version": "0.0.1",
   "private": false,
   "type": "module",
   "files": [
