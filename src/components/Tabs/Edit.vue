@@ -21,7 +21,7 @@
           <button
             :class="[
               active ? 'bg-violet-500 text-white' : 'text-gray-900',
-              'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+              'group flex w-full items-center rounded-md px-2 py-2 text-sm'
             ]"
             @click="addTabOpen = true"
           >
@@ -32,7 +32,7 @@
           <button
             :class="[
               active ? 'bg-violet-500 text-white' : 'text-gray-900',
-              'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+              'group flex w-full items-center rounded-md px-2 py-2 text-sm'
             ]"
             @click="reorderTabsOpen = true"
           >
@@ -47,31 +47,31 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
-import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
-import AddTab from "./Add.vue";
-import ReorderTabs from "./Reorder.vue";
-// import { LayoutManager } from "../../types";
+import { defineComponent, ref } from 'vue'
+import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
+import AddTab from './Add.vue'
+import ReorderTabs from './Reorder.vue'
+// import type { LayoutManager } from "@/types";
 
 export default defineComponent({
-  name: "EditTabs",
+  name: 'EditTabs',
   components: {
     Menu,
     MenuButton,
     MenuItems,
     MenuItem,
     AddTab,
-    ReorderTabs,
+    ReorderTabs
   },
   setup() {
-    const addTabOpen = ref(false);
-    const reorderTabsOpen = ref(false);
+    const addTabOpen = ref(false)
+    const reorderTabsOpen = ref(false)
     // const layoutManager = inject("$widgetLayoutManager") as LayoutManager;
 
     return {
       reorderTabsOpen,
-      addTabOpen,
-    };
-  },
-});
+      addTabOpen
+    }
+  }
+})
 </script>

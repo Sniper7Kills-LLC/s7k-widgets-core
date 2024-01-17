@@ -1,5 +1,5 @@
 <template>
-  <Listbox v-model="selectedLayoutID" :key="layoutManager.getLayoutNames()">
+  <Listbox v-model="selectedLayoutID" :key="sha512(JSON.stringify(layoutManager.getLayoutNames()))">
     <div class="relative mt-2 z-50">
       <ListboxButton
         class="relative w-48 cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm"
@@ -24,22 +24,18 @@
             <li
               :class="[
                 active ? 'bg-indigo-600 text-white' : 'text-gray-900',
-                'relative cursor-default select-none py-2 pl-3 pr-9',
+                'relative cursor-default select-none py-2 pl-3 pr-9'
               ]"
             >
-              <span
-                :class="[
-                  selected ? 'font-semibold' : 'font-normal',
-                  'block truncate',
-                ]"
-                >{{ layout.name }}</span
-              >
+              <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">{{
+                layout.name
+              }}</span>
 
               <span
                 v-if="selected"
                 :class="[
                   active ? 'text-white' : 'text-indigo-600',
-                  'absolute inset-y-0 right-0 flex items-center pr-4',
+                  'absolute inset-y-0 right-0 flex items-center pr-4'
                 ]"
               >
                 <CheckIcon class="h-5 w-5" aria-hidden="true" />
@@ -52,45 +48,42 @@
   </Listbox>
 </template>
 <script lang="ts">
-import { defineComponent, inject, ref, watch } from "vue";
-import { CheckIcon } from "@heroicons/vue/24/solid";
-import {
-  Listbox,
-  ListboxButton,
-  ListboxOptions,
-  ListboxOption,
-} from "@headlessui/vue";
+import { defineComponent, inject, ref, watch } from 'vue'
+import { CheckIcon } from '@heroicons/vue/24/solid'
+import { Listbox, ListboxButton, ListboxOptions, ListboxOption } from '@headlessui/vue'
+import sha512 from 'crypto-js/sha512'
 
-import { LayoutManager } from "../../types";
+import type { LayoutManager } from '@/types'
 
 export default defineComponent({
-  name: "SelectWidgetLayout",
+  name: 'SelectWidgetLayout',
   components: {
     Listbox,
     ListboxButton,
     ListboxOptions,
     ListboxOption,
-    CheckIcon,
+    CheckIcon
   },
   setup() {
-    const layoutManager = inject("$widgetLayoutManager") as LayoutManager;
-    const selectedLayoutID = ref(layoutManager.currentLayout.id);
+    const layoutManager = inject('$widgetLayoutManager') as LayoutManager
+    const selectedLayoutID = ref(layoutManager.currentLayout.id)
 
     watch(selectedLayoutID, (newID: number | string) => {
-      layoutManager.setLayout(newID);
-    });
+      layoutManager.setLayout(newID)
+    })
 
     watch(
       () => layoutManager.currentLayout.id,
       () => {
-        selectedLayoutID.value = layoutManager.currentLayout.id;
+        selectedLayoutID.value = layoutManager.currentLayout.id
       }
-    );
+    )
 
     return {
       selectedLayoutID,
       layoutManager,
-    };
-  },
-});
+      sha512
+    }
+  }
+})
 </script>

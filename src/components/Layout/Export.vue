@@ -9,9 +9,7 @@
             >
               Page
             </th>
-            <th
-              class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900"
-            >
+            <th class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">
               Layout Name
             </th>
             <th class="relative whitespace-nowrap py-3.5 pl-3 pr-4 sm:pr-0">
@@ -45,74 +43,69 @@
       </button>
     </div>
     <div v-else>
-      <p class="text-center text-bold px-3.5 py-2.5">
-        No Saved Layouts To Export.
-      </p>
+      <p class="text-center text-bold px-3.5 py-2.5">No Saved Layouts To Export.</p>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, inject, ref } from "vue";
-import { LayoutManager, LayoutPage } from "../../types";
+import { defineComponent, inject, ref } from 'vue'
+import type { LayoutManager, LayoutPage } from '@/types'
 
 export default defineComponent({
-  name: "ExportLayout",
+  name: 'ExportLayout',
   setup() {
     // Use inject in the setup function
-    const layoutManager = inject("$widgetLayoutManager") as LayoutManager;
+    const layoutManager = inject('$widgetLayoutManager') as LayoutManager
 
-    const layouts = layoutManager.savedLayouts;
+    const layouts = layoutManager.savedLayouts
 
     type ExportableLayout = LayoutPage & {
-      shouldExport?: boolean;
-    };
+      shouldExport?: boolean
+    }
 
-    const savedLayouts = ref<ExportableLayout[]>([
-      ...layouts.map((layout) => ({ ...layout })),
-    ]);
+    const savedLayouts = ref<ExportableLayout[]>([...layouts.map((layout) => ({ ...layout }))])
 
     function downloadLayouts() {
       const exportLayouts = savedLayouts.value
         // Get the ones set to be exported
         .filter((layout) => {
-          return layout.shouldExport;
+          return layout.shouldExport
         })
         // Remove "Should Export" variable to false
         .map(
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          ({ shouldExport, ...layoutWithoutShouldExport }) =>
-            layoutWithoutShouldExport
-        );
+          ({ shouldExport, ...layoutWithoutShouldExport }) => layoutWithoutShouldExport
+        )
       // Set Default to Fale
       exportLayouts.forEach((layout) => {
-        layout.default = false;
-      });
+        layout.default = false
+      })
 
-      if (exportLayouts.length == 0) return;
+      if (exportLayouts.length == 0) return
 
       const dataUri = `data:application/json;charset=utf-8,${encodeURIComponent(
         JSON.stringify(exportLayouts)
-      )}`;
-      const filename = "WidgetLayouts.json";
+      )}`
+      const filename = 'WidgetLayouts.json'
 
-      const anchorEl = document.createElement("a");
-      anchorEl.href = dataUri;
-      anchorEl.download = filename;
-      document.body.appendChild(anchorEl);
-      anchorEl.click();
-      document.body.removeChild(anchorEl);
+      const anchorEl = document.createElement('a')
+      anchorEl.href = dataUri
+      anchorEl.download = filename
+      document.body.appendChild(anchorEl)
+      anchorEl.click()
+      document.body.removeChild(anchorEl)
 
       // Reset the SavedLayouts
       savedLayouts.value.forEach((layout) => {
-        layout.shouldExport = false;
-      });
+        layout.shouldExport = false
+      })
     }
 
     return {
       savedLayouts,
       layoutManager,
-      downloadLayouts,
-    };
-  },
-});
+      downloadLayouts
+    }
+  }
+})
 </script>

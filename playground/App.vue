@@ -1,31 +1,13 @@
 <template>
-  <!-- <div class="text-xs">
-    {{ layoutManager.defaultLayouts[0] }}
-  </div>
-  <hr />
-  <div class="text-xs">
-    {{ layoutManager.currentLayout }}
-  </div> -->
-  <!-- <div class="text-xs">
-    {{ widgetManager.widgets }}
-  </div> -->
-  <div class="bg-white dark:bg-gray-700">
-    <ModeSelector></ModeSelector>
-    <WidgetsPage page="test-page" :default-layouts="layouts"></WidgetsPage>
-  </div>
+  <ModeSelector></ModeSelector>
+  <WidgetsPage page="test-page" :default-layouts="layouts"></WidgetsPage>
 </template>
 
 <script setup lang="ts">
 import ModeSelector from "./components/Mode.vue";
-import { LayoutPage } from "../types";
+import WidgetsPage from "../src/components/Page.vue"
 import { v4 as uuidv4 } from "uuid";
-import { WidgetManager, LayoutManager } from "../src/types";
-import { inject } from "vue";
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const widgetManager = inject("$widgetManager") as WidgetManager;
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const layoutManager = inject("$widgetLayoutManager") as LayoutManager;
+import type { LayoutPage } from "../src/types";
 
 const layouts: LayoutPage[] = [
   {
@@ -134,4 +116,6 @@ const layouts: LayoutPage[] = [
 ];
 </script>
 
-<style></style>
+<style scoped>
+
+</style>

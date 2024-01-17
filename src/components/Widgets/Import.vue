@@ -27,7 +27,7 @@
         </div>
       </div>
     </div>
-    <div v-if="this.widgets.length > 0" class="pt-4 max-h-56 overflow-y-auto">
+    <div v-if="widgets.length > 0" class="pt-4 max-h-56 overflow-y-auto">
       <table class="w-full">
         <thead>
           <tr>
@@ -62,101 +62,96 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject } from "vue";
-import type { WidgetManager, ManagedWidget } from "../../types";
+import { defineComponent, inject } from 'vue'
+import type { WidgetManager, ManagedWidget } from '@/types'
 
 export default defineComponent({
-  name: "ImportWidget",
+  name: 'ImportWidget',
   data() {
     return {
       files: [] as { name: string }[],
-      widgets: [] as ManagedWidget[],
-    };
+      widgets: [] as ManagedWidget[]
+    }
   },
   setup() {
-    const widgetManager = inject("$widgetManager") as WidgetManager;
+    const widgetManager = inject('$widgetManager') as WidgetManager
     return {
-      widgetManager,
-    };
+      widgetManager
+    }
   },
   methods: {
     importWidget(widgetID: number | string) {
-      const widgetIndex = this.widgets.findIndex(
-        (widget) => widget.id == widgetID
-      );
+      const widgetIndex = this.widgets.findIndex((widget) => widget.id == widgetID)
 
-      if (widgetIndex == -1) return;
+      if (widgetIndex == -1) return
 
-      const widget = this.widgets[widgetIndex];
-      this.widgetManager.addUserWidget(widget);
+      const widget = this.widgets[widgetIndex]
+      this.widgetManager.addUserWidget(widget)
 
-      this.widgets.splice(widgetIndex, 1);
+      this.widgets.splice(widgetIndex, 1)
     },
     openFileInput() {
       // Trigger file input click
-      const fileInput = this.$el.querySelector("#WidgetImport");
+      const fileInput = this.$el.querySelector('#WidgetImport')
       if (fileInput) {
-        fileInput.click();
+        fileInput.click()
       }
     },
     onFileSelection(e: Event) {
-      const input = e.target as HTMLInputElement;
+      const input = e.target as HTMLInputElement
       if (input.files) {
         for (let i = 0; i < input.files.length; i++) {
-          this.processFile(input.files[i]);
+          this.processFile(input.files[i])
         }
       }
       // Reset file input
-      input.value = "";
+      input.value = ''
     },
     onFileDrop(e: DragEvent) {
-      e.preventDefault();
-      e.stopPropagation();
-      const dt = e.dataTransfer;
-      if (dt === null) return;
+      e.preventDefault()
+      e.stopPropagation()
+      const dt = e.dataTransfer
+      if (dt === null) return
       if (dt.files) {
         for (let i = 0; i < dt.files.length; i++) {
-          this.processFile(dt.files[i]);
+          this.processFile(dt.files[i])
         }
       }
     },
     processFile(file: File) {
-      const reader = new FileReader();
+      const reader = new FileReader()
 
       reader.onload = (event) => {
-        if (event.target == null) return;
-        const content = event.target.result as string;
+        if (event.target == null) return
+        const content = event.target.result as string
         try {
-          const jsonData = JSON.parse(content);
+          const jsonData = JSON.parse(content)
           if (Array.isArray(jsonData)) {
             for (let widget of jsonData as ManagedWidget[]) {
-              if (widget == null) return;
+              if (widget == null) return
               if (
-                this.widgets.findIndex(
-                  (widgetForImport) => widgetForImport.id === widget.id
-                ) == -1
+                this.widgets.findIndex((widgetForImport) => widgetForImport.id === widget.id) == -1
               )
-                this.widgets.push(widget);
+                this.widgets.push(widget)
             }
-          } else if (typeof jsonData === "object" && jsonData !== null) {
+          } else if (typeof jsonData === 'object' && jsonData !== null) {
             if (
               this.widgets.findIndex(
-                (widgetForImport) =>
-                  widgetForImport.id === (jsonData as ManagedWidget).id
+                (widgetForImport) => widgetForImport.id === (jsonData as ManagedWidget).id
               ) == -1
             )
-              this.widgets.push(jsonData as ManagedWidget);
+              this.widgets.push(jsonData as ManagedWidget)
           } else {
-            console.log("Data apears to be corrupt.");
+            console.log('Data apears to be corrupt.')
           }
           // Process the Data
         } catch (error) {
-          console.error("Error parsing JSON:", error);
+          console.error('Error parsing JSON:', error)
         }
-      };
+      }
 
-      reader.readAsText(file);
-    },
-  },
-});
+      reader.readAsText(file)
+    }
+  }
+})
 </script>

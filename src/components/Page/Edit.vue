@@ -21,18 +21,18 @@
           <button
             :class="[
               active ? 'bg-violet-500 text-white' : 'text-gray-900',
-              'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+              'group flex w-full items-center rounded-md px-2 py-2 text-sm'
             ]"
             @click="toggleEditMode"
           >
-            {{ editMode ? "Save" : "Edit" }}
+            {{ editMode ? 'Save' : 'Edit' }}
           </button>
         </MenuItem>
         <MenuItem v-slot="{ active }">
           <button
             :class="[
               active ? 'bg-violet-500 text-white' : 'text-gray-900',
-              'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+              'group flex w-full items-center rounded-md px-2 py-2 text-sm'
             ]"
             @click="setDefaultLayout"
           >
@@ -43,7 +43,7 @@
           <button
             :class="[
               active ? 'bg-violet-500 text-white' : 'text-gray-900',
-              'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+              'group flex w-full items-center rounded-md px-2 py-2 text-sm'
             ]"
             @click="deleteLayout"
           >
@@ -54,7 +54,7 @@
           <button
             :class="[
               active ? 'bg-violet-500 text-white' : 'text-gray-900',
-              'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+              'group flex w-full items-center rounded-md px-2 py-2 text-sm'
             ]"
             @click="importExportOpen = true"
           >
@@ -65,7 +65,7 @@
           <button
             :class="[
               active ? 'bg-violet-500 text-white' : 'text-gray-900',
-              'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+              'group flex w-full items-center rounded-md px-2 py-2 text-sm'
             ]"
             @click="registerWidgetOpen = true"
           >
@@ -80,53 +80,53 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch, inject } from "vue";
-import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
-import RegisterWidget from "../Widgets/Register.vue";
-import ImportExportLayout from "../Layout/ImportExport.vue";
-import { LayoutManager } from "../../types";
+import { defineComponent, ref, watch, inject } from 'vue'
+import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
+import RegisterWidget from '../Widgets/Register.vue'
+import ImportExportLayout from '../Layout/ImportExport.vue'
+import type { LayoutManager } from '@/types'
 
 export default defineComponent({
-  name: "EditWidgetsPage",
+  name: 'EditWidgetsPage',
   components: {
     RegisterWidget,
     ImportExportLayout,
     Menu,
     MenuButton,
     MenuItems,
-    MenuItem,
+    MenuItem
   },
   props: {
     modelValue: {
       type: Boolean,
-      required: true,
-    },
+      required: true
+    }
   },
-  emits: ["update:modelValue"],
+  emits: ['update:modelValue'],
   setup(props, { emit }) {
-    const editMode = ref(props.modelValue);
-    const importExportOpen = ref(false);
-    const registerWidgetOpen = ref(false);
-    const layoutManager = inject("$widgetLayoutManager") as LayoutManager;
+    const editMode = ref(props.modelValue)
+    const importExportOpen = ref(false)
+    const registerWidgetOpen = ref(false)
+    const layoutManager = inject('$widgetLayoutManager') as LayoutManager
 
     watch(
       () => props.modelValue,
       (newValue) => {
-        editMode.value = newValue;
+        editMode.value = newValue
       }
-    );
+    )
 
     const toggleEditMode = () => {
-      editMode.value = !editMode.value;
-      emit("update:modelValue", editMode.value);
-    };
+      editMode.value = !editMode.value
+      emit('update:modelValue', editMode.value)
+    }
 
     function setDefaultLayout(): void {
-      layoutManager.setDefaultLayout(layoutManager.currentLayout.id);
+      layoutManager.setDefaultLayout(layoutManager.currentLayout.id)
     }
 
     function deleteLayout(): void {
-      layoutManager.deleteLayout(layoutManager.currentLayout.id);
+      layoutManager.deleteLayout(layoutManager.currentLayout.id)
     }
 
     return {
@@ -135,8 +135,8 @@ export default defineComponent({
       registerWidgetOpen,
       toggleEditMode,
       setDefaultLayout,
-      deleteLayout,
-    };
-  },
-});
+      deleteLayout
+    }
+  }
+})
 </script>

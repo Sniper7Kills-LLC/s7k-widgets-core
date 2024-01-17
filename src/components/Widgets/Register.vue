@@ -10,9 +10,7 @@
         leave-from="opacity-100"
         leave-to="opacity-0"
       >
-        <div
-          class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-        />
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
       </TransitionChild>
 
       <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
@@ -33,9 +31,7 @@
             >
               <div>
                 <div class="mt-3 text-center">
-                  <DialogTitle
-                    as="h3"
-                    class="text-base font-semibold leading-6 text-gray-900"
+                  <DialogTitle as="h3" class="text-base font-semibold leading-6 text-gray-900"
                     >Register Widget</DialogTitle
                   >
                   <DialogDescription class="mt-2 text-sm text-gray-500">
@@ -53,21 +49,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from "vue";
+import { defineComponent, ref, watch } from 'vue'
 import {
   Dialog,
   DialogPanel,
   DialogTitle,
   DialogDescription,
   TransitionChild,
-  TransitionRoot,
-} from "@headlessui/vue";
-//import { WidgetManager } from "../../types";
+  TransitionRoot
+} from '@headlessui/vue'
+//import type { WidgetManager } from "@/types";
 
-import ImportWidget from "./Import.vue";
+import ImportWidget from './Import.vue'
 
 export default defineComponent({
-  name: "RegisterWidget",
+  name: 'RegisterWidget',
   components: {
     Dialog,
     DialogPanel,
@@ -75,37 +71,37 @@ export default defineComponent({
     DialogDescription,
     TransitionChild,
     TransitionRoot,
-    ImportWidget,
+    ImportWidget
   },
   props: {
     open: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
-  emits: ["update:open"],
+  emits: ['update:open'],
   setup(props, { emit }) {
-    const isOpen = ref(false);
+    const isOpen = ref(false)
 
     watch(
       () => props.open,
       () => {
-        isOpen.value = props.open;
+        isOpen.value = props.open
       }
-    );
+    )
 
     function setIsOpen(value: boolean) {
-      isOpen.value = value;
-      emit("update:open", value);
+      isOpen.value = value
+      emit('update:open', value)
     }
 
     // Expose data and methods to the template
     return {
       isOpen,
-      setIsOpen,
-    };
-  },
-});
+      setIsOpen
+    }
+  }
+})
 </script>
 
 <style scoped>

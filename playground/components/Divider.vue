@@ -41,15 +41,17 @@
   </WidgetInterface>
 </template>
 <script lang="ts">
+import { defineComponent } from "vue";
 import WidgetInterface from "../../src/components/Widget.vue";
-import defineWidget from "../../src/defineWidget";
+import defaultWidgetComponent from "../../src/defineWidget";
 
-export default defineWidget({
+export default defineComponent({
   name: "WidgetDivider",
   components: {
     WidgetInterface,
   },
   props: {
+    ...defaultWidgetComponent.props,
     label: {
       type: String,
       default: "Divider",

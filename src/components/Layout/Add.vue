@@ -28,35 +28,35 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, inject, ref, watch } from "vue";
-import { LayoutManager } from "../../types";
+import { defineComponent, inject, ref, watch } from 'vue'
+import type { LayoutManager } from '@/types'
 
 export default defineComponent({
-  name: "AddLayout",
+  name: 'AddLayout',
   setup() {
-    const layoutName = ref("");
-    const layoutManager = inject("$widgetLayoutManager") as LayoutManager;
+    const layoutName = ref('')
+    const layoutManager = inject('$widgetLayoutManager') as LayoutManager
 
-    layoutName.value = layoutManager.currentLayout.name;
+    layoutName.value = layoutManager.currentLayout.name
 
     watch(layoutManager, () => {
-      layoutName.value = layoutManager.currentLayout.name;
-    });
+      layoutName.value = layoutManager.currentLayout.name
+    })
 
     function createNewLayout() {
-      layoutManager.createLayout(layoutName.value);
+      layoutManager.createLayout(layoutName.value)
     }
 
     function renameLayout() {
-      layoutManager.currentLayout.name = layoutName.value;
-      layoutManager.save();
+      layoutManager.currentLayout.name = layoutName.value
+      layoutManager.save()
     }
 
     return {
       layoutName,
       createNewLayout,
-      renameLayout,
-    };
-  },
-});
+      renameLayout
+    }
+  }
+})
 </script>

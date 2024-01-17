@@ -34,54 +34,54 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, inject } from "vue";
-import EditWidgetsPage from "./Page/Edit.vue";
-import SelectWidgetLayout from "./Layout/Select.vue";
-import AddLayout from "./Layout/Add.vue";
-import AddWidget from "./Widgets/Add.vue";
-import { LayoutPage, LayoutManager, LayoutWidget } from "../types";
+import { defineComponent, ref, onMounted, inject } from 'vue'
+import EditWidgetsPage from './Page/Edit.vue'
+import SelectWidgetLayout from './Layout/Select.vue'
+import AddLayout from './Layout/Add.vue'
+import AddWidget from './Widgets/Add.vue'
+import type { LayoutPage, LayoutManager, LayoutWidget } from '@/types'
 
 export default defineComponent({
-  name: "WidgetsPage",
+  name: 'WidgetsPage',
   props: {
     page: {
       type: String,
-      default: "index",
+      default: 'index'
     },
     defaultLayouts: {
       type: Array as () => LayoutPage[],
-      required: true,
-    },
+      required: true
+    }
   },
   components: {
     AddLayout,
     AddWidget,
     EditWidgetsPage,
-    SelectWidgetLayout,
+    SelectWidgetLayout
   },
   setup(props) {
-    const inEditMode = ref(false);
+    const inEditMode = ref(false)
 
-    const layoutManager = inject("$widgetLayoutManager") as LayoutManager;
+    const layoutManager = inject('$widgetLayoutManager') as LayoutManager
 
     // Fetch widgets on component mount
     onMounted(() => {
       if (layoutManager) {
-        layoutManager.setPage(props.page, props.defaultLayouts);
+        layoutManager.setPage(props.page, props.defaultLayouts)
       }
-    });
+    })
 
     function gridUpdated(input: LayoutWidget[]) {
-      layoutManager.updateGrid(input, layoutManager.currentLayout.grid.id);
+      layoutManager.updateGrid(input, layoutManager.currentLayout.grid.id)
     }
 
     return {
       inEditMode,
       gridUpdated,
-      layoutManager,
-    };
-  },
-});
+      layoutManager
+    }
+  }
+})
 </script>
 
 <style scoped>

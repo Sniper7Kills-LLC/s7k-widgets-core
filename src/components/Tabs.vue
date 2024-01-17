@@ -6,20 +6,15 @@
   <TabGroup
     :selected-index="currentTab"
     @change="changeTab"
-    :key="layoutManager.currentLayout.tabs"
+    :key="sha512(JSON.stringify(layoutManager.currentLayout.tabs)).toString()"
   >
     <TabList class="flex rounded-lg shadow">
-      <Tab
-        as="template"
-        v-slot="{ selected }"
-        v-for="tab in $props.tabs"
-        :key="tab.id"
-      >
+      <Tab as="template" v-slot="{ selected }" v-for="tab in $props.tabs" :key="tab.id">
         <button
           :class="{
             'border-indigo-500 text-indigo-600': selected,
             'text-gray-500 border-gray-200': !selected,
-            'w-full border-b-2 py-4 px-1 text-center text-sm font-medium': true,
+            'w-full border-b-2 py-4 px-1 text-center text-sm font-medium': true
           }"
         >
           <div class="flex flex-grow justify-center items-center">
@@ -39,11 +34,7 @@
                 stroke="currentColor"
                 class="w-6 h-6"
               >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6 18 18 6M6 6l12 12"
-                />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
               </svg>
 
               <span class="visually-hidden">Edit Properties</span>
@@ -57,29 +48,30 @@
         <WidgetsGrid
           :layout="tab.grid"
           :inEditMode="inEditMode"
-          @layout-updated="(n) => gridUpdated(n)"
+          @layout-updated="(layout: LayoutWidget[]) => gridUpdated(layout)"
         ></WidgetsGrid>
       </TabPanel>
     </TabPanels>
   </TabGroup>
 </template>
 <script lang="ts">
-import { defineComponent, inject, ref, watch } from "vue";
-import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
-import EditTabs from "./Tabs/Edit.vue";
-import { LayoutManager, LayoutTab, LayoutWidget } from "../types";
+import { defineComponent, inject, ref, watch } from 'vue'
+import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
+import EditTabs from './Tabs/Edit.vue'
+import type { LayoutManager, LayoutTab, LayoutWidget } from '@/types'
+import sha512 from 'crypto-js/sha512'
 
 export default defineComponent({
-  name: "WidgetsTabs",
+  name: 'WidgetsTabs',
   props: {
     tabs: {
       type: Array as () => LayoutTab[],
-      required: true,
+      required: true
     },
     inEditMode: {
       type: Boolean,
-      required: true,
-    },
+      required: true
+    }
   },
   components: {
     EditTabs,
@@ -87,35 +79,32 @@ export default defineComponent({
     TabList,
     Tab,
     TabPanels,
-    TabPanel,
+    TabPanel
   },
   setup(props) {
-    const layoutManager = inject("$widgetLayoutManager") as LayoutManager;
+    const layoutManager = inject('$widgetLayoutManager') as LayoutManager
 
-    const currentTab = ref(0);
+    const currentTab = ref(0)
 
     watch(
       () => layoutManager.currentTab,
       () => {
-        currentTab.value = layoutManager.currentTab;
+        currentTab.value = layoutManager.currentTab
       }
-    );
+    )
 
     function changeTab(index: number) {
-      layoutManager.currentTab = index;
+      layoutManager.currentTab = index
     }
 
     function gridUpdated(input: LayoutWidget[]) {
-      const tab = props.tabs[layoutManager.currentTab];
-      tab.grid.items = input;
-      layoutManager.updateGrid(
-        input,
-        props.tabs[layoutManager.currentTab].grid.id
-      );
+      const tab = props.tabs[layoutManager.currentTab]
+      tab.grid.items = input
+      layoutManager.updateGrid(input, props.tabs[layoutManager.currentTab].grid.id)
     }
 
     function deleteTab(id: number | string) {
-      layoutManager.deleteTab(id);
+      layoutManager.deleteTab(id)
     }
 
     return {
@@ -124,9 +113,10 @@ export default defineComponent({
       changeTab,
       gridUpdated,
       deleteTab,
-    };
-  },
-});
+      sha512
+    }
+  }
+})
 </script>
 
 <style scoped>
