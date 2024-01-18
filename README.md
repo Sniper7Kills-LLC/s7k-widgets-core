@@ -2,7 +2,7 @@
 
 The s7k-widgets-core package is crafted to empower developers in enhancing user experiences by allowing customization of information display.
 
-![Edit Mode](./docs/images/page-edit.png.png)
+![Edit Mode](./docs/images/page-edit.png)
 
 ## Background
 
