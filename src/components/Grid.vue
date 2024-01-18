@@ -26,11 +26,6 @@
           'overflow-hidden'
         ]"
       >
-        <!-- <ModifyWidgetProperties
-            v-if="inEditMode"
-            :widgetId="item.i"
-            :settings="item.props"
-          ></ModifyWidgetProperties> -->
         <component
           :is="widgetManager.getComponent(item.widgetID)"
           :widget-id="item.i"

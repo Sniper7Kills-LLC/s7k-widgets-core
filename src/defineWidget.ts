@@ -1,4 +1,4 @@
-import type { ComponentPropsOptions } from 'vue'
+import type { Prop, ComponentObjectPropsOptions } from 'vue'
 
 export const props = {
   inEditMode: {
@@ -15,10 +15,22 @@ export const props = {
       return {}
     }
   }
-} satisfies ComponentPropsOptions
+};
+
+interface PropOptions<T = any, D = T> {
+  type?: any;
+  required?: boolean;
+  default?: any;
+}
+
+type RequiredWidgetProps = ComponentObjectPropsOptions& {
+  inEditMode: PropOptions,
+  widgetId: PropOptions,
+  settings: PropOptions,
+}
 
 type DefaultWidgetComponent = {
-    props: ComponentPropsOptions,
+    props: RequiredWidgetProps,
 }
 
 export default {
