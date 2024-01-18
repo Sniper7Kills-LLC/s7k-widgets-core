@@ -8,14 +8,25 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Release
+        uses: justincy/github-action-npm-release@v1.2.0
+        id: release
+      - name: Print release output
+        if: ${{ steps.release.outputs.released == 'true' }}
+        run: echo Release ID ${{ steps.release.outputs.release_id }}
       - name: Setup Node
+        if: ${{ steps.release.outputs.released == 'true' }}
         uses: actions/setup-node@v2
         with:
           node-version: '21.x'
           registry-url: 'https://registry.npmjs.org'
       - name: Install dependencies and build 🔧
+        if: ${{ steps.release.outputs.released == 'true' }}
         run: npm ci && npm run build
       - name: Publish package on NPM 📦
+        if: ${{ steps.release.outputs.released == 'true' }}
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
