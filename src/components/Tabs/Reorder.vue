@@ -38,6 +38,7 @@
                 @start="drag = true"
                 @end="drag = false"
                 v-model="layoutManager.currentLayout.tabs"
+                item-key="id"
               >
                 <template #item="{ element }">
                   <div

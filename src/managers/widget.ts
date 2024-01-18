@@ -49,7 +49,7 @@ const widgetManager: WidgetManager = reactive({
       const script = document.createElement('script')
 
       script.addEventListener('load', () => {
-        console.log('Widget.ts Loading')
+        //console.log('Widget.ts Loading')
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         resolve((window as Record<string, any>)[name])
       })

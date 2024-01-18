@@ -125,8 +125,6 @@ export default defineComponent({
         i: uuidv4(),
         moved: false
       } as LayoutWidget
-      console.log(selectedWidget.value)
-      console.log(widget)
 
       layoutManager.addWidgetToGrid(widget, gridID)
     }
@@ -147,5 +145,4 @@ export default defineComponent({
 </script>
 
 <style scoped>
-/* Your styling for the available widgets list component */
 </style>

@@ -1,6 +1,6 @@
 {
   "name": "s7k-widgets-core",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "private": false,
   "type": "module",
   "files": [
@@ -38,7 +38,7 @@
     "uuid": "^9.0.1",
     "vue": "^3.3.11",
     "vue-ts-responsive-grid-layout": "^1.2.7",
-    "vuedraggable": "^2.24.3"
+    "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.3.3",

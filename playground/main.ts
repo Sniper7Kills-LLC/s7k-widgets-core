@@ -4,8 +4,6 @@ import WidgetsDivider from "./components/Divider.vue";
 
 import WidgetsPlugin from "../src/main";
 
-console.log(WidgetsPlugin);
-
 const app = createApp(App)
 
 const WidgetsPluginOptions: WidgetsPluginOptions = {
