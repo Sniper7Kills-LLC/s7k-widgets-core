@@ -36,7 +36,9 @@ Create a `plugins/widgets.client.ts` file within your application with the follo
 
 ```typescript
 // Import Plugin and Plugin Options Type
-import { WidgetsPlugin, WidgetsPluginOptions } from "s7k-widgets-core";
+import { type WidgetsPluginOptions } from "s7k-widgets-core";
+import WidgetsPlugin from "s7k-widgets-core";
+import "s7k-widgets-core/dist/widgets-core.css"
 
 // Define the Plugin Options
 const WidgetsPluginOptions: WidgetsPluginOptions = {
@@ -61,7 +63,9 @@ import App from "./App.vue";
 const app = createApp(App);
 
 // Import the Widget Plugin and Options Type Definition
-import { WidgetsPlugin, WidgetsPluginOptions } from "s7k-widgets-core";
+import { type WidgetsPluginOptions } from "s7k-widgets-core";
+import WidgetsPlugin from "s7k-widgets-core";
+import "s7k-widgets-core/dist/widgets-core.css"
 
 // Define the Plugin Options
 const WidgetsPluginOptions: WidgetsPluginOptions = {
@@ -207,10 +211,14 @@ const widgetTab = {
     // The name of the tab
     name: "Tab"
     // The widget grid for this tab
-    grid: [
-        // The widgets on this grid
-        gridItem,
-    ]
+    grid: {
+        // ID of the Grid
+        id: "0000-000-000-0000",
+        // Items on the Grid
+        items: [
+            gridItem
+        ]
+    }
 } as T.LayoutTab;
 
 const myLayout = {
@@ -221,10 +229,14 @@ const myLayout = {
     // Is this the 'default' layout provided by the application for this page
     default: false,
     // The widget Grid
-    grid: [
-        // The widgets on this grid
-        gridItem,
-    ],
+    grid: {
+        // ID of the Grid
+        id: "0000-000-000-0000",
+        // Items on the Grid
+        items: [
+            gridItem
+        ]
+    }
     // Does this layout have tabs?
     hasTabs: true,
     // The tabs for this layout

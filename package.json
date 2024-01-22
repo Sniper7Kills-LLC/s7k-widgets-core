@@ -1,6 +1,11 @@
 {
   "name": "s7k-widgets-core",
-  "version": "0.0.4",
+  "homepage": "https://github.com/Sniper7Kills-LLC/s7k-widgets-core/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Sniper7Kills-LLC/s7k-widgets-core.git"
+  },
+  "version": "0.0.5",
   "private": false,
   "type": "module",
   "files": [
