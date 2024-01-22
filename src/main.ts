@@ -2,7 +2,8 @@ import type { App } from 'vue'
 import type { ManagedWidget } from '@/types'
 import { WidgetsGrid, WidgetsPage, WidgetsTabs, WidgetInterface } from '@/components'
 import { WidgetManager, LayoutManager } from '@/managers'
-import './styles.css'
+
+import 'primeicons/primeicons.css'
 
 export type WidgetsPluginOptions = {
   widgets?: ManagedWidget[] // Adjust the type based on your widget structure

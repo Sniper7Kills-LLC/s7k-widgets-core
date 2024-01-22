@@ -1,7 +1,6 @@
 <template>
   <div id="GridLayout" :grid-id="$props.layout.id">
     <GridLayout
-      v-if="$props.layout"
       :layout="$props.layout.items"
       :col-num="3"
       @layout-updated="layoutUpdatedEvent"

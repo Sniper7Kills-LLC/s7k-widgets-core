@@ -1,6 +1,5 @@
 import { reactive } from 'vue'
 import type { LayoutManager, LayoutPage, LayoutWidget, LayoutGrid } from '@/types'
-import sha512 from 'crypto-js/sha512'
 import { v4 as uuidv4 } from 'uuid'
 
 const defaultLayout: LayoutPage = {
@@ -51,7 +50,7 @@ const layoutManager: LayoutManager = reactive({
   savedLayouts: [] as LayoutPage[],
   currentTab: 0,
   currentLayout: {
-    id: '0000-000-000-0000',
+    id: uuidv4(),
     page: 'default',
     name: 'default',
     default: false,
@@ -99,7 +98,7 @@ const layoutManager: LayoutManager = reactive({
     }
 
     if (layout === null) {
-      console.log('No Layout')
+      // console.log('No Layout')
       return
     }
     this.currentTab = 0
@@ -431,8 +430,8 @@ const layoutManager: LayoutManager = reactive({
        * Currently the changes to widgets is duplicated to the defaultLayouts and isn't static.
        * As such we are only able to identify when a widget is added/removed.
        */
-      const dHash = sha512(JSON.stringify(defaultLayout)).toString()
-      const cHash = sha512(JSON.stringify(this.currentLayout)).toString()
+      const dHash = JSON.stringify(defaultLayout).toString()
+      const cHash = JSON.stringify(this.currentLayout).toString()
       // console.log(dHash);
       // console.log(cHash);
       if (dHash === cHash) {

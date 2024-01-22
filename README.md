@@ -4,6 +4,9 @@ The s7k-widgets-core package is crafted to empower developers in enhancing user 
 
 ![Edit Mode](./docs/images/page-edit.png)
 
+> [!WARNING]  
+> This package is transitioning to using PrimeVue. Readme.md does not currently reflect this!
+
 ## Background
 
 This package originated from the necessity to present a large volume of data within a project to users. Given the size and complexity of the available data, creating different pages solely for displaying data based on user preferences or roles was impractical. Instead, this package was developed with the objective of componentizing the data and enabling users to select what data to display based on their preferences and needs.

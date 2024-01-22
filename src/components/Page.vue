@@ -1,40 +1,28 @@
 <template>
-  <div :class="[inEditMode ? 'sticky top-0' : '', 'z-10 m-2 bg-white']">
-    <div class="drop-shadow-md rounded-b-lg">
-      <div class="p-4 flex">
-        <div class="flex-grow">
-          <div class="flex">
-            <AddLayout v-if="inEditMode" />
-          </div>
-        </div>
-        <div class="flex justify-end">
-          <SelectWidgetLayout />
-          <EditWidgetsPage v-model="inEditMode"></EditWidgetsPage>
-        </div>
-      </div>
-      <div class="bg-white px-4 pb-2">
-        <AddWidget v-if="inEditMode"></AddWidget>
-      </div>
-    </div>
+  <div :class="[inEditMode ? 'sticky top-0' : '', 'z-10 flex justify-end']">
+    <SelectWidgetLayout />
+    <EditWidgetsPage v-model:editMode="inEditMode"></EditWidgetsPage>
   </div>
-  <div class="">
-    <template v-if="layoutManager.currentLayout">
-      <WidgetsGrid
-        :layout="layoutManager.currentLayout.grid"
-        :inEditMode="inEditMode"
-        @layout-updated="gridUpdated"
-      ></WidgetsGrid>
-      <WidgetsTabs
-        v-if="layoutManager.currentLayout.hasTabs"
-        :tabs="layoutManager.currentLayout.tabs"
-        :inEditMode="inEditMode"
-      />
-    </template>
+  <div class="" v-if="layoutManager.currentLayout">
+    <WidgetsGrid
+      :layout="layoutManager.currentLayout.grid"
+      :inEditMode="inEditMode"
+      @layout-updated="gridUpdated"
+    ></WidgetsGrid>
+    <WidgetsTabs
+      v-if="layoutManager.currentLayout.hasTabs"
+      :tabs="layoutManager.currentLayout.tabs"
+      :inEditMode="inEditMode"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, onMounted, inject } from 'vue'
+
+// PrimeVue
+import PVToolbar from 'primevue/toolbar';
+
 import EditWidgetsPage from './Page/Edit.vue'
 import SelectWidgetLayout from './Layout/Select.vue'
 import AddLayout from './Layout/Add.vue'
@@ -54,6 +42,7 @@ export default defineComponent({
     }
   },
   components: {
+    PVToolbar,
     AddLayout,
     AddWidget,
     EditWidgetsPage,
