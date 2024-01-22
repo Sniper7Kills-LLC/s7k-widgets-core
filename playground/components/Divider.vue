@@ -4,7 +4,7 @@
     :widget-id="widgetId"
     :settings="settings"
   >
-    <template #settings="{ widgetSettings }">
+    <!-- <template #settings="{ widgetSettings }">
       <div>
         <label
           for="label"
@@ -22,7 +22,7 @@
           />
         </div>
       </div>
-    </template>
+    </template> -->
 
     <div class="h-full flex items-center">
       <div class="relative w-full">

@@ -11,7 +11,7 @@ import type { LayoutPage } from "../src/types";
 
 const layouts: LayoutPage[] = [
   {
-    id: "0000-000-000-0000",
+    id: uuidv4(),
     name: "Test Page",
     default: false,
     grid: {

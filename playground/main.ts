@@ -1,11 +1,23 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import WidgetsDivider from "./components/Divider.vue";
 
+import "./styles.css"
+
+// Widget
+import WidgetsDivider from "./components/Divider.vue";
 import WidgetsPlugin from "../src/main";
 
 const app = createApp(App)
 
+// PrimeVue
+import PrimeVue from 'primevue/config';
+import wind from './presets/wind';
+app.use(PrimeVue, {
+  unstyled: true,
+  pt: wind
+});
+
+// Widget
 const WidgetsPluginOptions: WidgetsPluginOptions = {
     widgets: [
       {
