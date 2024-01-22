@@ -16,6 +16,9 @@ export default defineConfig({
   ],
   build: {
     cssCodeSplit: true,
+    commonjsOptions: {
+      esmExternals: ['vue']
+    },
     lib: {
       // Could also be a dictionary or array of multiple entry points
       entry: "src/main.ts",
