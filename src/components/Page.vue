@@ -1,43 +1,46 @@
 <template>
-    <PVCard
-      :pt="{
-        root: 'sticky top-0 z-10',
-        body: 'p-0',
-        content: 'mx-0'
-      }"
-      v-if="inEditMode"
-    >
-      <template #content>
-        <WidgetDock></WidgetDock>
-      </template>
-    </PVCard>
+  <PVCard
+    :pt="{
+      root: 'sticky top-0 z-10',
+      body: 'p-0',
+      content: 'mx-0'
+    }"
+    v-if="inEditMode"
+  >
+    <template #content>
+      <WidgetDock></WidgetDock>
+    </template>
+  </PVCard>
   <div :class="[inEditMode ? 'sticky top-0' : '', 'z-10 flex justify-end']">
     <div class="space-x-2">
       <SelectWidgetLayout />
       <EditWidgetsPage v-model:editMode="inEditMode"></EditWidgetsPage>
     </div>
   </div>
-  <div class="" v-if="layoutManager.currentLayout">
+  <div class="" v-if="currentLayout">
     <WidgetsGrid
-      :layout="layoutManager.currentLayout.grid"
+      :layout="currentLayout.grid"
       :inEditMode="inEditMode"
+      :page-content="pageContent"
       @layout-updated="gridUpdated"
     ></WidgetsGrid>
     <WidgetsTabs
-      v-if="layoutManager.currentLayout.hasTabs && layoutManager.currentLayout.tabs.length > 0"
-      :tabs="layoutManager.currentLayout.tabs"
+      v-if="currentLayout.hasTabs && currentLayout.tabs.length > 0"
+      :tabs="currentLayout.tabs"
       :inEditMode="inEditMode"
+      :page-content="pageContent"
     />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, inject } from 'vue'
+import { defineComponent } from 'vue'
 
 // PrimeVue
-import PVToolbar from 'primevue/toolbar';
-import PVCard from 'primevue/card';
+import PVToolbar from 'primevue/toolbar'
+import PVCard from 'primevue/card'
 
+// Out Components
 import EditWidgetsPage from './Page/Edit.vue'
 import SelectWidgetLayout from './Layout/Select.vue'
 import AddLayout from './Layout/Add.vue'
@@ -46,6 +49,15 @@ import type { LayoutPage, LayoutManager, LayoutWidget } from '@/types'
 
 export default defineComponent({
   name: 'WidgetsPage',
+  components: {
+    PVToolbar,
+    PVCard,
+
+    AddLayout,
+    EditWidgetsPage,
+    SelectWidgetLayout,
+    WidgetDock
+  },
   props: {
     page: {
       type: String,
@@ -54,41 +66,36 @@ export default defineComponent({
     defaultLayouts: {
       type: Array as () => LayoutPage[],
       required: true
-    }
-  },
-  components: {
-    PVToolbar,
-    PVCard,
-    AddLayout,
-    EditWidgetsPage,
-    SelectWidgetLayout,
-    WidgetDock
-  },
-  setup(props) {
-    const inEditMode = ref(false)
-
-    const layoutManager = inject('$widgetLayoutManager') as LayoutManager
-
-    // Fetch widgets on component mount
-    onMounted(() => {
-      if (layoutManager) {
-        layoutManager.setPage(props.page, props.defaultLayouts)
+    },
+    pageContent: {
+      type: Object,
+      default: () => {
+        return {}
       }
-    })
-
-    function gridUpdated(input: LayoutWidget[]) {
-      layoutManager.updateGrid(input, layoutManager.currentLayout.grid.id)
     }
-
+  },
+  inject: {
+    layoutManager: {
+      from: '$widgetLayoutManager'
+    }
+  },
+  computed: {
+    currentLayout() {
+      return (this.layoutManager as LayoutManager).currentLayout;
+    }
+  },
+  data() {
     return {
-      inEditMode,
-      gridUpdated,
-      layoutManager
+      inEditMode: false
+    }
+  },
+  mounted(){
+    (this.layoutManager as LayoutManager).setPage(this.page, this.defaultLayouts);
+  },
+  methods: {
+    gridUpdated(input: LayoutWidget[]) {
+      (this.layoutManager as LayoutManager).updateGrid(input, (this.layoutManager as LayoutManager).currentLayout.grid.id);
     }
   }
 })
 </script>
-
-<style scoped>
-/* Your styling for the grid display component */
-</style>

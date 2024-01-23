@@ -84,22 +84,22 @@ export default defineComponent({
       layouts: [] as LayoutPage[]
     }
   },
-  setup() {
-    const layoutManager = inject('$widgetLayoutManager') as LayoutManager
-    return {
-      layoutManager
+  inject: {
+    layoutManager: {
+      from: '$widgetLayoutManager'
     }
   },
   methods: {
     importLayout(layoutID: number | string) {
       const layoutIndex = this.layouts.findIndex((layout) => layout.id == layoutID)
 
-      if (layoutIndex == -1) return
+      if (layoutIndex == -1) return;
 
-      const layout = this.layouts[layoutIndex]
-      this.layoutManager.addLayout(layout)
+      const layout = this.layouts[layoutIndex];
 
-      this.layouts.splice(layoutIndex, 1)
+      (this.layoutManager as LayoutManager).addLayout(layout);
+
+      this.layouts.splice(layoutIndex, 1);
     },
     openFileInput() {
       // Trigger file input click

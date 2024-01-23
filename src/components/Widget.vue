@@ -30,6 +30,12 @@ export default defineComponent({
       default: () => {
         return {}
       }
+    },
+    content: {
+      type: Object,
+      default: () => {
+        return {}
+      }
     }
   }
 })

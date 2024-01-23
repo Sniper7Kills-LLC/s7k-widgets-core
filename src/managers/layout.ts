@@ -272,16 +272,16 @@ const layoutManager: LayoutManager = reactive({
 
     if (index !== -1) {
       // Tab found
-      console.log("Tab Found")
+      console.log('Tab Found')
       if (this.currentTab == index) {
         // Currently viewing that tab
-        console.log("Need To Change Current Tab")
-        this.currentTab = (this.currentTab - 1 > 0) ? this.currentTab - 1 : 0;
+        console.log('Need To Change Current Tab')
+        this.currentTab = this.currentTab - 1 > 0 ? this.currentTab - 1 : 0
       }
-      console.log("Delete Tab")
+      console.log('Delete Tab')
       // remove it
-      this.currentLayout.tabs.splice(index, 1);
-      this.save();
+      this.currentLayout.tabs.splice(index, 1)
+      this.save()
     }
   },
 

@@ -21,9 +21,7 @@
         :enableEditMode="$props.inEditMode"
         @remove-grid-item="removeGridItem"
         :class="[
-          $props.inEditMode
-            ? 'rounded-lg border-2 border-dashed hover:border-solid'
-            : '',
+          $props.inEditMode ? 'rounded-lg border-2 border-dashed hover:border-solid' : '',
           'overflow-hidden'
         ]"
       >
@@ -31,7 +29,7 @@
           :is="widgetManager.getComponent(item.widgetID)"
           :widget-id="item.i"
           :in-edit-mode="inEditMode"
-          v-bind="{ ...item.props, settings: { ...item.props } }"
+          v-bind="{ ...item.props, settings: { ...item.props }, content: { ...pageContent } }"
           :key="item.props"
         ></component>
       </GridItem>
@@ -55,6 +53,12 @@ export default defineComponent({
     layout: {
       type: Object as () => LayoutGrid,
       required: true
+    },
+    pageContent: {
+      type: Object,
+      default: () => {
+        return {}
+      }
     }
   },
   components: {
@@ -63,27 +67,21 @@ export default defineComponent({
     GridLayout
   },
   emits: ['layoutUpdated'],
-  setup(props, { emit }) {
-    // Use ref to hold the widgets data
-    const widgetManager = inject('$widgetManager') as WidgetManager
-
-    function layoutUpdatedEvent(newLayout: LayoutWidget[]): void {
-      emit('layoutUpdated', newLayout)
+  methods: {
+    layoutUpdatedEvent(newLayout: LayoutWidget[]) {
+      this.$emit('layoutUpdated', newLayout);
+    },
+    removeGridItem(remove: number | string) {
+      this.$emit('layoutUpdated',
+        this.layout.items.filter((item: LayoutWidget) => item.i != remove)
+      );
     }
-
-    function removeGridItem(remove: number | string) {
-      // eslint-disable-next-line vue/no-mutating-props
-      emit(
-        'layoutUpdated',
-        props.layout.items.filter((item: LayoutWidget) => item.i != remove)
-      )
-    }
+  },
+  setup() {
+    const widgetManager = inject('$widgetManager') as WidgetManager;
 
     return {
-      removeGridItem,
-      layoutUpdatedEvent,
       widgetManager,
-      window
     }
   }
 })
@@ -423,10 +421,6 @@ export default defineComponent({
     top: 0;
     width: 20px;
   } */
-
-/**
-   *
-   */
 
 .visually-hidden {
   display: none;

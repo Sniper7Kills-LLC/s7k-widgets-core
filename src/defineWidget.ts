@@ -14,25 +14,31 @@ export const props = {
     default: () => {
       return {}
     }
+  },
+  content: {
+    type: Object,
+    default: () => {
+      return {}
+    }
   }
-};
-
-interface PropOptions<T = any, D = T> {
-  type?: any;
-  required?: boolean;
-  default?: any;
 }
 
-type RequiredWidgetProps = ComponentObjectPropsOptions& {
-  inEditMode: PropOptions,
-  widgetId: PropOptions,
-  settings: PropOptions,
+interface PropOptions<T = any, D = T> {
+  type?: any
+  required?: boolean
+  default?: any
+}
+
+type RequiredWidgetProps = ComponentObjectPropsOptions & {
+  inEditMode: PropOptions
+  widgetId: PropOptions
+  settings: PropOptions
 }
 
 type DefaultWidgetComponent = {
-    props: RequiredWidgetProps,
+  props: RequiredWidgetProps
 }
 
 export default {
-    props: props,
-} as DefaultWidgetComponent;
+  props: props
+} as DefaultWidgetComponent

@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen bg-surface-0 dark:bg-surface-800 text-surface-700 dark:text-surface-0/80">
     <ModeSelector class="pb-2"></ModeSelector>
-    <WidgetsPage page="test-page" :default-layouts="layouts"></WidgetsPage>
+    <WidgetsPage page="test-page" :default-layouts="layouts" :page-content="{code:'word'}"></WidgetsPage>
   </div>
 </template>
 

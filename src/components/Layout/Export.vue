@@ -1,6 +1,6 @@
 <template>
   <div class="pt-4 space-y-4">
-    <div v-if="savedLayouts.length > 0" class="pt-4 max-h-56 overflow-y-scroll">
+    <div v-if="layouts.length > 0" class="pt-4 max-h-56 overflow-y-scroll">
       <table class="w-full">
         <thead>
           <tr>
@@ -18,7 +18,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="layout in savedLayouts" :key="layout.id">
+          <tr v-for="layout in layouts" :key="layout.id">
             <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
               {{ layout.page }}
             </td>
@@ -51,22 +51,29 @@
 import { defineComponent, inject, ref } from 'vue'
 import type { LayoutManager, LayoutPage } from '@/types'
 
+type ExportableLayout = LayoutPage & {
+  shouldExport?: boolean
+}
+
 export default defineComponent({
   name: 'ExportLayout',
-  setup() {
-    // Use inject in the setup function
-    const layoutManager = inject('$widgetLayoutManager') as LayoutManager
-
-    const layouts = layoutManager.savedLayouts
-
-    type ExportableLayout = LayoutPage & {
-      shouldExport?: boolean
+  inject: {
+    layoutManager: {
+      from: '$widgetLayoutManager'
     }
-
-    const savedLayouts = ref<ExportableLayout[]>([...layouts.map((layout) => ({ ...layout }))])
-
-    function downloadLayouts() {
-      const exportLayouts = savedLayouts.value
+  },
+  data() {
+    return {
+      layouts: [] as ExportableLayout[],
+    }
+  },
+  mounted() {
+    this.layouts = (this.layoutManager as LayoutManager).savedLayouts;
+  },
+  methods: {
+    downloadLayouts() {
+      // Get the layouts we marked to export
+      const exportLayouts = this.layouts
         // Get the ones set to be exported
         .filter((layout) => {
           return layout.shouldExport
@@ -76,12 +83,12 @@ export default defineComponent({
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           ({ shouldExport, ...layoutWithoutShouldExport }) => layoutWithoutShouldExport
         )
+      if (exportLayouts.length == 0) return
+      
       // Set Default to Fale
       exportLayouts.forEach((layout) => {
         layout.default = false
       })
-
-      if (exportLayouts.length == 0) return
 
       const dataUri = `data:application/json;charset=utf-8,${encodeURIComponent(
         JSON.stringify(exportLayouts)
@@ -94,18 +101,10 @@ export default defineComponent({
       document.body.appendChild(anchorEl)
       anchorEl.click()
       document.body.removeChild(anchorEl)
-
-      // Reset the SavedLayouts
-      savedLayouts.value.forEach((layout) => {
+      this.layouts.forEach((layout) => {
         layout.shouldExport = false
       })
     }
-
-    return {
-      savedLayouts,
-      layoutManager,
-      downloadLayouts
-    }
-  }
+  },
 })
 </script>

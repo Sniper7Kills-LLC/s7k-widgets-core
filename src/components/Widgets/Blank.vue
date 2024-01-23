@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="relative block w-full h-full rounded-lg border-2 border-dashed  p-12 text-center"
-  >
+  <div class="relative block w-full h-full rounded-lg border-2 border-dashed p-12 text-center">
     <span class="mx-auto my-auto block text-sm font-semibold"> Empty Widget </span>
   </div>
 </template>

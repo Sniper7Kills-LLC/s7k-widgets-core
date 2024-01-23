@@ -35,6 +35,7 @@
           >
             {{ label }}
           </span>
+          {{ content?.code }}
         </div>
       </div>
     </div>
