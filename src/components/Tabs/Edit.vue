@@ -112,12 +112,11 @@ export default defineComponent({
         },
         layoutManager: {
             handler(newLayoutManager: LayoutManager, oldLayoutManager: LayoutManager) {
-                if(newLayoutManager.currentLayout.tabs == oldLayoutManager.currentLayout.tabs && this.tabs) return;
+                if(newLayoutManager.currentLayout.tabs == oldLayoutManager.currentLayout.tabs && newLayoutManager.currentLayout.tabs == this.tabs) return;
 
                 if(newLayoutManager.currentLayout.tabs == this.tabs) return;
 
-                // We don't want it reactive.
-                this.tabs = JSON.parse(JSON.stringify(newLayoutManager.currentLayout.tabs));
+                this.tabs = newLayoutManager.currentLayout.tabs;
             },
             deep: true
         }

@@ -33,7 +33,7 @@ export default defineComponent({
     watch: {
         selected: {
             handler(newSelected, oldSelected) {
-                (this.layoutManager as LayoutManager).setLayout(newSelected.id);
+                (this.layoutManager as LayoutManager).setLayout(newSelected);
             }
         },
         layoutManager: {
@@ -41,8 +41,9 @@ export default defineComponent({
                 if(newLayoutManager.getLayoutNames() != oldLayoutManager.getLayoutNames())
                     this.available = newLayoutManager.getLayoutNames();
 
-                if(newLayoutManager.currentLayout.id != oldLayoutManager.currentLayout.id || !this.selected)
-                    this.selected = newLayoutManager.currentLayout.id
+                if(newLayoutManager.currentLayout.id != oldLayoutManager.currentLayout.id || newLayoutManager.currentLayout.id != this.selected)
+                    this.selected = newLayoutManager.currentLayout.id;
+
             },
             deep: true
         }

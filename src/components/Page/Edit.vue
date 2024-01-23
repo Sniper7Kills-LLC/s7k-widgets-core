@@ -1,29 +1,36 @@
 <template>
-    <PVButton 
-        type="button" 
-        icon="pi pi-ellipsis-v" 
-        @click="toggleMenu" 
-        aria-haspopup="true" 
-        aria-controls="overlay_menu"
-    />
-    <PVMenu
-        id="overlay_menu"
-        ref="menu"
-        :popup="true"
-        :model="menu"
-    />
+        <PVButton
+            label="Save"
+            type="button" 
+            icon="pi pi-save" 
+            @click="toggleEditMode"
+            v-if="editMode"
+        />
+        <PVButton 
+            type="button" 
+            icon="pi pi-ellipsis-v" 
+            @click="toggleMenu" 
+            aria-haspopup="true" 
+            aria-controls="overlay_menu"
+        />
+        <PVMenu
+            id="overlay_menu"
+            ref="menu"
+            :popup="true"
+            :model="(menu as any[])"
+        />
     <PropertiesDialog v-model:open="propertiesDialog"></PropertiesDialog>
     <TabsDialog v-model:open="tabsDialog"></TabsDialog>
     <LayoutDialog v-model:open="layoutDialog"></LayoutDialog>
     <WidgetDialog v-model:open="widgetDialog"></WidgetDialog>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 
 // PrimeVue
 import PVMenu from 'primevue/menu';
 import PVButton from 'primevue/button';
-import { MenuItem } from 'primevue/menuitem';
+import PVOverlayPanel from 'primevue/overlaypanel';
 
 // Our Stuff
 import PropertiesDialog from "@/components/Page/Properties.vue"
@@ -37,6 +44,7 @@ export default defineComponent({
     components: {
         PVMenu,
         PVButton,
+        PVOverlayPanel,
 
         PropertiesDialog,
         TabsDialog,
@@ -90,7 +98,7 @@ export default defineComponent({
                     label: 'Register Widget',
                     command: this.toggleWidgetDialog
                 }
-            ] as MenuItem[]
+            ]
         }
     },
     methods: {
@@ -123,6 +131,13 @@ export default defineComponent({
         },
         toggleTabsDialog() {
             this.tabsDialog = !this.tabsDialog;
+        }
+    },
+    setup() {
+        const op = ref();
+
+        return {
+            op
         }
     }
 })

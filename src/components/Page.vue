@@ -1,7 +1,21 @@
 <template>
+    <PVCard
+      :pt="{
+        root: 'sticky top-0 z-10',
+        body: 'p-0',
+        content: 'mx-0'
+      }"
+      v-if="inEditMode"
+    >
+      <template #content>
+        <WidgetDock></WidgetDock>
+      </template>
+    </PVCard>
   <div :class="[inEditMode ? 'sticky top-0' : '', 'z-10 flex justify-end']">
-    <SelectWidgetLayout />
-    <EditWidgetsPage v-model:editMode="inEditMode"></EditWidgetsPage>
+    <div class="space-x-2">
+      <SelectWidgetLayout />
+      <EditWidgetsPage v-model:editMode="inEditMode"></EditWidgetsPage>
+    </div>
   </div>
   <div class="" v-if="layoutManager.currentLayout">
     <WidgetsGrid
@@ -10,7 +24,7 @@
       @layout-updated="gridUpdated"
     ></WidgetsGrid>
     <WidgetsTabs
-      v-if="layoutManager.currentLayout.hasTabs"
+      v-if="layoutManager.currentLayout.hasTabs && layoutManager.currentLayout.tabs.length > 0"
       :tabs="layoutManager.currentLayout.tabs"
       :inEditMode="inEditMode"
     />
@@ -22,11 +36,12 @@ import { defineComponent, ref, onMounted, inject } from 'vue'
 
 // PrimeVue
 import PVToolbar from 'primevue/toolbar';
+import PVCard from 'primevue/card';
 
 import EditWidgetsPage from './Page/Edit.vue'
 import SelectWidgetLayout from './Layout/Select.vue'
 import AddLayout from './Layout/Add.vue'
-import AddWidget from './Widgets/Add.vue'
+import WidgetDock from './Widgets/Add.vue'
 import type { LayoutPage, LayoutManager, LayoutWidget } from '@/types'
 
 export default defineComponent({
@@ -43,10 +58,11 @@ export default defineComponent({
   },
   components: {
     PVToolbar,
+    PVCard,
     AddLayout,
-    AddWidget,
     EditWidgetsPage,
-    SelectWidgetLayout
+    SelectWidgetLayout,
+    WidgetDock
   },
   setup(props) {
     const inEditMode = ref(false)

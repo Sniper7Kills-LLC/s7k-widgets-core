@@ -16,11 +16,13 @@
         :w="item.w"
         :h="item.h"
         :i="item.i"
+        :is-draggable="$props.inEditMode"
+        :is-resizable="$props.inEditMode"
         :enableEditMode="$props.inEditMode"
         @remove-grid-item="removeGridItem"
         :class="[
           $props.inEditMode
-            ? 'rounded-lg border-2 border-dashed border-gray-300 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+            ? 'rounded-lg border-2 border-dashed hover:border-solid'
             : '',
           'overflow-hidden'
         ]"

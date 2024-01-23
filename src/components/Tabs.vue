@@ -1,41 +1,37 @@
 <template>
-    <PVTabView
-        :scrollable="true"
-        :key="activeTab"
-        :activeIndex="activeTab" 
-        @update:active-index="changeTab"
-    >
-        <PVTabPanel 
-            v-for="tab in $props.tabs" 
-            :key="tab.name"
-        >
-            <template #header>
-                {{ tab.name }}
-            </template>
-            <WidgetsGrid
-                :layout="tab.grid"
-                :inEditMode="inEditMode"
-                @layout-updated="(layout: LayoutWidget[]) => gridUpdated(layout)"
-            />
-        </PVTabPanel>
-    </PVTabView>
+    <PVTabMenu
+        :model="tabMenu"
+        :key="tabMenu.length"
+        v-model:activeIndex="activeTab"
+        :pt="{
+            root: 'z-10',
+            menuitem: 'flex-grow',
+            action: 'justify-center'
+        }"
+        :pt-options="{mergeSections: true, mergeProps: true}"
+    />
+    <WidgetsGrid
+        v-if="tabs[activeTab] && tabs[activeTab].grid"
+        :layout="tabs[activeTab].grid"
+        :inEditMode="inEditMode"
+        @layout-updated="(layout: LayoutWidget[]) => gridUpdated(layout)"
+    />
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
 
 // Prime Vue
-import PVTabView from 'primevue/tabview';
-import PVTabPanel from 'primevue/tabpanel';
+import PVTabMenu from 'primevue/tabmenu';
 
 // Our Stuff
 import WidgetsGrid from './Grid.vue';
 import { LayoutManager, LayoutTab, LayoutWidget } from '@/types';
+import { MenuItem } from 'primevue/menuitem';
 
 export default defineComponent({
     name: 'WidgetTabs',
     components: {
-        PVTabView,
-        PVTabPanel,
+        PVTabMenu,
 
         WidgetsGrid
     },
@@ -54,40 +50,50 @@ export default defineComponent({
             from: '$widgetLayoutManager'
         }
     },
+    mounted() {
+        this.tabMenu = this.tabs.map((obj, index) => ({ id: index, label: obj.name }));
+    },
     data() {
         return {
-            activeTab: undefined as number | undefined,
-            bypassChange: false
+            activeTab: 0 as number,
+            bypassChange: false,
+            tabMenu: [] as MenuItem[]
         }
     },
     watch: {
+        tabs: {
+            handler(newTabs: LayoutTab[]) {
+                this.tabMenu = newTabs.map((obj, index) => ({ id: index, label: obj.name }))
+            },
+            deep: true
+        },
         activeTab: {
             handler(tabIndex: number) {
                 (this.layoutManager as LayoutManager).currentTab = tabIndex;
             }
         },
-        // layoutManager: {
-        //     handler(layoutManager) {
-        //         console.log("Layout Manager Changed")
-        //         this.activeTab = (layoutManager as LayoutManager).currentTab
-        //     },
-        //     deep: true
-        // }
+        layoutManager: {
+            handler(newLayoutManager: LayoutManager, oldLayoutManager: LayoutManager) {
+                if (newLayoutManager.currentTab != this.activeTab)
+                    this.activeTab = newLayoutManager.currentTab
+            },
+            deep: true
+        }
     },
     methods: {
         gridUpdated(input: LayoutWidget[]) {
-
+            const CurrentTab = (this.layoutManager as LayoutManager).currentTab;
+            (this.layoutManager as LayoutManager).updateGrid(input, this.tabs[CurrentTab].grid.id)
         },
         changeTab(id: number) {
-            if(this.bypassChange){
-                this.activeTab = id - 1 > 0 ? id - 1 : 0;
-                this.bypassChange = false;
-                return;
-            }
             this.activeTab = id;
-            
             (this.layoutManager as LayoutManager).currentTab = id;
         }
     }
 });
 </script>
+<style>
+li[role=none] {
+    display: none;
+}
+</style>

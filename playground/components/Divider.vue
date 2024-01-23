@@ -27,11 +27,11 @@
     <div class="h-full flex items-center">
       <div class="relative w-full">
         <div class="absolute inset-0 flex items-center" aria-hidden="true">
-          <div class="w-full border-t border-gray-300" />
+          <div class="w-full border-t border-surface-800 dark:border-surface-0" />
         </div>
         <div class="relative flex justify-center">
           <span
-            class="bg-white px-3 text-base font-semibold leading-6 text-gray-900"
+            class="px-3 text-base font-semibold leading-6 bg-surface-0 dark:bg-surface-800 text-surface-700 dark:text-surface-0/80"
           >
             {{ label }}
           </span>

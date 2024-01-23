@@ -14,6 +14,9 @@ export default defineConfig({
     vueJsx(),
     dts({ rollupTypes: true })
   ],
+  optimizeDeps: {
+    exclude: []
+  },
   build: {
     cssCodeSplit: true,
     commonjsOptions: {
@@ -32,16 +35,16 @@ export default defineConfig({
       input: {
         main: path.resolve(__dirname, "src/main.ts")
       },
-      external: ['vue'],
+      external: ['vue', 'uuid', 'primevue', 'primeicons', 'json-editor-vue', 'vue-ts-responsive-grid-layout'],
       output: {
+        globals: {
+          vue: 'Vue',
+        },
         assetFileNames: (assetInfo) => {
           if (assetInfo.name === 'main.css') return 'widgets-core.css';
           return assetInfo.name || 'default-filename';
         },
         exports: "named",
-        globals: {
-          vue: 'Vue',
-        },
       },
     },
   },
