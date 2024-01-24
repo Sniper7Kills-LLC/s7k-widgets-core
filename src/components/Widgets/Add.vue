@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ul class="flex flex-grow space-x-2 overflow-x-auto" :key="widgets.length">
+    <ul class="flex flex-grow space-x-2 overflow-x-auto">
       <li v-for="widget in widgets" :key="widget.name">
         <div
           class="droppable-element"
@@ -47,7 +47,7 @@ export default defineComponent({
       mouseXY: { x: 0, y: 0 } as { x: number, y: number },
     }
   },
-  onMounted() {
+  mounted() {
     this.widgets = (this.widgetManager as WidgetManager).getWidgets((this.layoutManager as LayoutManager).currentPage);
   },
   watch: {

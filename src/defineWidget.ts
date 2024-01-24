@@ -23,22 +23,22 @@ export const props = {
   }
 }
 
-interface PropOptions<T = any, D = T> {
+export interface PropOptions<T = any, D = T> {
   type?: any
   required?: boolean
   default?: any
 }
 
-type RequiredWidgetProps = ComponentObjectPropsOptions & {
+export type RequiredWidgetProps = ComponentObjectPropsOptions & {
   inEditMode: PropOptions
   widgetId: PropOptions
   settings: PropOptions
 }
 
-type DefaultWidgetComponent = {
+export type DefaultWidgetComponent = {
   props: RequiredWidgetProps
 }
 
 export default {
-  props: props
+  props: props,
 } as DefaultWidgetComponent

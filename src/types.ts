@@ -5,6 +5,12 @@ export type Widget = {
   name: string
 }
 
+import type {
+  DefaultWidgetComponent,
+  RequiredWidgetProps,
+  PropOptions
+} from "./defineWidget"
+
 export type {
   // Widget
   ManagedWidget,
@@ -14,5 +20,9 @@ export type {
   LayoutTab,
   LayoutPage,
   LayoutManager,
-  LayoutGrid
+  LayoutGrid,
+  // Default Widget
+  DefaultWidgetComponent,
+  RequiredWidgetProps,
+  PropOptions
 }
