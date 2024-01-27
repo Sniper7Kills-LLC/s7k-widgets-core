@@ -27,13 +27,13 @@ export default defineComponent({
       default: 'DEFAULT_WIDGET_ID'
     },
     settings: {
-      type: Object,
+      type: Object as () => Record<string, any>,
       default: () => {
         return {}
       }
     },
     content: {
-      type: Object,
+      type: Object as () => Record<string, any>,
       default: () => {
         return {}
       }
