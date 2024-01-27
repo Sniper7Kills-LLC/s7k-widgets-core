@@ -23,7 +23,8 @@ export default defineComponent({
     },
     widgetId: {
       type: [Number, String],
-      required: true
+      required: true,
+      default: 'DEFAULT_WIDGET_ID'
     },
     settings: {
       type: Object,
