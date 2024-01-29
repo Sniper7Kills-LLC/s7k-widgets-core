@@ -1,4 +1,4 @@
-import type { Prop, ComponentObjectPropsOptions } from 'vue'
+import type { Prop, PropType, ComponentObjectPropsOptions } from 'vue'
 
 export const props = {
   inEditMode: {
@@ -7,16 +7,17 @@ export const props = {
   },
   widgetId: {
     type: [Number, String],
+    default: 'DefaultWidgetID',
     required: true
   },
   settings: {
-    type: Object,
+    type: Object as PropType<Record<string, any>>,
     default: () => {
       return {}
     }
   },
   content: {
-    type: Object,
+    type: Object as PropType<Record<string, any>>,
     default: () => {
       return {}
     }
@@ -30,9 +31,10 @@ export interface PropOptions<T = any, D = T> {
 }
 
 export type RequiredWidgetProps = ComponentObjectPropsOptions & {
-  inEditMode: PropOptions
-  widgetId: PropOptions
-  settings: PropOptions
+  inEditMode: PropType<Boolean>,
+  widgetId: PropType<Number | String>
+  settings: PropType<Record<string, any>>,
+  content: PropType<Record<string, any>> | any,
 }
 
 export type DefaultWidgetComponent = {
@@ -41,4 +43,4 @@ export type DefaultWidgetComponent = {
 
 export default {
   props: props,
-} as DefaultWidgetComponent
+}

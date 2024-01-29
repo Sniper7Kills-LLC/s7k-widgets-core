@@ -8,7 +8,6 @@ export type Widget = {
 import type {
   DefaultWidgetComponent,
   RequiredWidgetProps,
-  PropOptions
 } from "./defineWidget"
 
 export type {
@@ -24,5 +23,4 @@ export type {
   // Default Widget
   DefaultWidgetComponent,
   RequiredWidgetProps,
-  PropOptions
 }

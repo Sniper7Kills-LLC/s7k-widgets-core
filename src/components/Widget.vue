@@ -10,34 +10,13 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import ModifyWidgetProperties from './Widgets/Modify.vue'
+import { default as defaultWidgetComponent } from '@/defineWidget'
 
 export default defineComponent({
   name: 'WidgetInterface',
   components: {
     ModifyWidgetProperties
   },
-  props: {
-    inEditMode: {
-      type: Boolean,
-      default: false
-    },
-    widgetId: {
-      type: [Number, String],
-      required: true,
-      default: 'DEFAULT_WIDGET_ID'
-    },
-    settings: {
-      type: Object as () => Record<string, any>,
-      default: () => {
-        return {}
-      }
-    },
-    content: {
-      type: Object as () => Record<string, any>,
-      default: () => {
-        return {}
-      }
-    }
-  }
+  props: defaultWidgetComponent.props
 })
 </script>

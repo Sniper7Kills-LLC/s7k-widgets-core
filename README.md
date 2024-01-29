@@ -6,6 +6,7 @@ The s7k-widgets-core package is crafted to empower developers in enhancing user 
 
 > [!WARNING]  
 > This package is transitioning to using PrimeVue. Readme.md does not currently reflect this!
+> Check: https://github.com/RunbookSolutions/GUI for implementation references.
 
 ## Background
 
